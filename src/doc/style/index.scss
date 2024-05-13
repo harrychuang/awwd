@@ -1,0 +1,153 @@
+@import '../../components/style/color/settings';
+@import '../../components/style/font/settings';
+@import './cardList';
+
+body{
+  font-family: var(--awwd-ref-font-face-gotham-reg);
+}
+
+// Code
+%code{
+  display: inline-block !important;
+  color: rgba(255,255,255,0.8) !important;
+  padding: 10px 15px !important;
+  border-radius: 8px !important;
+  margin-bottom: 20px !important;
+  background-color: var(--awwd-doc-color-code-container) !important;
+}
+
+.sbdocs-code{
+  @extend %code;
+}
+
+.noeindls-button,
+.ds-card,
+.ds-tag,
+.ds-toogle{
+  margin: 5px;
+}
+
+/* Main Container */
+.sbdocs-main{
+  max-width: 1200px;
+  position: relative;
+  margin: 0 auto;
+  padding: 40px 40px;
+
+  p{
+    font-family: var(--awwd-ref-font-face-gotham-reg);
+    color: var(--awwd-doc-color-font-paragraph);
+    margin-bottom: 30px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  code{
+    @extend %code;
+  }
+
+}
+
+/* Fonts */
+
+/* Mixin */
+@mixin hashtag{
+  &:before{
+    content: '# ';
+    position: relative;
+    top: -4px;
+    color: #8C89F6;
+  }
+}
+
+.sbdocs-h1{
+  color: var(--awwd-doc-color-font-heading);
+  font-size: 48px;
+  line-height: 56px;
+  margin: 20px 0 15px 0;
+  font-family: var(--awwd-ref-font-face-gotham-black);
+  @include hashtag;
+}
+
+.sbdocs-h2{
+  margin: 30px 0 20px 0;
+  color: var(--awwd-doc-color-font-heading);
+  font-family: var(--awwd-ref-font-face-gotham-bold);
+  @include mixin-font-size-reg;
+  @include hashtag;
+}
+
+.sbdocs-h3{
+  color: var(--awwd-doc-color-font-heading);
+  font-family: var(--awwd-ref-font-face-gotham-med);
+  margin: 10px 0 15px 0;
+  @include mixin-font-size-sm;
+  @include hashtag;
+}
+
+.sbdocs-h6{
+  color: var(--awwd-doc-color-font-paragraph);
+  font-family: var(--awwd-ref-font-face-gotham-med);
+  margin: 10px 0 15px 0;
+  @include mixin-font-size-xs;
+}
+
+.sbdocs-p{
+  color: var(--awwd-doc-color-font-paragraph);
+  font-family: var(--awwd-ref-font-face-gotham-reg);
+  @include mixin-font-size-xxs;
+}
+
+/* Spacing Demo [start] */
+.spacing-box{
+  display: block;
+  width: 100%;
+  margin-top: 40px;
+  position: relative;
+  background-color: var(--awwd-doc-color-example-list-box);
+}
+
+.spacing-label{
+  position: absolute;
+  top: -23px;
+  left: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--awwd-doc-color-font-paragraph);
+}
+
+.spacing-line{
+  display: block;
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  left:20px;
+  border: 1px solid var(--awwd-sys-color-function-info);
+  background-color: var(--awwd-doc-color-example-list-box);
+}
+/* Spacing Demo [end] */
+
+
+/* Vendor */
+
+/* Antd Design message styling rewrite [start] */
+.ant-message-notice-content{
+  padding: 15px 20px;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px var(--awwd-sys-color-dark-a10);
+  i {
+    color: #4285f4 !important;
+    font-size: 18px !important;
+    display: inline-block;
+    vertical-align: sub;
+  }
+  span{
+    display: inline-block;
+    vertical-align: middle;
+  }
+}  /* Antd Design message styling rewrite [end] */
+

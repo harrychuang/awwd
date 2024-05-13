@@ -1,0 +1,89 @@
+:root{
+    //// Refer Layout token ////
+    // Screen
+    --awwd-ref-screen-xl: 1599px;
+    --awwd-ref-screen-lg: 1199px;
+    --awwd-ref-screen-med: 991px;
+    --awwd-ref-screen-sm: 767px;
+    --awwd-ref-screen-xs: 319px;
+    // Container width
+    --awwd-ref-container-width-full: 100%;
+    --awwd-ref-container-width-xl: 1600px;
+    --awwd-ref-container-width-lg: 1200px;
+    --awwd-ref-container-width-med: 960px;
+    // Border Radius
+    --awwd-ref-border-radius-full: 100px;
+    --awwd-ref-border-radius-xl: 24px;
+    --awwd-ref-border-radius-lg: 16px;
+    --awwd-ref-border-radius-med: 12px;
+    --awwd-ref-border-radius-rg: 8px;
+    --awwd-ref-border-radius-sm: 4px;
+    // Button Size
+    --awwd-ref-size-button-default: 50px;
+    --awwd-ref-size-button-med: 36px;
+    --awwd-ref-size-button-sm: 26px;
+    --awwd-ref-size-button-xs: 24px;
+    --awwd-ref-size-button-xxs: 20px;
+    --awwd-ref-size-icon-button-default: 24px;
+    --awwd-ref-size-icon-button-med: 22px;
+    --awwd-ref-size-icon-button-sm: 20px;
+    --awwd-ref-size-icon-on-button-xs: 18px;
+    --awwd-ref-size-icon-on-button-xxs: 16px;
+    // Spacing
+    --awwd-ref-spacing-xl: 40px;
+    --awwd-ref-spacing-lg: 30px;
+    --awwd-ref-spacing-med: 20px;
+    --awwd-ref-spacing-rg: 15px;
+    --awwd-ref-spacing-sm: 10px;
+    --awwd-ref-spacing-xs: 5px;
+    // z-Index
+    --awwd-ref-z-index-super: 9999;
+    --awwd-ref-z-index-modal: 999;
+    --awwd-ref-z-index-overlay: 666;
+    --awwd-ref-z-index-nav: 333;
+    --awwd-ref-z-index-header: 111;
+    --awwd-ref-z-index-base: 1;
+    // Shadow
+    --awwd-ref-shadow-long-heavy: 0 0 24px 0 rgba(0,0,0,0.30);
+    --awwd-ref-shadow-long-light: 0 0 24px 0 rgba(0,0,0,0.08);
+    --awwd-ref-shadow-med: 0 8px 16px 0 rgba(0,0,0,0.1);
+    --awwd-ref-shadow-med-light: 0 8px 16px 0 rgba(0,0,0,0.04);
+    --awwd-ref-shadow-rg: 0 6px 12px 0 rgba(0,0,0,0.08);
+    --awwd-ref-shadow-short: 0 4px 8px 0 rgba(0,0,0,0.10);
+    --awwd-ref-shadow-short-light: 0 4px 8px 0 rgba(0,0,0,0.05);
+}
+
+$ds-breakpoint-xl: 1599px;
+$ds-breakpoint-lg: 1199px;
+$ds-breakpoint-med: 991px;
+$ds-breakpoint-sm: 767px;
+$ds-breakpoint-xs: 319px;
+
+/* Responsive */
+@mixin respond-to($media) {
+    @if $media == screenXl {
+        @media only screen and (max-width: $screenXl) {
+            @content;
+        }
+    }
+    @else if $media == screenLg {
+        @media only screen and (max-width: $screenLg) {
+            @content; 
+        }
+    }
+    @else if $media == screenMed {
+        @media only screen and (max-width: $screenMed) {
+            @content; 
+        }
+    }
+    @else if $media == screenSm {
+        @media only screen and (max-width: $screenSm) {
+            @content; 
+        }
+    }
+    @else if $media == screenXs {
+        @media only screen and (max-width: $screenXs) {
+            @content; 
+        }
+    }
+}

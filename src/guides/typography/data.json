@@ -1,0 +1,66 @@
+{
+    "fontSize": [
+        {
+            "Title": "Heading Large", 
+            "helper": "awwd-sys-font-size-xxl", 
+            "class": "awwd-sys-font-heading-xxl", 
+            "style": "font-size: 32px; line-height: 36px;"
+        },
+        {
+            "Title": "Heading", 
+            "helper": "awwd-sys-font-heading-xl", 
+            "class": "noein-text--h1", 
+            "style": "font-size: 20px; line-height: 24px;"
+        },
+        {
+            "Title": "Subheading", 
+            "helper": "awwd-sys-font-heading-lg", 
+            "class": "noein-text--h2", 
+            "style": "font-size: 18px; line-height: 22px;"
+        },
+        {
+            "Title": "Paragraph", 
+            "helper": "awwd-sys-font-size-med", 
+            "class": "awwd-sys-font-paragraph", 
+            "style": "font-size: 16px; line-height: 20px;"
+        },
+        {
+            "Title": "Paragraph Small", 
+            "helper": "awwd-sys-font-size-reg", 
+            "class": "awwd-sys-font-paragraph-sm",
+            "style": "font-size: 14px; line-height: 16px;"
+        },
+        {
+            "Title": "Label", 
+            "helper": "awwd-sys-font-size-sm", 
+            "class": "awwd-sys-font-label",
+            "style": "font-size: 10px; line-height: 12px;"
+        }
+    ],
+    "fontFamily": [
+        {
+            "Title": "Gotham Regular",
+            "fontFamily": "var(--awwd-ref-font-face-gotham-reg)",
+            "class": "awwd-sys-font-face--reg",
+            "style": "800"
+        },
+        {
+            "Title": "Gotham Medium",
+            "fontFamily": "var(--awwd-ref-font-gotham-med)",
+            "class": "awwd-sys-font-face--med",
+            "style": "500"
+        },
+        {
+            "Title": "Gotham Bold",
+            "fontFamily": "var(--awwd-ref-font-gotham-bold)",
+            "class": "awwd-sys-font-face--bold",
+            "style": "600"
+        },
+        {
+            "Title": "Gotham Black",
+            "fontFamily": "var(--awwd-ref-font-gotham-black)",
+            "class": "awwd-sys-font-face--black",
+            "style": "800"
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+@import './color/color';
+@import './font/font';
+@import './layout/layout';
+
+body{
+  font-family: var(--awwd-ref-font-gotham-med);
+}

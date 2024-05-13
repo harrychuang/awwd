@@ -1,0 +1,355 @@
+//// Doc Color Token
+.sbdocs-main {
+    // Refer Color Tokens
+    --awwd-doc-color-dark-a100: rgba(33,43,54,1);
+    --awwd-doc-color-dark-a90: rgba(33,43,54,0.9);
+    --awwd-doc-color-dark-a80: rgba(33,43,54,0.8);
+    --awwd-doc-color-dark-a60: rgba(33,43,54,0.6);
+    --awwd-doc-color-dark-a50: rgba(33,43,54,0.5);
+    --awwd-doc-color-dark-a40: rgba(33,43,54,0.4);
+    --awwd-doc-color-dark-a20: rgba(33,43,54,0.2);
+    --awwd-doc-color-dark-a15: rgba(33,43,54,0.15);
+    --awwd-doc-color-dark-a10: rgba(33,43,54,0.1);
+    --awwd-doc-color-dark-a5: rgba(33,43,54,0.05);
+    --awwd-doc-color-light-a100: #fff;
+    --awwd-doc-color-light-a80: rgba(255,255,255,0.8);
+    --awwd-doc-color-light-a60: rgba(255,255,255,0.6);
+    --awwd-doc-color-light-a50: rgba(255,255,255,0.5);
+    --awwd-doc-color-light-a20: rgba(255,255,255,0.2);
+    --awwd-doc-color-light-a10: rgba(255,255,255,0.1);
+    --awwd-doc-color-light-a5: rgba(255,255,255,0.05);
+    --awwd-doc-color-grey: #999;
+    --awwd-doc-color-alpha: rgba(0,0,0,0);
+    --awwd-doc-color-info: #4285F4;
+    // System Color Tokens
+    --awwd-doc-color-list-container-dark: var(--awwd-doc-color-dark-a100);
+    --awwd-doc-color-list-container: var(--awwd-doc-color-light-a100);
+    --awwd-doc-color-list-container-hover: var(--awwd-doc-color-light-a100);
+    --awwd-doc-color-list-container-hover-outline: var(--awwd-doc-color-light-a100);
+    --awwd-doc-color-list-container-info: var(--awwd-doc-color-dark-a80);
+    --awwd-doc-color-list-container-label: var(--awwd-doc-color-dark-a50);
+    --awwd-doc-color-copy-button-container: var(--awwd-doc-color-dark-a5);
+    --awwd-doc-color-copy-button-icon: var(--awwd-doc-color-grey);
+    --awwd-doc-color-font-heading: var(--awwd-doc-color-dark-a100);
+    --awwd-doc-color-font-paragraph: var(--awwd-doc-color-dark-a80);
+    --awwd-doc-color-code-container: var(--awwd-doc-color-dark-a100);
+    --awwd-doc-color-example-list-box: var(--awwd-doc-color-dark-a5);
+    --awwd-doc-color-example-shadow-box: var(--awwd-doc-color-light-a100);
+    --awwd-doc-color-example-shadow-container: var(--awwd-doc-color-light-a100);
+    --awwd-doc-color-example-icon: var(--awwd-doc-color-dark-a100);
+}
+
+[data-theme="dark"] {
+    .sbdocs-main {
+        --awwd-doc-color-list-container-dark: var(--awwd-doc-color-dark-a40);
+        --awwd-doc-color-list-container: var(--awwd-doc-color-dark-a60);
+        --awwd-doc-color-list-container-hover: var(--awwd-doc-color-dark-a50);
+        --awwd-doc-color-list-container-hover-outline: var(--awwd-doc-color-light-a10);
+        --awwd-doc-color-list-container-info: var(--awwd-doc-color-light-a80);
+        --awwd-doc-color-list-container-label: var(--awwd-doc-color-light-a50);
+        --awwd-doc-color-copy-button-container: var(--awwd-doc-color-light-a10);
+        --awwd-doc-color-copy-button-icon: var(--awwd-doc-color-light-a60);
+        --awwd-doc-color-font-heading: var(--awwd-doc-color-light-a100);
+        --awwd-doc-color-font-paragraph: var(--awwd-doc-color-light-a60);
+        --awwd-doc-color-code-container: var(--awwd-doc-color-dark-a60);
+        --awwd-doc-color-example-list-box: var(--awwd-doc-color-light-a5);
+        --awwd-doc-color-example-shadow-box: var(--awwd-doc-color-light-a10);
+        --awwd-doc-color-example-shadow-container: var(--awwd-doc-color-dark-a100);
+        --awwd-doc-color-example-icon: var(--awwd-doc-color-light-a100);
+    }
+}
+
+/* Mixin */
+@mixin copyButtonSlider{
+    .copy{
+      width: 0;
+      margin-right: 0px;
+    }
+    &:hover{
+      .copy{
+        margin-right: 5px;
+        width: 36px;
+        &:hover{
+          background-color: var(--awwd-doc-color-copy-button-container);
+          i{
+            color: var(--awwd-doc-color-copy-button-icon);
+          }
+        }
+      }
+    }
+}
+
+@mixin copyButtonShow{
+    .copy{
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+    }
+    &:hover{
+      .copy{
+        opacity: 1;
+      }
+    }
+}
+
+/* Copy code - button */
+.copy{
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    cursor: pointer;
+    border: 0px solid transparent;
+    border-radius: 50%;
+    background-color: var(--awwd-doc-color-alpha);
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: width 0.2s ease-in-out, margin-right 0.2s ease-in-out, background-color 0.1s ease-in-out;
+
+    i{
+        font-size: 16px !important;
+        line-height: 32px;
+        color: var(--awwd-doc-color-copy-button-icon) !important;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    &:hover{
+        background-color: var(--awwd-doc-color-copy-button-container);
+        i{ opacity: 1; }
+    }
+
+}
+
+/* Card List [start] */
+.card-list {
+    padding: 0px 0px;
+    margin-left: 0px;
+    margin-bottom: 40px;
+    border-radius: 6px;
+
+    /* card-list item [start] */
+    &__item {
+        padding: 20px;
+        box-shadow: 0px 2px 6px var(--awwd-doc-color-alpha);
+        border-radius: 12px;
+        border:0.5px solid var(--awwd-doc-color-dark-a10);
+        background-color: var(--awwd-doc-color-list-container);
+        text-align: left;
+        list-style: none;
+        display: block;
+        margin-bottom: 10px;
+        position: relative;
+        transition: all 0.15s ease-in-out;
+        &:hover {
+            background-color: var(--awwd-doc-color-list-container-hover);
+            transform: scale(1.02);
+            border:0.5px solid var(--awwd-doc-color-list-container-hover-outline);
+            box-shadow: 0px 6px 16px var(--awwd-doc-color-dark-a10);
+        }
+        
+        .copy {
+            margin-left: 5px; 
+        }
+       
+        /* flexible item [start] */
+        &__flexible{
+            display: inline-block;
+            text-align: center;
+            min-width: 100px;
+            padding: 40px 20px;
+            margin-right: 10px;
+            font-size: 13px;
+            border: 1px solid var(--awwd-doc-color-dark-a10);
+            vertical-align: top;
+            color: var(--awwd-doc-color-list-container-info);
+            cursor: pointer;
+            i{
+                display: inline-block;
+                margin-bottom: 10px;
+                color: var(--awwd-doc-color-example-icon);
+                transition: all 0.1s ease-in-out;
+            }
+            .shpmtc-ills{
+                width: 90%;
+                margin-bottom: 10px;
+                img{
+                    height: 150px;
+                }
+            }
+            .shpmtc-logo{
+                width: 100%;
+                margin-bottom: 10px;
+                img{
+                    height: 150px;
+                    margin-bottom: 10px;
+                }
+            }
+            &:hover{
+                color: var(var(--awwd-doc-color-info)) !important;
+                border: 1px solid rgba(0,0,0,0.05);
+                i{
+                    transform: scale(1.2);
+                    color: var(var(--awwd-doc-color-info)) !important;
+                }
+            }
+            /* Modifier */
+            &--sm{
+                width: calc(20% - 10px);
+                min-width: 160px;
+                min-height: 120px;
+                padding: 15px 20px;
+            }
+            &--med{
+                width: calc(25% - 10px);
+                min-width: 200px;
+            }
+        }   /* flexible item [end] */
+       
+        box-shadow: 0px, 4px, 16px, rgba(255,255,255,0.05);
+
+        /* color item [start] */
+        &__color {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            border: 1px solid rgba(0,0,0,0.03);
+            margin-right: 20px;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            &:before{
+                content:'';
+                height: inherit;
+                width: 0px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }   /* color item [end] */
+
+        /* typo item [start] */
+        &__typo{
+            color: var(--awwd-doc-color-font-heading);
+            display:block;
+            position: relative;
+            font-family: var(--awwd-ref-font-gotham-med);
+        }    /* typo item [end] */
+
+        /* info item [start] */
+        &__info {
+            display: inline-block;
+            vertical-align: middle;
+
+            .info {
+                display: inline-block;
+                vertical-align: middle;
+                font-size: 14px !important;
+                line-height: 18px !important;
+                color: var(--awwd-doc-color-list-container-info);
+                font-weight: 500;
+                margin-top: 25px;
+                margin-right: 30px;
+                position: relative;
+                min-width: 200px;
+                &:before {
+                    content:'';
+                    display: inline-block;
+                    position: absolute;
+                    top: -15px;
+                    left: 0px;
+                    font-size: 12px;
+                    color: var(--awwd-doc-color-list-container-label);
+                }
+                /* Modifier */
+                &--value{
+                    &:before { content: 'Value'; }
+                }
+                &--helper { 
+                    &:before { content: 'System token (Variable)'; }
+                }
+                &--hex { 
+                    min-width: 130px;
+                    &:before { content: 'Hex'; }
+                }
+                &--mixin{
+                    &:before { content: 'Mixin'; }
+                }
+                &--classname {
+                    &:before { content: 'Class Name'; }
+                }
+                &--style {
+                    &:before { content: 'Style'; }
+                }
+                &--bg-color-classname {
+                    &:before { content: 'Background Color Class Name'; }
+                }
+                &--font-color-classname{
+                    &:before { content: 'Font Color Class Name'; }
+                }
+            }
+
+            .copy {
+                display: inline-block;
+                vertical-align: middle;
+                position: relative !important;
+                top: auto !important;
+                right: auto !important;
+            }
+
+        }   /* info item [end] */
+
+        /* Dark Theme [start] */
+        &--dark-theme {
+            color: var(--awwd-doc-color-light-a80);
+            background-color: var(--awwd-doc-color-list-container-dark);
+
+            &:hover {
+                background-color: #111;
+            }
+
+            .card-list__item__color {
+                border: 0.5px solid var(--awwd-doc-color-light-a10);
+            }
+            .card-list__item__info {
+                .info {
+                    color: var(--awwd-doc-color-light-a80);
+                    &:before {
+                        color: var(--awwd-doc-color-light-a50);
+                    }
+                }
+            }
+            .copy {
+                background-color: var(--awwd-doc-color-alpha);
+                i { color: var(--awwd-doc-color-light-a50); }
+                &:hover {
+                    background-color: var(--awwd-doc-color-light-a5);
+                    i { color: var(--awwd-doc-color-light-a80); }
+                }
+            }
+
+        }  /* Dark Theme [end] */
+
+    }   /* card-list item [end] */
+
+    .contain-block{
+        position: relative;
+        .download{
+            position: absolute;
+            top: 5px;
+            right: 20px;
+            opacity: 0;
+            transition: all 0.15s ease-in-out;
+            i{
+                transform: scale(1.2);
+            }
+        }
+        &:hover{
+            .download{
+                opacity: 1;
+            }
+        }
+    }
+
+}   /* Card List [end] */

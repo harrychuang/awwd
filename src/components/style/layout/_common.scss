@@ -1,0 +1,125 @@
+/* Box shadow */
+.ds-sys-shadow {
+    &--long-heavy {
+        box-shadow: var(--awwd-ref-shadow-long-heavy);
+    }
+
+    &--long-light {
+        box-shadow: var(--awwd-ref-shadow-long-light);
+    }
+
+    &--med {
+        box-shadow: var(--awwd-ref-shadow-med);
+    }
+
+    &--med-light {
+        box-shadow: var(--awwd-ref-shadow-med-light);
+    }
+
+    &--rg {
+        box-shadow: var(--awwd-ref-shadow-rg);
+    }
+
+    &--short {
+        box-shadow: var(--awwd-ref-shadow-short);
+    }
+
+    &--short-light {
+        box-shadow: var(--awwd-ref-shadow-short-light);
+    }
+}
+
+/* Corner */
+.ds-sys-corner {
+    &--full {
+       border-radius: var(--awwd-ref-border-radius-full);
+    }
+
+    &--xl {
+       border-radius: var(--awwd-ref-border-radius-xl);
+    }
+
+    &--lg {
+       border-radius: var(--awwd-ref-border-radius-lg);
+    }
+
+    &--med {
+       border-radius: var(--awwd-ref-border-radius-med);
+    }
+
+    &--rg {
+       border-radius: var(--awwd-ref-border-radius-def);
+    }
+
+    &--sm {
+       border-radius: var(--awwd-ref-border-radius-sm);
+    }
+}
+
+/* Row Spacing */
+@mixin row-common-spacing {
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 0;
+    height: 0;
+}
+
+.ds-sys-row-spacing {
+    &--xl {
+        @include row-common-spacing;
+        height: var(--awwd-ref-spacing-xl);
+    }
+
+    &--lg {
+        @include row-common-spacing;
+        height: var(--awwd-ref-spacing-lg);
+    }
+
+    &--med {
+        @include row-common-spacing;
+        height: var(--awwd-ref-spacing-med);
+    }
+
+
+    &--rg {
+        @include row-common-spacing;
+        height: var(--awwd-ref-spacing-rg);
+    }
+
+
+    &--sm {
+        @include row-common-spacing;
+        height: var(--awwd-ref-spacing-sm);
+    }
+
+    &--xs {
+        @include row-common-spacing;
+        height: var(--awwd-ref-spacing-xs);
+    }
+}
+
+/* Divide Line */
+.ds-sys-divide-line {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background-color: var(--awwd-ref-color-neutral-300);
+}
+
+/* Visible and Hidden */
+.hidden-sm {
+    display: block;
+
+    @include respond-to(screenSM) {
+        display: none !important;
+    }
+}
+
+.visible-sm {
+    display: none;
+
+    @include respond-to(screenSM) {
+        display: block;
+    }
+}

@@ -1,0 +1,104 @@
+//// Font Face ////
+@font-face {
+  font-family: 'GothamRegular';
+  src: url('../../../assest/fonts/Gotham-Regular.woff2') format('woff2'),
+       url('../../../assest/fonts/Gotham-Regular.woff') format('woff'),
+       url('../../../assest/fonts/Gotham-Regular.eot') format('eot');
+}
+
+@font-face {
+  font-family: 'GothamMedium';
+  src: url('../../../assest/fonts/Gotham-Medium.woff2') format('woff2'),
+       url('../../../assest/fonts/Gotham-Medium.woff') format('woff'),
+       url('../../../assest/fonts/Gotham-Medium.eot') format('eot');
+}
+
+@font-face {
+  font-family: 'GothamBold';
+  src: url('../../../assest/fonts/Gotham-Bold.woff2') format('woff2'),
+       url('../../../assest/fonts/Gotham-Bold.woff') format('woff'),
+       url('../../../assest/fonts/Gotham-Bold.eot') format('eot');
+}
+
+@font-face {
+  font-family: 'GothamBlack';
+  src: url('../../../assest/fonts/Gotham-Black.woff2') format('woff2'),
+       url('../../../assest/fonts/Gotham-Black.woff') format('woff'),
+       url('../../../assest/fonts/Gotham-Black.eot') format('eot');
+}
+
+//// Refer Font Token ////
+:root{
+  // Font face
+  --awwd-ref-font-face-gotham-reg: 'GothamRegular';
+  --awwd-ref-font-face-gotham-med: 'GothamMedium';
+  --awwd-ref-font-face-gotham-bold: 'GothamBold';
+  --awwd-ref-font-face-gotham-black: 'GothamBlack';
+  // Font size
+  --awwd-ref-font-size-60: 60px;
+  --awwd-ref-font-size-46: 46px;
+  --awwd-ref-font-size-40: 40px;
+  --awwd-ref-font-size-36: 36px;
+  --awwd-ref-font-size-32: 32px;
+  --awwd-ref-font-size-28: 28px;
+  --awwd-ref-font-size-24: 24px;
+  --awwd-ref-font-size-20: 20px;
+  --awwd-ref-font-size-16: 16px;
+  --awwd-ref-font-size-14: 14px;
+  --awwd-ref-font-size-12: 12px;
+  // Font lineheight
+  --awwd-ref-font-lineheight-72: 72px;
+  --awwd-ref-font-lineheight-54: 54px;
+  --awwd-ref-font-lineheight-40: 40px;
+  --awwd-ref-font-lineheight-36: 36px;
+  --awwd-ref-font-lineheight-32: 32px;
+  --awwd-ref-font-lineheight-28: 28px;
+  --awwd-ref-font-lineheight-20: 20px;
+  --awwd-ref-font-lineheight-18: 18px;
+  --awwd-ref-font-lineheight-16: 16px;
+  --awwd-ref-font-lineheight-60: 60px;
+  --awwd-ref-font-lineheight-46: 46px;
+  --awwd-ref-font-lineheight-24: 24px;
+  --awwd-ref-font-lineheight-14: 14px;
+}
+
+// Mixin Font Size
+@mixin mixin-font-size-xxl {
+  font-size: var(--awwd-ref-font-size-60);
+  line-height: var(--awwd-ref-font-lineheight-72);
+}
+
+@mixin mixin-font-size-xl {
+  font-size: var(--awwd-ref-font-size-46);
+  line-height: var(--awwd-ref-font-lineheight-54);
+}
+
+@mixin mixin-font-size-lg {
+  font-size: var(--awwd-ref-font-size-32);
+  line-height: var(--awwd-ref-font-lineheight-40);
+}
+
+@mixin mixin-font-size-med {
+  font-size: var(--awwd-ref-font-size-28);
+  line-height: var(--awwd-ref-font-lineheight-36);
+}
+
+@mixin mixin-font-size-reg {
+  font-size: var(--awwd-ref-font-size-24);
+  line-height: var(--awwd-ref-font-lineheight-32);
+}
+
+@mixin mixin-font-size-sm {
+  font-size: var(--awwd-ref-font-size-20);
+  line-height: var(--awwd-ref-font-lineheight-28);
+}
+
+@mixin mixin-font-size-xs {
+  font-size: var(--awwd-ref-font-size-16);
+  line-height: var(--awwd-ref-font-lineheight-20);
+}
+
+@mixin mixin-font-size-xxs {
+  font-size: var(--awwd-ref-font-size-14);
+  line-height: var(--awwd-ref-font-lineheight-18);
+}
