@@ -41,42 +41,11 @@
   --awwd-ref-color-blue-60: #2f57d0;
   --awwd-ref-color-yellow-60: #ceb304;
   --awwd-ref-color-red-60: #c73039;
-  // Size
-  --awwd-ref-dimension-5: 5px;
-  --awwd-ref-dimension-5-rem: 0.3125rem;
-  --awwd-ref-dimension-10: 10px;
-  --awwd-ref-dimension-10-rem: 0.625rem;
-  --awwd-ref-dimension-15: 15px;
-  --awwd-ref-dimension-15-rem: 0.9375rem;
-  --awwd-ref-dimension-20: 20px;
-  --awwd-ref-dimension-20-rem: 1.25rem;
-  --awwd-ref-dimension-30: 30px;
-  --awwd-ref-dimension-30-rem: 1.875rem;
-  --awwd-ref-dimension-40: 40px;
-  --awwd-ref-dimension-40-rem: 2.5rem;
-  --awwd-ref-dimension-60: 60px;
-  --awwd-ref-dimension-60-rem: 3.75rem;
-  --awwd-ref-dimension-80: 80px;
-  --awwd-ref-dimension-80-rem: 5rem;
-  --awwd-ref-dimension-120: 120px;
-  --awwd-ref-dimension-120-rem: 7.5rem;
-
-  /* SYS SIZE TOKENS */
-  // Spacing
-  --awwd-sys-dimension-spacing-xxl: var(--awwd-ref-dimension-60);
-  --awwd-sys-dimension-spacing-xl: var(--awwd-ref-dimension-40);
-  --awwd-sys-dimension-spacing-lg: var(--awwd-ref-dimension-30);
-  --awwd-sys-dimension-spacing-med: var(--awwd-ref-dimension-20);
-  --awwd-sys-dimension-spacing-rg: var(--awwd-ref-dimension-15);
-  --awwd-sys-dimension-spacing-sm: var(--awwd-ref-dimension-10);
-  --awwd-sys-dimension-spacing-xs: var(--awwd-ref-dimension-5);
-  --awwd-sys-dimension-spacing-xxxl: var(--awwd-ref-dimension-80);
-  // Corner
-  --awwd-sys-dimension-corner-sm: var(--awwd-ref-dimension-5);
-  --awwd-sys-dimension-corner-rg: var(--awwd-ref-dimension-10);
-  --awwd-sys-dimension-corner-med: var(--awwd-ref-dimension-15);
-  --awwd-sys-dimension-corner-lg: var(--awwd-ref-dimension-40);
-  --awwd-sys-dimension-corner-full: var(--awwd-ref-dimension-120);
+  // Shadow
+  --awwd-ref-shadow-long: 0px 20px 40px rgba(11, 13, 18, 0.15);
+  --awwd-ref-shadow-med: 0px 10px 20px rgba(11, 13, 18, 0.15);
+  --awwd-ref-shadow-rg: 0px 5px 10px rgba(11, 13, 18, 0.15);
+  --awwd-ref-shadow-short: 0px 2.5px 5px rgba(11, 13, 18, 0.15);
 
   /* SYS COLOR TOKENS */
   --awwd-sys-color-primary-surface: var(--awwd-ref-color-primary-50);

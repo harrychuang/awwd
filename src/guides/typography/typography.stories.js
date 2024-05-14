@@ -71,11 +71,12 @@ const DsFontFamilyCardListItems = () => {
         className='font-h1 card-list__item__typo'
         style={{ fontFamily: `${fontData.fontFamily}` }}
       >
-        &apos;{fontData.Title}&apos;
+        {console.log(fontData.fontFamily)}
+        {fontData.Title}
       </div>
       <div className='card-list__item__info'>
-        <span className='info info--style'>
-          font-family: {fontData.fontFamily}
+        <span className='info info--helper'>
+          {fontData.fontFamily}
           <button
             type='button'
             className='copy'
@@ -113,11 +114,11 @@ const Template = () => (
     <h2 className='sbdocs-h2'>Usage</h2>
     <h6 className='sbdocs-h6'>* Font mixin from &apos;styles/font/_settings.scss&apos;</h6>
     <code>
-      {'.heading{ @include mixin-font-size-xxl; }'}
+      {'.heading{ @include awwd-sys-font-heading-1; }'}
     </code>
     <h6 className='sbdocs-h6'>* Font css from &apos;styles/font.scss&apos;</h6>
     <code>
-      {'<h1 class=\'awwd-sys-font-heading-xxl\'>Heading</h1>'}
+      {'<h1 class=\'awwd-font-heading-1\'>Heading</h1>'}
     </code>
     <h2 className='sbdocs-h2'>Font Family with Weight</h2>
     <div className='card-list'>

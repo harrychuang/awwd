@@ -1,0 +1,34 @@
+{
+    "corner": [
+        {
+            "Title": "Corner Small", 
+            "helper": "var(--awwd-ref-size-corner-sm)", 
+            "class": "awwd-size-corner--sm", 
+            "style": "border-radius: 4px;"
+        },
+        {
+            "Title": "Corner Regular", 
+            "helper": "var(--awwd-ref-size-corner-rg)", 
+            "class": "awwd-size-corner--rg", 
+            "style": "border-radius: 8px;"
+        },
+        {
+            "Title": "Corner Medium", 
+            "helper": "var(--awwd-ref-size-corner-med)", 
+            "class": "awwd-size-corner--med", 
+            "style": "border-radius: 12px;"
+        },
+        {
+            "Title": "Corner Large", 
+            "helper": "var(--awwd-ref-size-corner-lg)", 
+            "class": "awwd-size-corner--lg", 
+            "style": "border-radius: 16px;"
+        },
+        {
+            "Title": "Corner Full", 
+            "helper": "var(--awwd-ref-size-corner-full)", 
+            "class": "awwd-size-corner--full", 
+            "style": "border-radius: 50%;"
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "boxShadow": [
+        {
+            "Title": "Shadow Short", 
+            "helper": "var(--awwd-ref-shadow-short)",
+            "class": "awwd-shadow--short", 
+            "style": "box-shadow: 0px 2.5px 5px rgba(11, 13, 18, 0.15);"
+        },
+        {
+            "Title": "Shadow Regular", 
+            "helper": "var(--awwd-ref-shadow-rg)",
+            "class": "awwd-shadow--rg", 
+            "style": "box-shadow: 0px 5px 10px rgba(11, 13, 18, 0.15);"
+        },
+        {
+            "Title": "Shadow Medium", 
+            "helper": "var(--awwd-ref-shadow-med)",
+            "class": "awwd-shadow--med", 
+            "style": "box-shadow: 0px 10px 20px rgba(11, 13, 18, 0.15);"
+        },
+        {
+            "Title": "Shadow Long", 
+            "helper": "var(--awwd-ref-shadow-long)",
+            "class": "awwd-shadow--long", 
+            "style": "box-shadow: 0px 20px 40px rgba(11, 13, 18, 0.15)"
+        }        
+    ]
+}

@@ -1,32 +1,40 @@
 @import 'settings';
 
 /* Font Size */
-.awwd-sys-font-heading-xxl {
-    @include mixin-font-size-xxl;
+.awwd-font-heading-1 {
+    @include awwd-sys-font-heading-1;
 }
   
-.awwd-sys-font-heading-xl {
-    @include mixin-font-size-xl;
+.awwd-font-heading-2 {
+    @include awwd-sys-font-heading-2;
 }
   
-.awwd-sys-font-heading-lg {
-    @include mixin-font-size-lg;
+.awwd-font-heading-3 {
+    @include awwd-sys-font-heading-3;
 }
   
-.awwd-sys-font-paragraph {
-    @include mixin-font-size-med;
+.awwd-font-heading-4 {
+    @include awwd-sys-font-heading-4;
 }
   
-.awwd-sys-font-paragraph-sm {
-    @include mixin-font-size-reg;
+.awwd-font-subheading {
+    @include awwd-sys-font-subheading;
 }
-  
-.awwd-sys-font-label {
-    @include mixin-font-size-sm;
+
+.awwd-font-body-lg {
+    @include awwd-sys-font-body-lg;
+}
+
+.awwd-font-body-base {
+    @include awwd-sys-font-body-base;
+}
+
+.awwd-font-caption {
+    @include awwd-sys-font-caption;
 }
 
 /* Font Weight */
-.awwd-sys-font-face{
+.awwd-font-face-brand{
     &--reg{
         font-family: var(--awwd-ref-font-face-gotham-reg) !important;
     }
@@ -42,7 +50,7 @@
 }
 
 /* Font Align */
-.awwd-sys-font-align{
+.awwd-font-align{
     &--center{
         text-align: center;
     }

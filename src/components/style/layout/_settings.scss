@@ -1,23 +1,32 @@
 :root{
     //// Refer Layout token ////
+    // Size
+    --awwd-ref-size-5: 5px;
+    --awwd-ref-size-10: 10px;
+    --awwd-ref-size-15: 15px;
+    --awwd-ref-size-20: 20px;
+    --awwd-ref-size-30: 30px;
+    --awwd-ref-size-40: 40px;
+    --awwd-ref-size-60: 60px;
+    --awwd-ref-size-80: 80px;
+    --awwd-ref-size-120: 120px;
     // Screen
-    --awwd-ref-screen-xl: 1599px;
-    --awwd-ref-screen-lg: 1199px;
-    --awwd-ref-screen-med: 991px;
-    --awwd-ref-screen-sm: 767px;
-    --awwd-ref-screen-xs: 319px;
+    --awwd-ref-size-screen-xl: 1599px;
+    --awwd-ref-size-screen-lg: 1199px;
+    --awwd-ref-size-screen-med: 991px;
+    --awwd-ref-size-screen-sm: 767px;
+    --awwd-ref-size-screen-xs: 319px;
     // Container width
-    --awwd-ref-container-width-full: 100%;
-    --awwd-ref-container-width-xl: 1600px;
-    --awwd-ref-container-width-lg: 1200px;
-    --awwd-ref-container-width-med: 960px;
-    // Border Radius
-    --awwd-ref-border-radius-full: 100px;
-    --awwd-ref-border-radius-xl: 24px;
-    --awwd-ref-border-radius-lg: 16px;
-    --awwd-ref-border-radius-med: 12px;
-    --awwd-ref-border-radius-rg: 8px;
-    --awwd-ref-border-radius-sm: 4px;
+    --awwd-ref-size-container-width-full: 100%;
+    --awwd-ref-size-container-width-xl: 1600px;
+    --awwd-ref-size-container-width-lg: 1200px;
+    --awwd-ref-size-container-width-med: 960px;
+    // Corner
+    --awwd-ref-size-corner-full: 50%;
+    --awwd-ref-size-corner-lg: 40px;
+    --awwd-ref-size-corner-med: 20px;
+    --awwd-ref-size-corner-rg: 10px;
+    --awwd-ref-size-corner-sm: 5px;
     // Button Size
     --awwd-ref-size-button-default: 50px;
     --awwd-ref-size-button-med: 36px;
@@ -30,6 +39,7 @@
     --awwd-ref-size-icon-on-button-xs: 18px;
     --awwd-ref-size-icon-on-button-xxs: 16px;
     // Spacing
+    --awwd-ref-spacing-xxl: 60px;
     --awwd-ref-spacing-xl: 40px;
     --awwd-ref-spacing-lg: 30px;
     --awwd-ref-spacing-med: 20px;
@@ -37,27 +47,30 @@
     --awwd-ref-spacing-sm: 10px;
     --awwd-ref-spacing-xs: 5px;
     // z-Index
-    --awwd-ref-z-index-super: 9999;
-    --awwd-ref-z-index-modal: 999;
-    --awwd-ref-z-index-overlay: 666;
-    --awwd-ref-z-index-nav: 333;
-    --awwd-ref-z-index-header: 111;
-    --awwd-ref-z-index-base: 1;
-    // Shadow
-    --awwd-ref-shadow-long-heavy: 0 0 24px 0 rgba(0,0,0,0.30);
-    --awwd-ref-shadow-long-light: 0 0 24px 0 rgba(0,0,0,0.08);
-    --awwd-ref-shadow-med: 0 8px 16px 0 rgba(0,0,0,0.1);
-    --awwd-ref-shadow-med-light: 0 8px 16px 0 rgba(0,0,0,0.04);
-    --awwd-ref-shadow-rg: 0 6px 12px 0 rgba(0,0,0,0.08);
-    --awwd-ref-shadow-short: 0 4px 8px 0 rgba(0,0,0,0.10);
-    --awwd-ref-shadow-short-light: 0 4px 8px 0 rgba(0,0,0,0.05);
-}
+    --awwd-ref-zIndex-super: 9999;
+    --awwd-ref-zIndex-modal: 999;
+    --awwd-ref-zIndex-overlay: 666;
+    --awwd-ref-zIndex-nav: 333;
+    --awwd-ref-zIndex-header: 111;
+    --awwd-ref-zIndex-base: 1;
 
-$ds-breakpoint-xl: 1599px;
-$ds-breakpoint-lg: 1199px;
-$ds-breakpoint-med: 991px;
-$ds-breakpoint-sm: 767px;
-$ds-breakpoint-xs: 319px;
+    /* SYS SIZE TOKENS */
+    // Spacing
+    --awwd-sys-size-spacing-xxl: var(--awwd-ref-size-60);
+    --awwd-sys-size-spacing-xl: var(--awwd-ref-size-40);
+    --awwd-sys-size-spacing-lg: var(--awwd-ref-size-30);
+    --awwd-sys-size-spacing-med: var(--awwd-ref-size-20);
+    --awwd-sys-size-spacing-rg: var(--awwd-ref-size-15);
+    --awwd-sys-size-spacing-sm: var(--awwd-ref-size-10);
+    --awwd-sys-size-spacing-xs: var(--awwd-ref-size-5);
+    --awwd-sys-size-spacing-xxxl: var(--awwd-ref-size-80);
+    // Corner
+    --awwd-sys-size-corner-sm: var(--awwd-ref-size-5);
+    --awwd-sys-size-corner-rg: var(--awwd-ref-size-10);
+    --awwd-sys-size-corner-med: var(--awwd-ref-size-15);
+    --awwd-sys-size-corner-lg: var(--awwd-ref-size-40);
+    --awwd-sys-size-corner-full: var(--awwd-ref-size-120);
+}
 
 /* Responsive */
 @mixin respond-to($media) {

@@ -5,17 +5,17 @@
       {
         "hex": "#FF1755",
         "hexDarkTheme": "#CE1548",
-        "helper": "var(--awwd-sys-color-primary-surface)"
+        "helper": "var(--awwd-ref-color-primary-50)"
       },
       {
         "hex": "#FF618B",
         "hexDarkTheme": "#CE5073",
-        "helper": "var(--awwd-sys-color-primary-surface-light)"
+        "helper": "var(--awwd-ref-color-primary-30)"
       },
       {
         "hex": "#AD103A",
         "hexDarkTheme": "#8D0F32",
-        "helper": "var(--awwd-sys-color-primary-surface-dark)"
+        "helper": "var(--awwd-ref-color-primary-70)"
       }
     ]
   },
@@ -25,17 +25,17 @@
       {
         "hex": "#5652F2",
         "hexDarkTheme": "#4744C5",
-        "helper": "var(--awwd-sys-color-secondary-surface)"
+        "helper": "var(--awwd-ref-color-secondary-50)"
       },
       {
         "hex": "#8C89F6",
         "hexDarkTheme": "#7270C8",
-        "helper": "var(--awwd-sys-color-secondary-surface-light)"
+        "helper": "var(--awwd-ref-color-secondary-30)"
       },
       {
         "hex": "#3A38A5",
         "hexDarkTheme": "#23235D",
-        "helper": "var(--awwd-sys-color-secondary-surface-dark)"
+        "helper": "var(--awwd-ref-color-secondary-70)"
       }
     ]
   },
@@ -45,22 +45,22 @@
       {
         "hex": "#73F9E1",
         "hexDarkTheme": "#72E9D3",
-        "helper": "var(--awwd-sys-color-status-success-surface)"
+        "helper": "var(--awwd-ref-color-green-50)"
       },
       {
         "hex": "#3869FF",
         "hexDarkTheme": "#2F57D0",
-        "helper": "var(--awwd-sys-color-status-info-surface)"
+        "helper": "var(--awwd-ref-color-blue-50)"
       },
       {
         "hex": "#FFDD00",
         "hexDarkTheme": "#CEB304",
-        "helper": "var(--awwd-sys-color-status-warning-surface)"
+        "helper": "var(--awwd-ref-color-yellow-50)"
       },
       {
         "hex": "#DF353F",
         "hexDarkTheme": "#C73039",
-        "helper": "var(--awwd-sys-color-status-error-surface)"
+        "helper": "var(--awwd-ref-color-red-50)"
       }
     ]
   },
@@ -70,32 +70,32 @@
       {
         "hex": "#3C3D4",
         "hexDarkTheme": "#3C3D4",
-        "helper": "var(--awwd-sys-color-neutral-surface-darker)"
+        "helper": "var(--awwd-ref-color-neutral-80)"
       },
       {
         "hex": "#6D6E71",
         "hexDarkTheme": "#6D6E71",
-        "helper": "var(--awwd-sys-color-neutral-surface-dark)"
+        "helper": "var(--awwd-ref-color-neutral-60)"
       },
       {
         "hex": "#9D9EA0",
         "hexDarkTheme": "#9D9EA0",
-        "helper": "var(--awwd-sys-color-neutral-surface-med)"
+        "helper": "var(--awwd-ref-color-neutral-40)"
       },
       {
         "hex": "#CECFD0",
         "hexDarkTheme": "#CECFD0",
-        "helper": "var(--awwd-sys-color-neutral-surface-light)"
+        "helper": "var(--awwd-ref-color-neutral-20)"
       },
       {
         "hex": "#E7E7E7",
         "hexDarkTheme": "#E7E7E7",
-        "helper": "var(--awwd-sys-color-neutral-surface-lighter)"
+        "helper": "var(--awwd-ref-color-neutral-10)"
       },
       {
         "hex": "#F3F3F3",
         "hexDarkTheme": "#F3F3F3",
-        "helper": "var(--awwd-sys-color-neutral-surface-lightest)"
+        "helper": "var(--awwd-ref-color-neutral-5)"
       }
     ]
   },
@@ -105,37 +105,37 @@
       {
         "hex": "#0B0D12",
         "hexDarkTheme": "#0B0D12",
-        "helper": "var(--awwd-sys-color-on-light-surface)"
+        "helper": "var(--awwd-ref-color-dark-100a)"
       },
       {
         "hex": "#0B0D12cc",
         "hexDarkTheme": "#0B0D12cc",
-        "helper": "var(--awwd-sys-color-on-light-surface-80a)"
+        "helper": "var(--awwd-ref-color-dark-80a)"
       },
       {
         "hex": "#0B0D1299",
         "hexDarkTheme": "#0B0D1299",
-        "helper": "var(--awwd-sys-color-on-light-surface-60a)"
+        "helper": "var(--awwd-ref-color-dark-60a)"
       },
       {
         "hex": "#0B0D1266",
         "hexDarkTheme": "#0B0D1266",
-        "helper": "var(--awwd-sys-color-on-light-surface-40a)"
+        "helper": "var(--awwd-ref-color-dark-40a)"
       },
       {
         "hex": "#0B0D1233",
         "hexDarkTheme": "#0B0D1233",
-        "helper": "var(--awwd-sys-color-on-light-surface-20a)"
+        "helper": "var(--awwd-ref-color-dark-20a)"
       },
       {
         "hex": "#0B0D121a",
         "hexDarkTheme": "#0B0D121a",
-        "helper": "var(--awwd-sys-color-on-light-surface-10a)"
+        "helper": "var(--awwd-ref-color-dark-10a)"
       },
       {
         "hex": "#0B0D120d",
         "hexDarkTheme": "#0B0D120d",
-        "helper": "var(--awwd-sys-color-on-light-surface-5a)"
+        "helper": "var(--awwd-ref-color-dark-5a)"
       }
     ]
   },
@@ -146,37 +146,37 @@
       {
         "hex": "#ffffff",
         "hexDarkTheme": "#ffffff",
-        "helper": "var(--awwd-sys-color-on-dark-surface)"
+        "helper": "var(--awwd-ref-color-light-100a)"
       },
       {
         "hex": "#ffffffcc",
         "hexDarkTheme": "#ffffffcc",
-        "helper": "var(--awwd-sys-color-on-dark-surface-80a)"
+        "helper": "var(--awwd-ref-color-light-80a)"
       },
       {
         "hex": "#ffffff99",
         "hexDarkTheme": "#ffffff99",
-        "helper": "var(--awwd-sys-color-on-dark-surface-60a)"
+        "helper": "var(--awwd-ref-color-light-60a)"
       },
       {
         "hex": "#ffffff66",
         "hexDarkTheme": "#ffffff66",
-        "helper": "var(--awwd-sys-color-on-dark-surface-40a)"
+        "helper": "var(--awwd-ref-color-light-40a)"
       },
       {
         "hex": "#ffffff33",
         "hexDarkTheme": "#ffffff33",
-        "helper": "var(--awwd-sys-color-on-dark-surface-20a)"
+        "helper": "var(--awwd-ref-color-light-20a)"
       },
       {
         "hex": "#ffffff1a",
         "hexDarkTheme": "#ffffff1a",
-        "helper": "var(--awwd-sys-color-on-dark-surface-10a)"
+        "helper": "var(--awwd-ref-color-light-10a)"
       },
       {
         "hex": "#ffffff0d",
         "hexDarkTheme": "#ffffff0d",
-        "helper": "var(--awwd-sys-color-on-dark-surface-5a)"
+        "helper": "var(--awwd-ref-color-light-5a)"
       }
     ]
   }

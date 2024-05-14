@@ -1,65 +1,77 @@
 {
     "fontSize": [
         {
-            "Title": "Heading Large", 
-            "helper": "awwd-sys-font-size-xxl", 
-            "class": "awwd-sys-font-heading-xxl", 
-            "style": "font-size: 32px; line-height: 36px;"
+            "Title": "Heading 1", 
+            "helper": "awwd-sys-font-heading-1", 
+            "class": "awwd-font-heading-1", 
+            "style": "font-size: 60px; line-height: 72px"
         },
         {
-            "Title": "Heading", 
-            "helper": "awwd-sys-font-heading-xl", 
-            "class": "noein-text--h1", 
-            "style": "font-size: 20px; line-height: 24px;"
+            "Title": "Heading 2", 
+            "helper": "awwd-sys-font-heading-2", 
+            "class": "awwd-font-heading-2", 
+            "style": "font-size: 46px; line-height: 54px;"
+        },
+        {
+            "Title": "Heading 3", 
+            "helper": "awwd-sys-font-heading-3", 
+            "class": "awwd-font-heading-3", 
+            "style": "font-size: 32px; line-height: 40px;"
+        },
+        {
+            "Title": "Heading 4", 
+            "helper": "awwd-sys-font-heading-4", 
+            "class": "awwd-font-heading-4", 
+            "style": "font-size: 28px; line-height: 36px;"
         },
         {
             "Title": "Subheading", 
-            "helper": "awwd-sys-font-heading-lg", 
-            "class": "noein-text--h2", 
-            "style": "font-size: 18px; line-height: 22px;"
+            "helper": "awwd-sys-font-subheading", 
+            "class": "awwd-font-subheading",
+            "style": "font-size: 24px; line-height: 32px;"
         },
         {
-            "Title": "Paragraph", 
-            "helper": "awwd-sys-font-size-med", 
-            "class": "awwd-sys-font-paragraph", 
+            "Title": "Body large", 
+            "helper": "awwd-sys-font-body-lg", 
+            "class": "awwd-font-body-lg",
+            "style": "font-size: 20px; line-height: 28px;"
+        },
+        {
+            "Title": "Body base", 
+            "helper": "awwd-sys-font-body-base", 
+            "class": "awwd-font-body-base",
             "style": "font-size: 16px; line-height: 20px;"
         },
         {
-            "Title": "Paragraph Small", 
-            "helper": "awwd-sys-font-size-reg", 
-            "class": "awwd-sys-font-paragraph-sm",
-            "style": "font-size: 14px; line-height: 16px;"
-        },
-        {
-            "Title": "Label", 
-            "helper": "awwd-sys-font-size-sm", 
-            "class": "awwd-sys-font-label",
-            "style": "font-size: 10px; line-height: 12px;"
+            "Title": "Caption", 
+            "helper": "awwd-sys-font-caption", 
+            "class": "awwd-font-caption",
+            "style": "font-size: 14px; line-height: 18px;"
         }
     ],
     "fontFamily": [
         {
             "Title": "Gotham Regular",
             "fontFamily": "var(--awwd-ref-font-face-gotham-reg)",
-            "class": "awwd-sys-font-face--reg",
+            "class": "awwd-font-face-brand--reg",
             "style": "800"
         },
         {
             "Title": "Gotham Medium",
-            "fontFamily": "var(--awwd-ref-font-gotham-med)",
-            "class": "awwd-sys-font-face--med",
+            "fontFamily": "var(--awwd-ref-font-face-gotham-med)",
+            "class": "awwd-font-face-brand--med",
             "style": "500"
         },
         {
             "Title": "Gotham Bold",
-            "fontFamily": "var(--awwd-ref-font-gotham-bold)",
-            "class": "awwd-sys-font-face--bold",
+            "fontFamily": "var(--awwd-ref-font-face-gotham-bold)",
+            "class": "awwd-font-face-brand--bold",
             "style": "600"
         },
         {
             "Title": "Gotham Black",
-            "fontFamily": "var(--awwd-ref-font-gotham-black)",
-            "class": "awwd-sys-font-face--black",
+            "fontFamily": "var(--awwd-ref-font-face-gotham-black)",
+            "class": "awwd-font-face-brand--black",
             "style": "800"
         }
     ]

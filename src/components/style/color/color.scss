@@ -1,1 +1,17 @@
 @import 'settings';
+
+/* Box shadow */
+.awwd-shadow {
+  &--long {
+      box-shadow: var(--awwd-ref-shadow-long);
+  }
+  &--med {
+      box-shadow: var(--awwd-ref-shadow-med);
+  }
+  &--rg {
+      box-shadow: var(--awwd-ref-shadow-rg);
+  }
+  &--short {
+      box-shadow: var(--awwd-ref-shadow-short);
+  }
+}
