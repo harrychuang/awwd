@@ -1,0 +1,58 @@
+@font-face {
+    font-family: "awwd-iconfonts";
+    src: url('awwd-icon-fonts.woff2?t=1715667603100') format('woff2'),
+        url('awwd-icon-fonts.woff?t=1715667603100') format('woff'),
+        url('awwd-icon-fonts.ttf?t=1715667603100') format('truetype');
+}
+
+.awwd-icon {
+    font-family: "awwd-iconfonts" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.awwd-icon-person:before { content: "\e900"; }
+.awwd-icon-arrow-down:before { content: "\e901"; }
+.awwd-icon-arrow-right:before { content: "\e902"; }
+.awwd-icon-arrow-left:before { content: "\e903"; }
+.awwd-icon-heart:before { content: "\e904"; }
+.awwd-icon-arrow-downward:before { content: "\e905"; }
+.awwd-icon-arrow-upward:before { content: "\e906"; }
+.awwd-icon-arrow-up:before { content: "\e907"; }
+.awwd-icon-arrow-next:before { content: "\e908"; }
+.awwd-icon-arrow-back:before { content: "\e909"; }
+.awwd-icon-play:before { content: "\e90a"; }
+.awwd-icon-search:before { content: "\e90b"; }
+.awwd-icon-place:before { content: "\e90c"; }
+.awwd-icon-plus:before { content: "\e90d"; }
+.awwd-icon-minus:before { content: "\e90e"; }
+.awwd-icon-delete:before { content: "\e90f"; }
+.awwd-icon-message:before { content: "\e910"; }
+.awwd-icon-menu:before { content: "\e911"; }
+.awwd-icon-info:before { content: "\e912"; }
+.awwd-icon-share:before { content: "\e913"; }
+.awwd-icon-pause:before { content: "\e914"; }
+.awwd-icon-tick:before { content: "\e915"; }
+.awwd-icon-download:before { content: "\e916"; }
+.awwd-icon-home:before { content: "\e917"; }
+.awwd-icon-tag:before { content: "\e918"; }
+.awwd-icon-close:before { content: "\e919"; }
+.awwd-icon-mail:before { content: "\e91a"; }
+.awwd-icon-edit:before { content: "\e91b"; }
+.awwd-icon-error:before { content: "\e91c"; }
+.awwd-icon-checked:before { content: "\e91d"; }
+.awwd-icon-alert:before { content: "\e91e"; }
+.awwd-icon-block:before { content: "\e91f"; }
+.awwd-icon-clock:before { content: "\e920"; }
+.awwd-icon-star-outline:before { content: "\e921"; }
+.awwd-icon-star:before { content: "\e922"; }
+.awwd-icon-heart-outline:before { content: "\e923"; }
+.awwd-icon-warning:before { content: "\e924"; }
+
+
+/**
+ * Make by Icon Font Exporter
+ * https://www.figma.com/community/plugin/1129455674275940478/Icon-Font-Exporter
+ */

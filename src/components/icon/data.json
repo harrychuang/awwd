@@ -1,0 +1,146 @@
+[
+    {
+        "Title": "Varients", 
+        "Icons": [
+            {
+                "name": "home",
+                "color": "#FF3B66"
+            },
+            {
+                "name": "home",
+                "size": "12px"
+            },
+            {
+                "name": "home",
+                "size": "sm"
+            },
+            {
+                "name": "home",
+                "size": "med"
+            },
+            {
+                "name": "home",
+                "size": "lg"
+            }
+        ]
+    },
+    {
+        "Title": "Common", 
+        "Icons": [
+            {
+                "name": "person"
+            },
+            {
+                "name": "clock"
+            },
+            {
+                "name": "info"
+            },
+            {
+                "name": "warning"
+            },
+            {
+                "name": "block"
+            },
+            {
+                "name": "checked"
+            },
+            {
+                "name": "error"
+            },
+            {
+                "name": "checked"
+            },
+            {
+                "name": "tick"
+            },
+            {
+                "name": "close"
+            },
+            {
+                "name": "tag"
+            },
+            {
+                "name": "edit"
+            },
+            {
+                "name": "download"
+            },
+            {
+                "name": "share"
+            },
+            {
+                "name": "mail"
+            },
+            {
+                "name": "home"
+            },
+            {
+                "name": "menu"
+            },
+            {
+                "name": "message"
+            },
+            {
+                "name": "delete"
+            },
+            {
+                "name": "alert"
+            },
+            {
+                "name": "place"
+            },
+            {
+                "name": "minus"
+            },
+            {
+                "name": "plus"
+            },
+            {
+                "name": "arrow-back"
+            },
+            {
+                "name": "arrow-next"
+            },
+            {
+                "name": "arrow-upward"
+            },
+            {
+                "name": "arrow-downward"
+            },
+            {
+                "name": "arrow-left"
+            },
+            {
+                "name": "arrow-right"
+            },
+            {
+                "name": "arrow-up"
+            },
+            {
+                "name": "arrow-down"
+            },
+            {
+                "name": "play"
+            },
+            {
+                "name": "pause"
+            },
+            {
+                "name": "star"
+            },
+            {
+                "name": "star-outline"
+            },
+            {
+                "name": "heart"
+            },
+            {
+                "name": "heart-outline"
+            },
+            {
+                "name": "search"
+            }
+        ]
+    }
+]

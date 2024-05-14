@@ -132,7 +132,7 @@ const Template = () => (
     <h2 className='sbdocs-h2'>Usage</h2>
     <h6 className='sbdocs-h6'>* Corner mixin from &apos;styles/layout/_settings.scss&apos;</h6>
     <code>
-      {'.corner-sm{ border-radius: var(--awwd-ref-size-corner-sm); }'}
+      {'.corner-sm{ border-radius: var(--awwd-sys-size-corner-sm); }'}
     </code>
     <h6 className='sbdocs-h6'>* Corner css from &apos;styles/layout/_common.scss&apos;</h6>
     <code>

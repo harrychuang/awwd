@@ -100,7 +100,7 @@ const Template = () => (
     <h2 className='sbdocs-h2'>Usage</h2>
     <h6 className='sbdocs-h6'>* Spacing setting from &apos;styles/layout/_settings.scss&apos;</h6>
     <code>
-      {'.box{ margin: var(--awwd-ref-spacing-rg); padding: var(--awwd-ref-spacing-rg); }'}
+      {'.box{ margin: var(--awwd-sys-spacing-rg); padding: var(--awwd-sys-spacing-rg); }'}
     </code>
     <h6 className='sbdocs-h6'>* Spacing css from &apos;styles/layout/common.scss&apos;</h6>
     <code>

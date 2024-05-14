@@ -1,0 +1,174 @@
+@import "../style/settings.scss";
+
+/* Button [start] */
+//// Dark Theme Tokens ////
+[data-theme="dark"] {
+  // Buttons
+  .awwd-button {
+    --awwd-com-color-default-button-container: var(--awwd-sys-color-neutral-surface-light);
+    --awwd-com-color-default-button-label: var(--awwd-sys-color-on-light-surface);
+  }
+}
+
+.awwd-button {
+  // Component Tokens
+  --awwd-com-color-default-button-container: var(--awwd-sys-color-neutral-surface-darker);
+  --awwd-com-color-default-button-label: var(--awwd-sys-color-on-dark-surface);
+  --awwd-com-color-button-mask-hovered: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(0, 0, 0, 0.08) 20%);
+  // Styling
+  display: inline-block;
+  position: relative;
+  padding: 0 var(--awwd-sys-spacing-med);
+  vertical-align: middle;
+  min-width: 80px;
+  height: var(--awwd-sys-size-element-height);
+  border-radius: var(--awwd-sys-size-corner-rg);
+  border: none;
+  outline: none;
+  background-color: var(--awwd-com-color-default-button-container);
+  color: var(--awwd-com-color-default-button-label);
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  font-family: var(--awwd-ref-font-family-bold);
+  @include awwd-sys-font-body-base;
+
+  &__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .awwd-icon {
+    position: relative;
+    color: var(--awwd-com-color-on-button-container);
+  }
+
+  &:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: var(--awwd-sys-size-corner-rg);
+    opacity: 0;
+    background-image: var(--awwd-com-color-button-mask-hovered);
+  }
+
+  // status
+  &:hover {
+    opacity: 0.9;
+    box-shadow: 0px 4px 8px var(--awwd-sys-color-dark-a20);
+  }
+
+  &:active {
+    opacity: 1;
+    box-shadow: 0px 2px 4px var(--awwd-sys-color-dark-a10);
+
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  &:disabled {
+    color: var(--awwd-sys-color-light-a100);
+    background-color: var(--awwd-sys-color-neutral-400);
+    cursor: not-allowed;
+
+    .awwd-button__content {
+      opacity: 0.6;
+
+      .awwd-icon {
+        color: var(--awwd-sys-color-light-a100);
+      }
+    }
+
+    // status
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  // type
+  &--success {
+    color: var(--awwd-sys-color-function-on-success);
+    background-color: var(--awwd-sys-color-function-success);
+
+    .awwd-icon {
+      color: var(--awwd-sys-color-function-on-success);
+    }
+
+    // status
+    &:active {
+      &:before {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  &--error {
+    color: var(--awwd-sys-color-function-on-error) !important;
+    background-color: var(--awwd-sys-color-function-error) !important;
+
+    .awwd-icon {
+      color: var(---awwd-sys-color-function-on-error);
+    }
+
+    // status
+    &:disabled {
+      opacity: 0.6;
+
+      .awwd-button__content {
+        opacity: 1;
+      }
+    }
+  }
+
+  &--icon {
+    min-width: var(--awwd-sys-size-button-default) !important;
+    width: var(--awwd-sys-size-button-default);
+    height: var(--awwd-sys-size-button-default);
+    padding: 0 0;
+    overflow: hidden;
+    border-radius: var(--awwd-ref-border-radius-full);
+    .awwd-icon {
+      position: relative;
+      margin: 0 0;
+    }
+    // size
+    &.awwd-button--med {
+      min-width: var(--awwd-sys-size-button-med) !important;
+      width: var(--awwd-sys-size-button-med);
+      height: var(--awwd-sys-size-button-med);
+
+      .awwd-icon {
+        position: absolute;
+        line-height: var(--awwd-ref-size-icon-button-med) !important;
+        font-size: var(--awwd-ref-size-icon-button-med) !important;
+      }
+    }
+  }
+
+  // round
+  &--round {
+    border-radius: var(--awwd-ref-border-radius-full);
+    &:before {
+      border-radius: var(--awwd-ref-border-radius-full);
+    }
+  }
+
+  // size
+  &--med {
+    min-width: 80px;
+    height: var(--awwd-sys-size-button-med);
+    padding: 0 var(--awwd-sys-spacing-rg);
+    @include awwd-sys-font-body-base;
+  }
+  &--fit {
+    min-width: 100%;
+  }
+}
+
+/* Button [end] */

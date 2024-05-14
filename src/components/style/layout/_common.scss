@@ -1,22 +1,22 @@
 /* Corner */
 .awwd-size-corner {
     &--full {
-       border-radius: var(--awwd-ref-size-corner-full);
+       border-radius: var(--awwd-sys-size-corner-full);
     }
     &--xl {
-       border-radius: var(--awwd-ref-size-corner-lg);
+       border-radius: var(--awwd-sys-size-corner-lg);
     }
     &--lg {
-       border-radius: var(--awwd-ref-size-corner-lg);
+       border-radius: var(--awwd-sys-size-corner-lg);
     }
     &--med {
-       border-radius: var(--awwd-ref-size-corner-med);
+       border-radius: var(--awwd-sys-size-corner-med);
     }
     &--rg {
        border-radius: var(--awwd-ref-size-corner-def);
     }
     &--sm {
-       border-radius: var(--awwd-ref-size-corner-sm);
+       border-radius: var(--awwd-sys-size-corner-sm);
     }
 }
 
@@ -31,31 +31,31 @@
     }
     &--xxl {
         @include row-common-spacing;
-        height: var(--awwd-ref-spacing-xxl);
+        height: var(--awwd-sys-spacing-xxl);
     }
     &--xl {
         @include row-common-spacing;
-        height: var(--awwd-ref-spacing-xl);
+        height: var(--awwd-sys-spacing-xl);
     }
     &--lg {
         @include row-common-spacing;
-        height: var(--awwd-ref-spacing-lg);
+        height: var(--awwd-sys-spacing-lg);
     }
     &--med {
         @include row-common-spacing;
-        height: var(--awwd-ref-spacing-med);
+        height: var(--awwd-sys-spacing-med);
     }
     &--rg {
         @include row-common-spacing;
-        height: var(--awwd-ref-spacing-rg);
+        height: var(--awwd-sys-spacing-rg);
     }
     &--sm {
         @include row-common-spacing;
-        height: var(--awwd-ref-spacing-sm);
+        height: var(--awwd-sys-spacing-sm);
     }
     &--xs {
         @include row-common-spacing;
-        height: var(--awwd-ref-spacing-xs);
+        height: var(--awwd-sys-spacing-xs);
     }
 }
 

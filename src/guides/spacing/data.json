@@ -2,43 +2,43 @@
     "boxSpacing": [
         {
             "Title": "Spacing XX-Large", 
-            "helper": "var(--awwd-ref-spacing-xxl)", 
+            "helper": "var(--awwd-sys-spacing-xxl)", 
             "class": "awwd-spacing-vertical--xxl",
             "value": "60px"
         },
         {
             "Title": "Spacing X-Large", 
-            "helper": "var(--awwd-ref-spacing-xl)", 
+            "helper": "var(--awwd-sys-spacing-xl)", 
             "class": "awwd-spacing-vertical--xl",
             "value": "40px"
         },
         {
             "Title": "Spacing Large", 
-            "helper": "var(--awwd-ref-spacing-lg)", 
+            "helper": "var(--awwd-sys-spacing-lg)", 
             "class": "awwd-spacing-vertical--lg",
             "value": "30px"
         },
         {
             "Title": "Spacing Medium", 
-            "helper": "var(--awwd-ref-spacing-med)", 
+            "helper": "var(--awwd-sys-spacing-med)", 
             "class": "awwd-spacing-vertical--med",
             "value": "20px"
         },
         {
             "Title": "Spacing Regular", 
-            "helper": "var(--awwd-ref-spacing-rg)", 
+            "helper": "var(--awwd-sys-spacing-rg)", 
             "class": "awwd-spacing-vertical--rg",
             "value": "15px"
         },
         {
             "Title": "Spacing Small", 
-            "helper": "var(--awwd-ref-spacing-sm)", 
+            "helper": "var(--awwd-sys-spacing-sm)", 
             "class": "awwd-spacing-vertical--sm",
             "value": "10px"
         },
         {
             "Title": "Spacing X-Small", 
-            "helper": "var(--awwd-ref-spacing-xs)", 
+            "helper": "var(--awwd-sys-spacing-xs)", 
             "class": "awwd-spacing-vertical--xs",
             "value": "5px"
         }
