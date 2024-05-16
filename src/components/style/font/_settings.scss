@@ -61,45 +61,52 @@
   --awwd-ref-font-lineheight-46: 46px;
   --awwd-ref-font-lineheight-24: 24px;
   --awwd-ref-font-lineheight-14: 14px;
+
+  //// System Font Tokens ////
+  // Font face
+  --awwd-sys-font-face-brand-reg: var(--awwd-ref-font-face-gotham-reg);
+  --awwd-sys-font-face-brand-med: var(--awwd-ref-font-face-gotham-med);
+  --awwd-sys-font-face-brand-bold: var(--awwd-ref-font-face-gotham-bold);
+  --awwd-sys-font-face-brand-black: var(--awwd-ref-font-face-gotham-black);
 }
 
 // Mixin Font Size
-@mixin awwd-sys-font-heading-1 {
+@mixin awwd-sys-font-size-heading-1 {
   font-size: var(--awwd-ref-font-size-60);
   line-height: var(--awwd-ref-font-lineheight-72);
 }
 
-@mixin awwd-sys-font-heading-2 {
+@mixin awwd-sys-font-size-heading-2 {
   font-size: var(--awwd-ref-font-size-46);
   line-height: var(--awwd-ref-font-lineheight-54);
 }
 
-@mixin awwd-sys-font-heading-3 {
+@mixin awwd-sys-font-size-heading-3 {
   font-size: var(--awwd-ref-font-size-32);
   line-height: var(--awwd-ref-font-lineheight-40);
 }
 
-@mixin awwd-sys-font-heading-4 {
+@mixin awwd-sys-font-size-heading-4 {
   font-size: var(--awwd-ref-font-size-28);
   line-height: var(--awwd-ref-font-lineheight-36);
 }
 
-@mixin awwd-sys-font-subheading {
+@mixin awwd-sys-font-size-subheading {
   font-size: var(--awwd-ref-font-size-24);
   line-height: var(--awwd-ref-font-lineheight-32);
 }
 
-@mixin awwd-sys-font-body-lg {
+@mixin awwd-sys-font-size-body-lg {
   font-size: var(--awwd-ref-font-size-20);
   line-height: var(--awwd-ref-font-lineheight-28);
 }
 
-@mixin awwd-sys-font-body-base {
+@mixin awwd-sys-font-size-body-base {
   font-size: var(--awwd-ref-font-size-16);
   line-height: var(--awwd-ref-font-lineheight-20);
 }
 
-@mixin awwd-sys-font-caption {
+@mixin awwd-sys-font-size-caption {
   font-size: var(--awwd-ref-font-size-14);
   line-height: var(--awwd-ref-font-lineheight-18);
 }

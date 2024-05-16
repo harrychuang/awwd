@@ -111,7 +111,7 @@ DsShadowCardListItems = () => {
 const boxStyle = {
   display: 'inline-block',
   alignItems: 'center',
-  width: '18%',
+  width: '15%',
   height: '20px',
   color: 'var(--storybook-doc-color-font-heading)',
   textAlign: 'center',
@@ -147,13 +147,13 @@ const Template = () => (
       the illusion of perspective.
     </p>
     <h2 className='sbdocs-h2'>Usage</h2>
-    <h6 className='sbdocs-h6'>* Shadow mixin from &apos;styles/layout/_settings.scss&apos;</h6>
+    <h6 className='sbdocs-h6'>* Shadow mixin from &apos;styles/color/settings.scss&apos;</h6>
     <code>
-      {'.shadow{ box-shadow: var(--storybook-doc-color-example-shadow-box); }'}
+      {'.shadow{ box-shadow: var(--awwd-sys-shadow-basic-long); }'}
     </code>
-    <h6 className='sbdocs-h6'>* Shadow css from &apos;styles/layout/_common.scss&apos;</h6>
+    <h6 className='sbdocs-h6'>* Shadow css from &apos;styles/color/common.scss&apos;</h6>
     <code>
-      {'<div class=\'ds-sys-shadow--short\'></div>'}
+      {'<div class=\'awwd-shadow--light--long\' />'}
     </code>
     <br /><br />
     <section className='simple-theme'>

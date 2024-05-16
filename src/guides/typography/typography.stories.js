@@ -112,13 +112,13 @@ const Template = () => (
     <h2 className='sbdocs-h2'>Base Font Size</h2>
     <p>The base font size is 16px.</p>
     <h2 className='sbdocs-h2'>Usage</h2>
-    <h6 className='sbdocs-h6'>* Font mixin from &apos;styles/font/_settings.scss&apos;</h6>
+    <h6 className='sbdocs-h6'>* Font mixin from &apos;styles/font/settings.scss&apos;</h6>
     <code>
-      {'.heading{ @include awwd-sys-font-heading-1; }'}
+      {'.heading{ @include awwd-sys-font-size-heading-1; }'}
     </code>
     <h6 className='sbdocs-h6'>* Font css from &apos;styles/font.scss&apos;</h6>
     <code>
-      {'<h1 class=\'awwd-font-heading-1\'>Heading</h1>'}
+      {'<h1 class=\'awwd-font-size-heading-1\'>Heading</h1>'}
     </code>
     <h2 className='sbdocs-h2'>Font Family with Weight</h2>
     <div className='card-list'>

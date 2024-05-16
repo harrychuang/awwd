@@ -1,0 +1,17 @@
+:root {
+  /* REF MOTION TOKENS */
+  // Duration
+  --awwd-ref-motion-duration-1: 0.1s;
+  --awwd-ref-motion-duration-2: 0.2s;
+  --awwd-ref-motion-duration-3: 0.3s;
+  --awwd-ref-motion-duration-4: 0.4s;
+  --awwd-ref-motion-duration-5: 0.5s;
+
+  /* SYS MOTION TOKENS */
+  // Transition
+  --awwd-sys-transition-ease-out-fast: all var(--awwd-ref-motion-duration-1) ease-out;
+  --awwd-sys-transition-ease-out-reg: all var(--awwd-ref-motion-duration-2) ease-out;
+  --awwd-sys-transition-ease-out-med: all var(--awwd-ref-motion-duration-3) ease-out;
+  --awwd-sys-transition-ease-out-slow: all var(--awwd-ref-motion-duration-4) ease-out;
+  --awwd-sys-transition-ease-out-slower: all var(--awwd-ref-motion-duration-5) ease-out;
+}

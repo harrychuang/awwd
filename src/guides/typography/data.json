@@ -2,76 +2,76 @@
     "fontSize": [
         {
             "Title": "Heading 1", 
-            "helper": "awwd-sys-font-heading-1", 
-            "class": "awwd-font-heading-1", 
+            "helper": "awwd-sys-font-size-heading-1", 
+            "class": "awwd-font-size-heading-1", 
             "style": "font-size: 60px; line-height: 72px"
         },
         {
             "Title": "Heading 2", 
-            "helper": "awwd-sys-font-heading-2", 
-            "class": "awwd-font-heading-2", 
+            "helper": "awwd-sys-font-size-heading-2", 
+            "class": "awwd-font-size-heading-2", 
             "style": "font-size: 46px; line-height: 54px;"
         },
         {
             "Title": "Heading 3", 
-            "helper": "awwd-sys-font-heading-3", 
-            "class": "awwd-font-heading-3", 
+            "helper": "awwd-sys-font-size-heading-3", 
+            "class": "awwd-font-size-heading-3", 
             "style": "font-size: 32px; line-height: 40px;"
         },
         {
             "Title": "Heading 4", 
-            "helper": "awwd-sys-font-heading-4", 
-            "class": "awwd-font-heading-4", 
+            "helper": "awwd-sys-font-size-heading-4", 
+            "class": "awwd-font-size-heading-4", 
             "style": "font-size: 28px; line-height: 36px;"
         },
         {
             "Title": "Subheading", 
-            "helper": "awwd-sys-font-subheading", 
-            "class": "awwd-font-subheading",
+            "helper": "awwd-sys-font-size-subheading", 
+            "class": "awwd-font-size-subheading",
             "style": "font-size: 24px; line-height: 32px;"
         },
         {
             "Title": "Body large", 
-            "helper": "awwd-sys-font-body-lg", 
-            "class": "awwd-font-body-lg",
+            "helper": "awwd-sys-font-size-body-lg", 
+            "class": "awwd-font-size-body-lg",
             "style": "font-size: 20px; line-height: 28px;"
         },
         {
             "Title": "Body base", 
-            "helper": "awwd-sys-font-body-base", 
-            "class": "awwd-font-body-base",
+            "helper": "awwd-sys-font-size-body-base", 
+            "class": "awwd-font-size-body-base",
             "style": "font-size: 16px; line-height: 20px;"
         },
         {
             "Title": "Caption", 
-            "helper": "awwd-sys-font-caption", 
-            "class": "awwd-font-caption",
+            "helper": "awwd-sys-font-size-caption", 
+            "class": "awwd-font-size-caption",
             "style": "font-size: 14px; line-height: 18px;"
         }
     ],
     "fontFamily": [
         {
             "Title": "Gotham Regular",
-            "fontFamily": "var(--awwd-ref-font-face-gotham-reg)",
-            "class": "awwd-font-face-brand--reg",
+            "fontFamily": "var(--awwd-sys-font-face-brand-reg)",
+            "class": "awwd-font-face--brand--rg",
             "style": "800"
         },
         {
             "Title": "Gotham Medium",
-            "fontFamily": "var(--awwd-ref-font-face-gotham-med)",
-            "class": "awwd-font-face-brand--med",
+            "fontFamily": "var(--awwd-sys-font-face-brand-med)",
+            "class": "awwd-font-face--brand--med",
             "style": "500"
         },
         {
             "Title": "Gotham Bold",
-            "fontFamily": "var(--awwd-ref-font-face-gotham-bold)",
-            "class": "awwd-font-face-brand--bold",
+            "fontFamily": "var(--awwd-sys-font-face-brand-bold)",
+            "class": "awwd-font-face--brand--bold",
             "style": "600"
         },
         {
             "Title": "Gotham Black",
-            "fontFamily": "var(--awwd-ref-font-face-gotham-black)",
-            "class": "awwd-font-face-brand--black",
+            "fontFamily": "var(--awwd-sys-font-face-brand-black)",
+            "class": "awwd-font-face--brand--black",
             "style": "800"
         }
     ]

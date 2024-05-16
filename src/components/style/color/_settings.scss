@@ -1,18 +1,20 @@
 :root {
-  /* REF TOKENS */
-  // Color
+  /* REF COLOR TOKENS */
+  // Primary
   --awwd-ref-color-primary-30: #ff618b;
   --awwd-ref-color-primary-40: #ce5073;
   --awwd-ref-color-primary-50: #ff1755;
   --awwd-ref-color-primary-60: #ce1548;
   --awwd-ref-color-primary-70: #ad103a;
   --awwd-ref-color-primary-80: #8d0f32;
+  // Secondary
   --awwd-ref-color-secondary-30: #8c89f6;
   --awwd-ref-color-secondary-40: #7270c8;
   --awwd-ref-color-secondary-50: #5652f2;
   --awwd-ref-color-secondary-60: #4744c5;
   --awwd-ref-color-secondary-70: #3a38a5;
   --awwd-ref-color-secondary-80: #23235d;
+  // Dark
   --awwd-ref-color-dark-100a: #0b0d12;
   --awwd-ref-color-dark-80a: rgba(11 13 18 / 0.8);
   --awwd-ref-color-dark-60a: rgba(11 13 18 / 0.6);
@@ -20,6 +22,7 @@
   --awwd-ref-color-dark-20a: rgba(11 13 18 / 0.2);
   --awwd-ref-color-dark-10a: rgba(11 13 18 / 0.1);
   --awwd-ref-color-dark-5a: rgba(11 13 18 / 0.05);
+  // Light
   --awwd-ref-color-light-100a: #ffffff;
   --awwd-ref-color-light-80a: rgba(255 255 255 / 0.8);
   --awwd-ref-color-light-60a: rgba(255 255 255 / 0.6);
@@ -27,47 +30,55 @@
   --awwd-ref-color-light-20a: rgba(255 255 255 / 0.2);
   --awwd-ref-color-light-10a: rgba(255 255 255 / 0.1);
   --awwd-ref-color-light-5a: rgba(255 255 255 / 0.05);
+  // Neutral
   --awwd-ref-color-neutral-80: #3c3d41;
   --awwd-ref-color-neutral-60: #6d6e71;
   --awwd-ref-color-neutral-40: #9d9ea0;
   --awwd-ref-color-neutral-20: #cecfd0;
   --awwd-ref-color-neutral-10: #e7e7e7;
   --awwd-ref-color-neutral-5: #f3f3f3;
+  // Status
+  // Status
   --awwd-ref-color-green-50: #73f9e1;
-  --awwd-ref-color-blue-50: #3869ff;
-  --awwd-ref-color-yellow-50: #ffdd00;
-  --awwd-ref-color-red-50: #df353f;
   --awwd-ref-color-green-60: #72e9d3;
+  --awwd-ref-color-blue-50: #3869ff;
   --awwd-ref-color-blue-60: #2f57d0;
+  --awwd-ref-color-yellow-50: #ffdd00;
   --awwd-ref-color-yellow-60: #ceb304;
+  --awwd-ref-color-red-50: #df353f;
   --awwd-ref-color-red-60: #c73039;
   // Shadow
-  --awwd-ref-shadow-long: 0px 20px 40px rgba(11, 13, 18, 0.15);
-  --awwd-ref-shadow-med: 0px 10px 20px rgba(11, 13, 18, 0.15);
-  --awwd-ref-shadow-rg: 0px 5px 10px rgba(11, 13, 18, 0.15);
-  --awwd-ref-shadow-short: 0px 2.5px 5px rgba(11, 13, 18, 0.15);
+  --awwd-ref-color-shadow-10: var(--awwd-ref-color-dark-10a);
+  --awwd-ref-color-shadow-20: var(--awwd-ref-color-dark-20a);
+  --awwd-ref-color-shadow-40: var(--awwd-ref-color-dark-40a);
+  --awwd-ref-shadow-length-40: 0px 20px 40px;
+  --awwd-ref-shadow-length-20: 0px 10px 20px;
+  --awwd-ref-shadow-length-10: 0px 5px 10px;
+  --awwd-ref-shadow-length-5: 0px 2.5px 5px;
+  --awwd-ref-shadow-length-3: 0px 1px 3px;
 
   /* SYS COLOR TOKENS */
+  // Primary
   --awwd-sys-color-primary-surface: var(--awwd-ref-color-primary-50);
   --awwd-sys-color-primary-surface-light: var(--awwd-ref-color-primary-30);
   --awwd-sys-color-primary-surface-dark: var(--awwd-ref-color-primary-70);
-
+  // Secondary
   --awwd-sys-color-secondary-surface: var(--awwd-ref-color-secondary-50);
   --awwd-sys-color-secondary-surface-light: var(--awwd-ref-color-secondary-30);
   --awwd-sys-color-secondary-surface-dark: var(--awwd-ref-color-secondary-70);
-
+  // Status
   --awwd-sys-color-status-success-surface: var(--awwd-ref-color-green-50);
   --awwd-sys-color-status-error-surface: var(--awwd-ref-color-red-50);
   --awwd-sys-color-status-warning-surface: var(--awwd-ref-color-yellow-50);
   --awwd-sys-color-status-info-surface: var(--awwd-ref-color-blue-50);
-
+  // Neutral
   --awwd-sys-color-neutral-surface-darker: var(--awwd-ref-color-neutral-80);
   --awwd-sys-color-neutral-surface-dark: var(--awwd-ref-color-neutral-60);
   --awwd-sys-color-neutral-surface-med: var(--awwd-ref-color-neutral-40);
   --awwd-sys-color-neutral-surface-light: var(--awwd-ref-color-neutral-20);
   --awwd-sys-color-neutral-surface-lighter: var(--awwd-ref-color-neutral-10);
   --awwd-sys-color-neutral-surface-lightest: var(--awwd-ref-color-neutral-5);
-
+  // On Dark
   --awwd-sys-color-on-dark-surface: var(--awwd-ref-color-light-100a);
   --awwd-sys-color-on-dark-surface-80a: var(--awwd-ref-color-light-80a);
   --awwd-sys-color-on-dark-surface-60a: var(--awwd-ref-color-light-60a);
@@ -75,7 +86,7 @@
   --awwd-sys-color-on-dark-surface-20a: var(--awwd-ref-color-light-20a);
   --awwd-sys-color-on-dark-surface-10a: var(--awwd-ref-color-light-10a);
   --awwd-sys-color-on-dark-surface-5a: var(--awwd-ref-color-light-5a);
-
+  // On Light
   --awwd-sys-color-on-light-surface: var(--awwd-ref-color-dark-100a);
   --awwd-sys-color-on-light-surface-80a: var(--awwd-ref-color-dark-80a);
   --awwd-sys-color-on-light-surface-60a: var(--awwd-ref-color-dark-60a);
@@ -83,21 +94,37 @@
   --awwd-sys-color-on-light-surface-20a: var(--awwd-ref-color-dark-20a);
   --awwd-sys-color-on-light-surface-10a: var(--awwd-ref-color-dark-10a);
   --awwd-sys-color-on-light-surface-5a: var(--awwd-ref-color-dark-5a);
+  // Shadow
+  --awwd-sys-shadow-basic-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-20);
+  --awwd-sys-shadow-basic-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-20);
+  --awwd-sys-shadow-basic-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-20);
+  --awwd-sys-shadow-basic-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-20);
+  --awwd-sys-shadow-basic-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-20);
+  --awwd-sys-shadow-heavy-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-heavy-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-heavy-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-heavy-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-heavy-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-40);
 }
 
 [data-theme="dark"] {
   //// System Color Token ////
   /* SYS COLOR TOKENS */
+  // Primary
   --awwd-sys-color-primary-surface: var(--awwd-ref-color-primary-60);
   --awwd-sys-color-primary-surface-light: var(--awwd-ref-color-primary-40);
   --awwd-sys-color-primary-surface-dark: var(--awwd-ref-color-primary-80);
-
+  // Secondary
   --awwd-sys-color-secondary-surface: var(--awwd-ref-color-secondary-60);
   --awwd-sys-color-secondary-surface-light: var(--awwd-ref-color-secondary-40);
   --awwd-sys-color-secondary-surface-dark: var(--awwd-ref-color-secondary-80);
-
+  // Status
   --awwd-sys-color-status-success-surface: var(--awwd-ref-color-green-60);
   --awwd-sys-color-status-error-surface: var(--awwd-ref-color-red-60);
   --awwd-sys-color-status-warning-surface: var(--awwd-ref-color-yellow-60);
   --awwd-sys-color-status-info-surface: var(--awwd-ref-color-blue-60);
+  // Body
+  .docs-story {
+    background-color: var(--awwd-ref-color-dark-100a);
+  }
 }

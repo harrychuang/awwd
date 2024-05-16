@@ -8,16 +8,17 @@ import './index.scss';
  * ### When To Use
  *  A button means an operation (or a series of operations). Clicking a button will trigger corresponding business logic.
  * ### Usage
- * `import { Button, Icon } from 'ds'`
+ * `import { Button, Icon } from '@awwd'`
  * <br />
  */
  export const Button = ({
   type,
   fit,
   size,
-  icon,
-  round,
+  iconType,
+  rounded,
   style,
+  transparentBg,
   className,
   children,
   ...props
@@ -27,8 +28,9 @@ import './index.scss';
     `${type ? `awwd-button--${type}` : ''} ` +
     `${size ? `awwd-button--${size}` : ''} ` +
     `${fit ? `awwd-button--fit` : ''} ` +
-    `${icon ? 'awwd-button--icon' : ''} ` +
-    `${round ? 'awwd-button--round' : ''} ` +
+    `${iconType ? 'awwd-button--iconType' : ''} ` +
+    `${transparentBg ? 'awwd-button--transparent-bg' : ''} ` +
+    `${rounded ? 'awwd-button--rounded' : ''} ` +
     `${className}`
 
   return (
@@ -51,19 +53,19 @@ Button.propTypes = {
    */
  children: PropTypes.node,
   /**
-   * Can be set to `ghost` `dangerous` or omitted (meaning `default`)
+   * Can be set to `primary` `secondary` `gray` `success` `info` `warning` `error` or omitted (meaning `default`)
    */
   type: PropTypes.string,
   /**
-   * Round Styling Button
+   * Rounded Styling Button
    */
-  round: PropTypes.bool,
+  rounded: PropTypes.bool,
   /**
    * Make the button fit to its parent width. 
    */
   fit: PropTypes.bool,
   /**
-   * Button size type: `med` or omitted (meaning `default`)
+   * Button size type: `large` or omitted (meaning `default`)
    */
   size: PropTypes.string,
   /**
@@ -71,11 +73,15 @@ Button.propTypes = {
    */
   disabled: PropTypes.bool,
   /**
+   * Turn to a transparent background
+   */
+  transparentBg: PropTypes.bool,
+  /**
    * ClassName of Button
    */
   className: PropTypes.string,
   /**
-   * Style properties of button, like padding, margin, width
+   * Style properties of button, like padding, margin, width..etc
    */
   style: PropTypes.object,
 }
@@ -84,9 +90,10 @@ Button.defaultProps = {
   className: '',
   children: null,
   type: null,
-  icon: false,
-  round: false,
+  iconType: false,
+  rounded: false,
   size: null,
   style: null,
+  transparentBg: false,
   disabled: false,
 }

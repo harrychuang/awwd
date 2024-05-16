@@ -1,174 +1,209 @@
 @import "../style/settings.scss";
 
 /* Button [start] */
-//// Dark Theme Tokens ////
-[data-theme="dark"] {
-  // Buttons
-  .awwd-button {
-    --awwd-com-color-default-button-container: var(--awwd-sys-color-neutral-surface-light);
-    --awwd-com-color-default-button-label: var(--awwd-sys-color-on-light-surface);
-  }
-}
-
 .awwd-button {
-  // Component Tokens
-  --awwd-com-color-default-button-container: var(--awwd-sys-color-neutral-surface-darker);
-  --awwd-com-color-default-button-label: var(--awwd-sys-color-on-dark-surface);
-  --awwd-com-color-button-mask-hovered: linear-gradient(180deg,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(0, 0, 0, 0.08) 20%);
+  // Comp Button Tokens
+  // Color
+  --awwd-com-color-button-mask-actived: linear-gradient(360deg,
+      rgba(255, 255, 255, 0.2) 70%,
+      rgba(0, 0, 0, 0.08) 100%);
+  --awwd-com-color-button-mask-disabled: linear-gradient(360deg,
+      rgba(0, 0, 0, 0.25) 0%,
+      rgba(0, 0, 0, 0.25) 100%);
+  --awwd-com-color-button-default-container: var(--awwd-sys-color-neutral-surface-darker);
+  --awwd-com-color-button-default-label: var(--awwd-sys-color-on-dark-surface);
+  --awwd-com-color-button-primary-container: var(--awwd-sys-color-primary-surface);
+  --awwd-com-color-button-primary-label: var(--awwd-sys-color-on-dark-surface);
+  --awwd-com-color-button-secondary-container: var(--awwd-sys-color-secondary-surface);
+  --awwd-com-color-button-secondary-label: var(--awwd-sys-color-on-dark-surface);
+  --awwd-com-color-button-gray-container: var(--awwd-sys-color-neutral-surface-lighter);
+  --awwd-com-color-button-gray-label: var(--awwd-sys-color-on-light-surface);
+  --awwd-com-color-button-success-container: var(--awwd-sys-color-status-success-surface);
+  --awwd-com-color-button-success-label: var(--awwd-sys-color-on-light-surface);
+  --awwd-com-color-button-warning-container: var(--awwd-sys-color-status-warning-surface);
+  --awwd-com-color-button-warning-label: var(--awwd-sys-color-on-light-surface);
+  --awwd-com-color-button-error-container: var(--awwd-sys-color-status-error-surface);
+  --awwd-com-color-button-error-label: var(--awwd-sys-color-on-dark-surface);
+  --awwd-com-color-button-info-container: var(--awwd-sys-color-status-info-surface);
+  --awwd-com-color-button-info-label: var(--awwd-sys-color-on-dark-surface);
+  --awwd-com-color-button-transparentBg-label: var(--awwd-sys-color-on-light-surface);
+  // Size
+  --awwd-com-size-button-min-width: var(--awwd-sys-size-element-xl);
+  --awwd-com-size-button-height: var(--awwd-sys-size-element-rg);
+  --awwd-com-size-button-height-lg: var(--awwd-sys-size-element-lg);
+  --awwd-com-size-button-padding: var(--awwd-sys-spacing-med);
+  --awwd-com-size-button-padding-lg: var(--awwd-sys-spacing-lg);
+  --awwd-com-size-button-corner: var(--awwd-sys-size-corner-rg);
+  --awwd-com-size-button-corner-rounded: var(--awwd-sys-size-corner-full);
+  --awwd-com-size-button-icon: var(--awwd-sys-size-element-xs);
+  --awwd-com-size-button-icon-lg: var(--awwd-sys-size-element-sm);
+  --awwd-com-size-button-iconType-width: var(--awwd-sys-size-element-rg);
+  --awwd-com-size-button-iconType-width-lg: var(--awwd-sys-size-element-lg);
+  // Shadow
+  --awwd-com-shadow-button-hovered: var(--awwd-sys-shadow-basic-short);
+  --awwd-com-shadow-button-actived: var(--awwd-sys-shadow-basic-shorter);
   // Styling
-  display: inline-block;
-  position: relative;
-  padding: 0 var(--awwd-sys-spacing-med);
-  vertical-align: middle;
-  min-width: 80px;
-  height: var(--awwd-sys-size-element-height);
-  border-radius: var(--awwd-sys-size-corner-rg);
+  background-color: var(--awwd-com-color-button-default-container);
   border: none;
-  outline: none;
-  background-color: var(--awwd-com-color-default-button-container);
-  color: var(--awwd-com-color-default-button-label);
+  border-radius: var(--awwd-com-size-button-corner);
+  color: var(--awwd-com-color-button-default-label);
   cursor: pointer;
-  transition: all 0.2s ease-out;
-  font-family: var(--awwd-ref-font-family-bold);
-  @include awwd-sys-font-body-base;
-
+  display: inline-block;
+  font-family: var(--awwd-sys-font-face-brand-bold);
+  height: var(--awwd-com-size-button-height);
+  min-width: var(--awwd-com-size-button-min-width);
+  outline: none;
+  padding: 0 var(--awwd-com-size-button-padding);
+  position: relative;
+  transition: var(--awwd-sys-transition-ease-out-fast);
+  vertical-align: middle;
+  @include awwd-sys-font-size-body-base;
   &__content {
     display: flex;
     justify-content: center;
     align-items: center;
   }
-
   .awwd-icon {
+    font-size: var(--awwd-com-size-button-icon) !important;
     position: relative;
-    color: var(--awwd-com-color-on-button-container);
+    color: var(--awwd-com-color-button-default-label);
   }
-
   &:before {
     content: "";
-    width: 100%;
+    background-image: var(--awwd-com-color-button-mask-actived);
+    border-radius: var(--awwd-com-size-button-corner);
     height: 100%;
+    left: 0;
+    opacity: 0;
     position: absolute;
     top: 0;
-    left: 0;
-    border-radius: var(--awwd-sys-size-corner-rg);
-    opacity: 0;
-    background-image: var(--awwd-com-color-button-mask-hovered);
+    width: 100%;
   }
-
   // status
   &:hover {
-    opacity: 0.9;
-    box-shadow: 0px 4px 8px var(--awwd-sys-color-dark-a20);
+    box-shadow: var(--awwd-com-shadow-button-hovered);
+    opacity: 0.75;
   }
-
   &:active {
+    box-shadow: var(--awwd-com-shadow-button-actived);
     opacity: 1;
-    box-shadow: 0px 2px 4px var(--awwd-sys-color-dark-a10);
-
     &:before {
       opacity: 1;
     }
   }
-
   &:disabled {
-    color: var(--awwd-sys-color-light-a100);
-    background-color: var(--awwd-sys-color-neutral-400);
-    cursor: not-allowed;
-
+    pointer-events: none;
     .awwd-button__content {
-      opacity: 0.6;
-
-      .awwd-icon {
-        color: var(--awwd-sys-color-light-a100);
-      }
+      opacity: 0.35;
     }
-
-    // status
     &:hover {
       box-shadow: none;
+    }
+    &:before {
+      background-image: var(--awwd-com-color-button-mask-disabled);
+      opacity: 1;
     }
   }
 
   // type
+  &--primary {
+    background-color: var(--awwd-com-color-button-primary-container);
+    color: var(--awwd-com-color-button-primary-label);
+    .awwd-icon {
+      color: var(--awwd-com-color-button-primary-label);
+    }
+  }
+  &--secondary {
+    background-color: var(--awwd-com-color-button-secondary-container);
+    color: var(--awwd-com-color-button-secondary-label);
+    .awwd-icon {
+      color: var(--awwd-com-color-button-secondary-label);
+    }
+  }
+  &--gray {
+    background-color: var(--awwd-com-color-button-gray-container);
+    color: var(--awwd-com-color-button-gray-label);
+    .awwd-icon {
+      color: var(--awwd-com-color-button-gray-label);
+    }
+  }
   &--success {
-    color: var(--awwd-sys-color-function-on-success);
-    background-color: var(--awwd-sys-color-function-success);
-
+    background-color: var(--awwd-com-color-button-success-container);
+    color: var(--awwd-com-color-button-success-label);
     .awwd-icon {
-      color: var(--awwd-sys-color-function-on-success);
-    }
-
-    // status
-    &:active {
-      &:before {
-        opacity: 0.5;
-      }
+      color: var(--awwd-com-color-button-success-label);
     }
   }
-
+  &--warning {
+    background-color: var(--awwd-com-color-button-warning-container);
+    color: var(--awwd-com-color-button-warning-label);
+    .awwd-icon {
+      color: var(--awwd-com-color-button-warning-label);
+    }
+  }
   &--error {
-    color: var(--awwd-sys-color-function-on-error) !important;
-    background-color: var(--awwd-sys-color-function-error) !important;
-
+    background-color: var(--awwd-com-color-button-error-container);
+    color: var(--awwd-com-color-button-error-label);
     .awwd-icon {
-      color: var(---awwd-sys-color-function-on-error);
-    }
-
-    // status
-    &:disabled {
-      opacity: 0.6;
-
-      .awwd-button__content {
-        opacity: 1;
-      }
+      color: var(--awwd-com-color-button-error-label);
     }
   }
-
-  &--icon {
-    min-width: var(--awwd-sys-size-button-default) !important;
-    width: var(--awwd-sys-size-button-default);
-    height: var(--awwd-sys-size-button-default);
-    padding: 0 0;
-    overflow: hidden;
-    border-radius: var(--awwd-ref-border-radius-full);
+  &--info {
+    background-color: var(--awwd-com-color-button-info-container);
+    color: var(--awwd-com-color-button-info-label);
     .awwd-icon {
-      position: relative;
-      margin: 0 0;
+      color: var(--awwd-com-color-button-info-label);
     }
+  }
+  // Icon type
+  &--iconType {
+    padding: 0 0 !important;
+    min-width: var(--awwd-com-size-button-iconType-width) !important;
     // size
-    &.awwd-button--med {
-      min-width: var(--awwd-sys-size-button-med) !important;
-      width: var(--awwd-sys-size-button-med);
-      height: var(--awwd-sys-size-button-med);
-
-      .awwd-icon {
-        position: absolute;
-        line-height: var(--awwd-ref-size-icon-button-med) !important;
-        font-size: var(--awwd-ref-size-icon-button-med) !important;
-      }
+    &.awwd-button--large {
+      min-width: var(--awwd-com-size-button-iconType-width-lg) !important;
     }
   }
-
-  // round
-  &--round {
-    border-radius: var(--awwd-ref-border-radius-full);
+  // Rounded type
+  &--rounded {
+    border-radius: var(--awwd-com-size-button-corner-rounded);
     &:before {
-      border-radius: var(--awwd-ref-border-radius-full);
+      border-radius: var(--awwd-com-size-button-corner-rounded);
     }
   }
-
-  // size
-  &--med {
+  // Transparent BG
+  &--transparent-bg {
+    background: transparent !important;
+    color: var(--awwd-com-color-button-transparentBg-label) !important;
+    .awwd-icon {
+      color: var(--awwd-com-color-button-transparentBg-label) !important;
+    }
+  }
+  // Size
+  &--large {
+    height: var(--awwd-com-size-button-height-lg);
     min-width: 80px;
-    height: var(--awwd-sys-size-button-med);
-    padding: 0 var(--awwd-sys-spacing-rg);
-    @include awwd-sys-font-body-base;
+    padding: 0 var(--awwd-com-size-button-padding-lg);
+    @include awwd-sys-font-size-body-base;
+    .awwd-icon {
+      font-size: var(--awwd-com-size-button-icon-lg) !important;
+    }
   }
   &--fit {
     min-width: 100%;
   }
 }
 
+//// Dark Theme Tokens ////
+[data-theme="dark"] {
+  // Buttons
+  .awwd-button {
+    --awwd-com-color-button-mask-actived: linear-gradient(360deg,
+      rgba(0, 0, 0, 0.2) 70%,
+      rgba(255, 255, 255, 0.08) 100%);
+    --awwd-com-color-button-default-container: var(--awwd-sys-color-neutral-surface-light);
+    --awwd-com-color-button-default-label: var(--awwd-sys-color-on-light-surface);
+    --awwd-com-color-button-transparentBg-label: var(--awwd-sys-color-on-dark-surface);
+  }
+}
 /* Button [end] */

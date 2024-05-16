@@ -130,11 +130,11 @@ const Template = () => (
       Apply rounded corners to an element with the border radius utility.
     </p>
     <h2 className='sbdocs-h2'>Usage</h2>
-    <h6 className='sbdocs-h6'>* Corner mixin from &apos;styles/layout/_settings.scss&apos;</h6>
+    <h6 className='sbdocs-h6'>* Corner mixin from &apos;styles/layout/settings.scss&apos;</h6>
     <code>
       {'.corner-sm{ border-radius: var(--awwd-sys-size-corner-sm); }'}
     </code>
-    <h6 className='sbdocs-h6'>* Corner css from &apos;styles/layout/_common.scss&apos;</h6>
+    <h6 className='sbdocs-h6'>* Corner css from &apos;styles/layout/common.scss&apos;</h6>
     <code>
       {'<div class=\'awwd-size-corner--sm\'></div>'}
     </code>

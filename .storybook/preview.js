@@ -41,6 +41,17 @@ export default {
         date: /Date$/i,
       },
     },
+    options: {
+      storySort: {
+        // Stories Sorting
+        order: [
+          'Guides', ['Color', 'Typography', 'Spacing', 'Corner', 'Shadow'],
+          'Components', [
+            'General', ['Icons', 'Buttons'],
+          ]
+        ]
+      },
+    },
     backgrounds: { disable: true },
   },
 };

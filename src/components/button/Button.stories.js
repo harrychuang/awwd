@@ -10,10 +10,10 @@ export default {
   tags: ['autodocs'],
   argTypes: {
     type: {
-      options: ['primary', 'ghost', 'success', 'error'],
+      options: ['default','primary', 'secondary' , 'gray', 'success', 'info', 'warning', 'error'],
       control: { type: 'radio' },
     },
-    round: {
+    rounded: {
       options: [false, true],
       control: { type: 'boolean' }, 
     },
@@ -22,8 +22,12 @@ export default {
       control: { type: 'boolean' }, 
     },
     size: {
-      options: ['default', 'med'],
+      options: ['default', 'large'],
       control: { type: 'radio' },
+    },
+    transparentBg: {
+      options: [false, true],
+      control: { type: 'boolean' }, 
     },
     disabled: {
       options: [false, true],
@@ -31,36 +35,69 @@ export default {
     }
   },
   args: {
-    type: 'primary',
-    round: false,
+    type: 'default',
+    rounded: false,
     fit: false,
     size: 'default',
+    transparentBg: false,
     disabled: false,
   },
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Default = (args) => (
+const elementStyle ={
+  marginRight: 'var(--awwd-sys-spacing-sm)', 
+  marginBottom: 'var(--awwd-sys-spacing-sm)'
+}
+
+export const All = (args) => (
   <>
-    <Button style={{ margin: '0 10px 10px 0' }} {...args} icon={false}>
+    <Button {...args} style={elementStyle}>
       Button
     </Button>
-    <Button style={{ margin: '0 10px 10px 0' }} {...args} icon={false}>
-      <Icon type='arrow-left' style={{ marginRight: '10px' }} />
+    <Button {...args} style={elementStyle}>
+      <Icon prefix type='arrow-back' />
       Button with icon
     </Button>
-    <Button style={{ margin: '0 10px 10px 0' }} {...args} icon={false}>
+    <Button {...args} style={elementStyle}>
       Button with icon
-      <Icon type='arrow-right' style={{ marginLeft: '10px' }} />
+      <Icon surfix type='arrow-next' />
     </Button>
-    <Button style={{ margin: '0 10px 10px 0' }} {...args} icon>
-      <Icon type='star' />
+    <Button iconType {...args} style={elementStyle}>
+      <Icon type='home' />
+    </Button>
+    <Button iconType {...args} transparentBg style={elementStyle}>
+      <Icon type='close' />
     </Button>
   </>
+)
+
+export const Default = () => (
+  <Button type='default'>
+    Primary
+  </Button>
 )
 
 export const Primary = () => (
   <Button type='primary'>
     Primary
+  </Button>
+)
+
+export const Secondary = () => (
+  <Button type='secondary'>
+    Secondary
+  </Button>
+)
+
+export const Success = () => (
+  <Button type='success'>
+    Success
+  </Button>
+)
+
+export const Info = () => (
+  <Button type='info'>
+    Info
   </Button>
 )

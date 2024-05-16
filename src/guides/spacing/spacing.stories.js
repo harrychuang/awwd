@@ -98,7 +98,7 @@ const Template = () => (
       </h6>
     </p>
     <h2 className='sbdocs-h2'>Usage</h2>
-    <h6 className='sbdocs-h6'>* Spacing setting from &apos;styles/layout/_settings.scss&apos;</h6>
+    <h6 className='sbdocs-h6'>* Spacing setting from &apos;styles/layout/settings.scss&apos;</h6>
     <code>
       {'.box{ margin: var(--awwd-sys-spacing-rg); padding: var(--awwd-sys-spacing-rg); }'}
     </code>

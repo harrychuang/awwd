@@ -2,16 +2,38 @@
 
 /* Box shadow */
 .awwd-shadow {
-  &--long {
-      box-shadow: var(--awwd-ref-shadow-long);
-  }
-  &--med {
-      box-shadow: var(--awwd-ref-shadow-med);
-  }
-  &--rg {
-      box-shadow: var(--awwd-ref-shadow-rg);
-  }
-  &--short {
-      box-shadow: var(--awwd-ref-shadow-short);
-  }
+    &--basic{
+        &--long {
+            box-shadow: var(--awwd-sys-shadow-basic-long);
+        }
+        &--med {
+            box-shadow: var(--awwd-sys-shadow-basic-med);
+        }
+        &--rg {
+            box-shadow: var(--awwd-sys-shadow-basic-rg);
+        }
+        &--short {
+            box-shadow: var(--awwd-sys-shadow-basic-short);
+        }
+        &--shorter {
+          box-shadow: var(--awwd-sys-shadow-basic-shorter);
+        }
+    }
+    &--heavy{
+        &--long {
+            box-shadow: var(--awwd-sys-shadow-heavy-long);
+        }
+        &--med {
+            box-shadow: var(--awwd-sys-shadow-heavy-med);
+        }
+        &--rg {
+            box-shadow: var(--awwd-sys-shadow-heavy-rg);
+        }
+        &--short {
+            box-shadow: var(--awwd-sys-shadow-heavy-short);
+        }
+        &--shorter {
+          box-shadow: var(--awwd-sys-shadow-heavy-shorter);
+        }
+    }
 }

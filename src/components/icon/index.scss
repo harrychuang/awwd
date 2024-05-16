@@ -1,5 +1,6 @@
 @import '../../assest/fonts/icon-fonts/awwd-icon-fonts';
+@import '../style/layout/settings';
 
 .awwd-icon{
-  font-size: 24px;
+  font-size: var(--awwd-sys-size-element-sm);
 }

@@ -85,7 +85,7 @@ const Template = () => (
     and should serve to support the purpose of the content.
     </p>
     <h2 className='sbdocs-h2'>Usage</h2>
-    <h6 className='sbdocs-h6'>* Color setting from &apos;styles/color/_settings.scss&apos;</h6>
+    <h6 className='sbdocs-h6'>* Color setting from &apos;styles/color/settings.scss&apos;</h6>
     <code>
       {`background-color: var(--awwd-sys-color-primary-surface);`}
     </code>

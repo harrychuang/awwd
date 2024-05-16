@@ -1,7 +1,8 @@
 @import './color/color';
 @import './font/font';
 @import './layout/layout';
+@import './motion/motion';
 
 body{
-  font-family: var(--awwd-ref-font-face-gotham-med);
+  font-family: var(--awwd-sys-font-face-brand-med);
 }

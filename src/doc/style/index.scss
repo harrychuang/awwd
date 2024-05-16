@@ -3,7 +3,7 @@
 @import './cardList';
 
 body{
-  font-family: var(--awwd-ref-font-face-gotham-reg);
+  font-family: var(--awwd-sys-font-face-brand-reg);
 }
 
 // Code
@@ -35,7 +35,7 @@ body{
   padding: 40px 40px;
 
   p{
-    font-family: var(--awwd-ref-font-face-gotham-reg);
+    font-family: var(--awwd-sys-font-face-brand-reg);
     color: var(--storybook-doc-color-font-paragraph);
     margin-bottom: 30px;
     font-size: 16px;
@@ -65,37 +65,37 @@ body{
   font-size: 48px;
   line-height: 56px;
   margin: 20px 0 15px 0;
-  font-family: var(--awwd-ref-font-face-gotham-black);
+  font-family: var(--awwd-sys-font-face-brand-black);
   @include hashtag;
 }
 
 .sbdocs-h2{
   margin: 30px 0 20px 0;
   color: var(--storybook-doc-color-font-heading);
-  font-family: var(--awwd-ref-font-face-gotham-bold);
-  @include awwd-sys-font-subheading;
+  font-family: var(--awwd-sys-font-face-brand-bold);
+  @include awwd-sys-font-size-subheading;
   @include hashtag;
 }
 
 .sbdocs-h3{
   color: var(--storybook-doc-color-font-heading);
-  font-family: var(--awwd-ref-font-face-gotham-med);
+  font-family: var(--awwd-sys-font-face-brand-med);
   margin: 10px 0 15px 0;
-  @include awwd-sys-font-body-lg;
+  @include awwd-sys-font-size-body-lg;
   @include hashtag;
 }
 
 .sbdocs-h6{
   color: var(--storybook-doc-color-font-paragraph);
-  font-family: var(--awwd-ref-font-face-gotham-med);
+  font-family: var(--awwd-sys-font-face-brand-med);
   margin: 10px 0 15px 0;
-  @include awwd-sys-font-body-base;
+  @include awwd-sys-font-size-body-base;
 }
 
 .sbdocs-p{
   color: var(--storybook-doc-color-font-paragraph);
-  font-family: var(--awwd-ref-font-face-gotham-reg);
-  @include awwd-sys-font-caption;
+  font-family: var(--awwd-sys-font-face-brand-reg);
+  @include awwd-sys-font-size-caption;
 }
 
 /* Spacing Demo [start] */

@@ -10,8 +10,8 @@
     --awwd-ref-size-60: 60px;
     --awwd-ref-size-80: 80px;
     --awwd-ref-size-120: 120px;
-    --awwd-ref-size-50p: 50%;   // Percentage
     // Size for element
+    --awwd-ref-size-24: 24px;
     --awwd-ref-size-36: 36px;
     --awwd-ref-size-46: 46px;
     // Size for screent
@@ -30,8 +30,12 @@
 
     /* SYS SIZE TOKENS */
     // Element Size
-    --awwd-sys-size-element-height: var(--awwd-ref-size-36);
-    --awwd-sys-size-element-height-lg: var(--awwd-ref-size-46);
+    --awwd-sys-size-element-xxs: var(--awwd-ref-size-15);
+    --awwd-sys-size-element-xs: var(--awwd-ref-size-20);
+    --awwd-sys-size-element-sm: var(--awwd-ref-size-24);
+    --awwd-sys-size-element-rg: var(--awwd-ref-size-36);
+    --awwd-sys-size-element-lg: var(--awwd-ref-size-46);
+    --awwd-sys-size-element-xl: var(--awwd-ref-size-80);
     // Spacing
     --awwd-sys-spacing-xxxl: var(--awwd-ref-size-80);
     --awwd-sys-spacing-xxl: var(--awwd-ref-size-60);
@@ -46,7 +50,7 @@
     --awwd-sys-size-corner-rg: var(--awwd-ref-size-10);
     --awwd-sys-size-corner-med: var(--awwd-ref-size-20);
     --awwd-sys-size-corner-lg: var(--awwd-ref-size-40);
-    --awwd-sys-size-corner-full: var( --awwd-ref-size-50p);
+    --awwd-sys-size-corner-full: var(--awwd-ref-size-120);
     // Screen
     --awwd-sys-size-screen-xl: var(--awwd-ref-size-1600);
     --awwd-sys-size-screen-lg: var(--awwd-ref-size-1200);
