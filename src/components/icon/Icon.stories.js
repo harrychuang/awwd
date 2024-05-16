@@ -66,7 +66,7 @@ const Template = () => (
   <DocMain>
     <h1 className='sbdocs-h1'>Icons</h1>
     <p>An icon is a graphical representation of meaning. Icons can be used to express actions,
-      state, and even to categorize data. NOEIN Design&apos;s icons adhere to the
+      state, and even to categorize data. aww Design System&apos;s icons adhere to the
       following two principles and are designed for cross-platform consistency:
     </p>
     <h2 className='sbdocs-h2'>System Icons</h2>

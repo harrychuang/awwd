@@ -1,5 +1,5 @@
 // Node
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 // Style
 import './index.scss'
@@ -17,16 +17,6 @@ export const Icon = ({
 }) => {
   let fixIconPosition = '-5px'
   let iconMargin = '5px'
-  const [iconSizeXs, setIconSizeXs] = useState('')
-  const [iconSizeSm, setIconSizeSm] = useState('')
-  const [iconSizeLg, setIconSizeLg] = useState('')
-
-  useEffect(() => {
-    const root = document.documentElement;
-    setIconSizeXs(getComputedStyle(root).getPropertyValue('--awwd-sys-size-element-xxs').trim());
-    setIconSizeSm(getComputedStyle(root).getPropertyValue('--awwd-sys-size-element-sm').trim());
-    setIconSizeLg(getComputedStyle(root).getPropertyValue('--awwd-sys-size-element-rg').trim());
-  }, []);
 
   let colorStyle = {
     color: color === null ? null : color
@@ -46,18 +36,18 @@ export const Icon = ({
 
   switch(size){
     case 'lg':
-      sizeStyle = { fontSize: iconSizeLg }
+      sizeStyle = { fontSize: 'var(--awwd-sys-size-element-rg)' }
       break
-    case 'med':
-      sizeStyle = { fontSize: iconSizeSm }
+    case 'default':
+      sizeStyle = { fontSize: 'var(--awwd-sys-size-element-sm)' }
       break
     case 'sm':
-      sizeStyle = { fontSize: iconSizeXs }
+      sizeStyle = { fontSize: 'var(--awwd-sys-size-element-xs)' }
       break
     default:
       sizeStyle = {
-        fontSize: size === null ? iconSizeSm : size,
-        fontSize: size === null ? iconSizeSm : size,
+        fontSize: size === null ? 'var(--awwd-sys-size-element-sm)' : size,
+        fontSize: size === null ? 'var(--awwd-sys-size-element-sm)' : size,
       }
       break
   }
