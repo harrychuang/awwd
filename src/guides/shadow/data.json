@@ -32,31 +32,31 @@
         },
         {
             "Title": "Shadow Heavy Shorter", 
-            "helper": "var(--awwd-sys-shadow-heavy-shorter)",
+            "helper": "var(--awwd-sys-shadow-med-shorter)",
             "class": "awwd-shadow--heavy--shorter", 
             "style": "box-shadow: 0px 1px 3px rgba(11, 13, 18, 0.4);"
         },
         {
             "Title": "Shadow Heavy Short", 
-            "helper": "var(--awwd-sys-shadow-heavy-short)",
+            "helper": "var(--awwd-sys-shadow-med-short)",
             "class": "awwd-shadow--heavy--short", 
             "style": "box-shadow: 0px 2.5px 5px rgba(11, 13, 18, 0.4);"
         },
         {
             "Title": "Shadow Heavy Regular", 
-            "helper": "var(--awwd-sys-shadow-heavy-rg)",
+            "helper": "var(--awwd-sys-shadow-med-rg)",
             "class": "awwd-shadow--heavy--rg", 
             "style": "box-shadow: 0px 5px 10px rgba(11, 13, 18, 0.4);"
         },
         {
             "Title": "Shadow Heavy Medium", 
-            "helper": "var(--awwd-sys-shadow-heavy-med)",
+            "helper": "var(--awwd-sys-shadow-med-med)",
             "class": "awwd-shadow--heavy--med", 
             "style": "box-shadow: 0px 10px 20px rgba(11, 13, 18, 0.4);"
         },
         {
             "Title": "Shadow Heavy Long", 
-            "helper": "var(--awwd-sys-shadow-heavy-long)",
+            "helper": "var(--awwd-sys-shadow-med-long)",
             "class": "awwd-shadow--heavy--long", 
             "style": "box-shadow: 0px 20px 40px rgba(11, 13, 18, 0.4)"
         }

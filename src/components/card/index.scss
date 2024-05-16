@@ -1,0 +1,81 @@
+@import "../style/settings.scss";
+
+/* Card [start] */
+.awwd-card {
+  // Color
+  --awwd-comp-color-card-surface: var(--awwd-sys-color-theme-surface);
+  --awwd-comp-color-card-heading: var(--awwd-sys-color-on-theme-surface-100);
+  --awwd-comp-color-card-label: var(--awwd-sys-color-on-theme-surface-60);
+  // Spacing
+  --awwd-comp-spacing-card-padding: var(--awwd-sys-spacing-med);
+  --awwd-comp-spacing-card-padding-large: var(--awwd-sys-spacing-xl);
+  // Corner
+  --awwd-comp-size-card-corner: var(--awwd-sys-size-corner-rg);
+  --awwd-comp-size-card-corner-large: var(--awwd-sys-size-corner-lg);
+  // Shadow
+  --awwd-comp-shadow-card: var(--awwd-sys-shadow-basic-rg);
+  --awwd-comp-shadow-card-large: var(--awwd-sys-shadow-med-long);
+  // Styling
+  color: var(--awwd-comp-color-card-heading);
+  background-color: var(--awwd-comp-color-card-surface);
+  display: inline-block;
+  transition: var(--awwd-sys-transition-ease-out-fast);
+  text-align: center;
+  // Class
+  &__heading {
+    font-family: var(--awwd-sys-font-face-brand-bold);
+    color: var(--awwd-comp-color-card-heading);
+    margin-bottom: var(--awwd-sys-spacing-sm);
+    @include awwd-sys-font-size-heading-4;
+  }
+  &__desc {
+    font-family: var(--awwd-sys-font-face-brand-med);
+    color: var(--awwd-comp-color-card-label);
+    @include awwd-sys-font-size-caption;
+  }
+  // Corner
+  &--corner {
+    &--none {
+      border-radius: 0;
+    }
+    &--default {
+      border-radius: var( --awwd-comp-size-card-corner);
+    }
+    &--large {
+      border-radius: var( --awwd-comp-size-card-corner-large);
+    }
+  }
+  // Shadow
+  &--shadow {
+    &--none {
+      box-shadow: none;
+    }
+    &--default {
+      box-shadow: var(--awwd-comp-shadow-card);
+    }
+    &--large {
+      box-shadow: var(--awwd-comp-shadow-card-large); 
+    }
+  }
+  // Fit
+  &--fit {
+    width: 100%;
+  }
+  // Card padding
+  &--padding {
+    &--none {
+      padding: 0 0;
+    }
+    &--default {
+      padding: var(--awwd-comp-spacing-card-padding);
+    }
+    &--large {
+      padding: var(--awwd-comp-spacing-card-padding-large); 
+    }
+  }
+}
+
+//// Dark Theme Tokens ////
+[data-theme="dark"] {
+}
+/* Card [end] */

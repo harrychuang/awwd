@@ -51,6 +51,7 @@
   --awwd-ref-color-shadow-10: var(--awwd-ref-color-dark-10a);
   --awwd-ref-color-shadow-20: var(--awwd-ref-color-dark-20a);
   --awwd-ref-color-shadow-40: var(--awwd-ref-color-dark-40a);
+  --awwd-ref-color-shadow-60: var(--awwd-ref-color-dark-60a);
   --awwd-ref-shadow-length-40: 0px 20px 40px;
   --awwd-ref-shadow-length-20: 0px 10px 20px;
   --awwd-ref-shadow-length-10: 0px 5px 10px;
@@ -78,6 +79,8 @@
   --awwd-sys-color-neutral-surface-light: var(--awwd-ref-color-neutral-20);
   --awwd-sys-color-neutral-surface-lighter: var(--awwd-ref-color-neutral-10);
   --awwd-sys-color-neutral-surface-lightest: var(--awwd-ref-color-neutral-5);
+  // Dark
+  --awwd-sys-color-dark-surface: var(--awwd-ref-color-dark-100a);
   // On Dark
   --awwd-sys-color-on-dark-surface: var(--awwd-ref-color-light-100a);
   --awwd-sys-color-on-dark-surface-80a: var(--awwd-ref-color-light-80a);
@@ -86,6 +89,8 @@
   --awwd-sys-color-on-dark-surface-20a: var(--awwd-ref-color-light-20a);
   --awwd-sys-color-on-dark-surface-10a: var(--awwd-ref-color-light-10a);
   --awwd-sys-color-on-dark-surface-5a: var(--awwd-ref-color-light-5a);
+  // Light
+  --awwd-sys-color-light-surface: var(--awwd-ref-color-light-100a);
   // On Light
   --awwd-sys-color-on-light-surface: var(--awwd-ref-color-dark-100a);
   --awwd-sys-color-on-light-surface-80a: var(--awwd-ref-color-dark-80a);
@@ -94,17 +99,26 @@
   --awwd-sys-color-on-light-surface-20a: var(--awwd-ref-color-dark-20a);
   --awwd-sys-color-on-light-surface-10a: var(--awwd-ref-color-dark-10a);
   --awwd-sys-color-on-light-surface-5a: var(--awwd-ref-color-dark-5a);
+  // Theme
+  --awwd-sys-color-theme-surface: var(--awwd-ref-color-light-100a);
+  // On theme
+  --awwd-sys-color-on-theme-surface-100: var(--awwd-ref-color-dark-100a);
+  --awwd-sys-color-on-theme-surface-60: var(--awwd-ref-color-dark-60a);
   // Shadow
   --awwd-sys-shadow-basic-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-20);
   --awwd-sys-shadow-basic-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-20);
   --awwd-sys-shadow-basic-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-20);
   --awwd-sys-shadow-basic-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-20);
   --awwd-sys-shadow-basic-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-20);
-  --awwd-sys-shadow-heavy-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-40);
-  --awwd-sys-shadow-heavy-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-40);
-  --awwd-sys-shadow-heavy-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-40);
-  --awwd-sys-shadow-heavy-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-40);
-  --awwd-sys-shadow-heavy-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-med-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-med-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-med-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-med-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-med-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-40);
+  // Storybook Docs
+  .docs-story {
+    background-color: var(--awwd-ref-color-neutral-5);
+  }
 }
 
 [data-theme="dark"] {
@@ -123,8 +137,24 @@
   --awwd-sys-color-status-error-surface: var(--awwd-ref-color-red-60);
   --awwd-sys-color-status-warning-surface: var(--awwd-ref-color-yellow-60);
   --awwd-sys-color-status-info-surface: var(--awwd-ref-color-blue-60);
-  // Body
+  // Theme
+  --awwd-sys-color-theme-surface: var(--awwd-ref-color-neutral-80);
+  // On theme
+  --awwd-sys-color-on-theme-surface-100: var(--awwd-ref-color-light-100a);
+  --awwd-sys-color-on-theme-surface-60: var(--awwd-ref-color-light-60a);
+  // Shadow
+  --awwd-sys-shadow-basic-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-basic-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-basic-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-basic-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-basic-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-med-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-60);
+  --awwd-sys-shadow-med-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-60);
+  --awwd-sys-shadow-med-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-60);
+  --awwd-sys-shadow-med-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-60);
+  --awwd-sys-shadow-med-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-60);
+  // Storybook Docs
   .docs-story {
-    background-color: var(--awwd-ref-color-dark-100a);
+    background-color: var(--awwd-ref-color-neutral-80);
   }
 }
