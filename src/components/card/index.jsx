@@ -13,7 +13,9 @@ import './index.scss';
  * <br />
  */
  export const Card = ({
+  align,
   actions,
+  fixedActions,
   cornerSize,
   className,
   children,
@@ -28,17 +30,19 @@ import './index.scss';
   cardPaddingSpacing,
   ...props
 }) => {
-  console.log(!!type && !!photo)
   // Container classname
   let cardContainerClassNameProps = `awwd-card ` +
     `${cornerSize ? `awwd-card--corner--${cornerSize}` : ''} ` +
     `${shadow ? `awwd-card--shadow--${shadow}` : ''} ` +
     `${fit ? `awwd-card--fit` : ''} ` +
     `${(type === 'row' || (!!type && !!photo)) ? `awwd-card--type--${type}` : ''} ` +
+    `${align ? `awwd-card--align--${align}` : ''} ` +
+    `${fixedActions ? 'fixed-actions' : ''} ` +
     `${className}`
 
   // Content classname
   let cardContentClassNameProps = `awwd-card__content ` +
+    `${!!photo ? `has-photo` : ''} ` +
     `${cardPaddingSpacing ? `awwd-card__content--padding--${cardPaddingSpacing}` : ''} `
 
   return (
@@ -62,13 +66,21 @@ import './index.scss';
           </section>
         : null}
         {children}
-        {actions && <div className='awwd-card__actions'>{actions}</div>}
       </div>
+      {actions && <div className='awwd-card__actions'>{actions}</div>}
     </div>
   )
 }
 
 Card.propTypes = {
+  /**
+   * Align of card.
+   */
+  align: PropTypes.string,
+  /**
+   * Fixed the Actions on bottom.
+   */
+  fixedActions: PropTypes.bool,
   /**
    * Actions of card.
    */
@@ -124,6 +136,8 @@ Card.propTypes = {
 }
 
 Card.defaultProps = {
+  align: null,
+  fixedActions: false,
   className: '',
   cornerSize: 'default',
   heading: null,

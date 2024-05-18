@@ -9,9 +9,14 @@
 
   /* SYS MOTION TOKENS */
   // Transition
-  --awwd-sys-transition-ease-out-fast: all var(--awwd-ref-motion-duration-1) ease-out;
-  --awwd-sys-transition-ease-out-reg: all var(--awwd-ref-motion-duration-2) ease-out;
-  --awwd-sys-transition-ease-out-med: all var(--awwd-ref-motion-duration-3) ease-out;
-  --awwd-sys-transition-ease-out-slow: all var(--awwd-ref-motion-duration-4) ease-out;
-  --awwd-sys-transition-ease-out-slower: all var(--awwd-ref-motion-duration-5) ease-out;
+  --awwd-sys-transition-ease-out-fast: var(--awwd-ref-motion-duration-1) ease-out;
+  --awwd-sys-transition-ease-out-reg: var(--awwd-ref-motion-duration-2) ease-out;
+  --awwd-sys-transition-ease-out-med: var(--awwd-ref-motion-duration-3) ease-out;
+  --awwd-sys-transition-ease-out-slow: var(--awwd-ref-motion-duration-4) ease-out;
+  --awwd-sys-transition-ease-out-slower: var(--awwd-ref-motion-duration-5) ease-out;
+  --awwd-sys-transition-ease-back-fast: var(--awwd-ref-motion-duration-1) cubic-bezier(0.34, 1.56, 0.64, 1);
+  --awwd-sys-transition-ease-back-reg: var(--awwd-ref-motion-duration-2) cubic-bezier(0.34, 1.56, 0.64, 1);
+  --awwd-sys-transition-ease-back-med: var(--awwd-ref-motion-duration-3) cubic-bezier(0.34, 1.56, 0.64, 1);
+  --awwd-sys-transition-ease-back-slow: var(--awwd-ref-motion-duration-4) cubic-bezier(0.34, 1.56, 0.64, 1);
+  --awwd-sys-transition-ease-back-slower: var(--awwd-ref-motion-duration-5) cubic-bezier(0.34, 1.56, 0.64, 1);
 }

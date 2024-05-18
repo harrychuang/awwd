@@ -1,0 +1,83 @@
+@import "../style/settings.scss";
+
+/* Modal [start] */
+.awwd-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  z-index: var(--awwd-sys-elevation-base);
+  overflow-y: auto;
+  // padding-bottom: 100px;
+  &.has-close-button {
+    // Custmixed card
+    .awwd-card__content__body {
+      width: calc(100% - var(--awwd-sys-spacing-xxl));
+    }
+  }
+}
+
+.awwd-modal-close {
+  position: absolute !important;
+  right: var(--awwd-sys-spacing-rg);
+  top: var(--awwd-sys-spacing-rg);
+  z-index: var(--awwd-sys-elevation-modal);
+}
+
+.awwd-modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--awwd-sys-color-dark-surface-60a);
+  /* awwd-modal-overlay animations */
+  &-enter {
+    opacity: 0;
+  }
+  &-enter-active {
+    opacity: 1;
+    transition:
+      opacity var(--awwd-sys-transition-ease-out-reg);
+  }
+  &-exit {
+    opacity: 1;
+  }
+  &-exit-active {
+    opacity: 0;
+    transition:
+      opacity var(--awwd-sys-transition-ease-out-reg);
+  }
+}
+
+.awwd-modal-content {
+  position: relative;
+  pointer-events: auto;
+  z-index: var(--awwd-sys-elevation-nav);
+  /* awwd-modal-content animations */
+  &-enter {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  &-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition:
+      opacity var(--awwd-sys-transition-ease-out-reg), transform var(--awwd-sys-transition-ease-back-med);
+  }
+  &-exit {
+    opacity: 1;
+    transform: scale(1);
+  }
+  &-exit-active {
+    opacity: 0;
+    transform: scale(0.6);
+    transition:
+      opacity var(--awwd-sys-transition-ease-out-reg), transform var(--awwd-sys-transition-ease-back-med);
+  }
+}

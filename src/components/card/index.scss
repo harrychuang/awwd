@@ -20,10 +20,12 @@
   color: var(--awwd-comp-color-card-heading);
   background-color: var(--awwd-comp-color-card-surface);
   display: inline-block;
-  transition: var(--awwd-sys-transition-ease-out-fast);
+  transition: all var(--awwd-sys-transition-ease-out-fast);
   text-align: center;
   overflow: hidden;
   position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
   // Class
   &__heading {
     font-family: var(--awwd-sys-font-face-brand-bold);
@@ -79,11 +81,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: var(--awwd-sys-spacing-sm);
-    padding: var(--awwd-sys-spacing-sm) 0;
-    flex-wrap: wrap;
+    width: -webkit-fill-available;
+    gap: var(--awwd-sys-spacing-med);
+    padding: var(--awwd-sys-spacing-med);
     .awwd-button {
       flex: 1;
+    }
+  }
+  &.fixed-actions {
+    .awwd-card__actions {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      z-index: var(--awwd-sys-elevation-nav);
+      border-top: 1px solid var(--awwd-sys-color-neutral-surface-lighter);
+      background-color: var(--awwd-comp-color-card-surface);
     }
   }
   // Photo
@@ -160,18 +172,41 @@
       }
     }
   }
+  // Align
+  &--align {
+    // Align left
+    &--left {
+      .awwd-card__content__body {
+        align-self: flex-start !important;
+        text-align: left !important;
+      }
+      .awwd-card__actions {
+        justify-content: flex-start;
+        .awwd-button {
+          flex: none;
+        }
+      }
+    }
+  }
   // Content
   &__content {
     display: flex;
     gap: var(--awwd-sys-spacing-sm);
     flex-direction: column;
     position: relative;
-    transition: var(--awwd-sys-transition-ease-out-fast);
+    transition: all var(--awwd-sys-transition-ease-out-fast);
     z-index: var(--awwd-sys-elevation-nav);
     &__body {
       display: flex;
       flex-direction: column;
+      align-self: center;
       gap: var(--awwd-sys-spacing-xs);
+    }
+    // Has photo
+    &.has-photo {
+      .awwd-card__content__body {
+        width: 100% !important;
+      }
     }
     // Card content padding
     &--padding {
