@@ -49,7 +49,7 @@
     --awwd-sys-size-corner-sm: var(--awwd-ref-size-5);
     --awwd-sys-size-corner-rg: var(--awwd-ref-size-10);
     --awwd-sys-size-corner-med: var(--awwd-ref-size-20);
-    --awwd-sys-size-corner-lg: var(--awwd-ref-size-40);
+    --awwd-sys-size-corner-lg: var(--awwd-ref-size-30);
     --awwd-sys-size-corner-full: var(--awwd-ref-size-120);
     // Screen
     --awwd-sys-size-screen-xl: var(--awwd-ref-size-1600);
@@ -58,12 +58,12 @@
     --awwd-sys-size-screen-sm: var(--awwd-ref-size-768);
     --awwd-sys-size-screen-xs: var(--awwd-ref-size-320);
     // Elevation
-    --awwd-sys-zIndex-super: var(--awwd-ref-elevation-9999);
-    --awwd-sys-zIndex-modal: var(--awwd-ref-elevation-999);
-    --awwd-sys-zIndex-overlay: var(--awwd-ref-elevation-666);
-    --awwd-sys-zIndex-nav: var(--awwd-ref-elevation-333);
-    --awwd-sys-zIndex-header: var(--awwd-ref-elevation-111);
-    --awwd-sys-zIndex-base: var(--awwd-ref-elevation-1);
+    --awwd-sys-elevation-super: var(--awwd-ref-elevation-9999);
+    --awwd-sys-elevation-modal: var(--awwd-ref-elevation-999);
+    --awwd-sys-elevation-overlay: var(--awwd-ref-elevation-666);
+    --awwd-sys-elevation-nav: var(--awwd-ref-elevation-333);
+    --awwd-sys-elevation-header: var(--awwd-ref-elevation-111);
+    --awwd-sys-elevation-base: var(--awwd-ref-elevation-1);
 }
 
 /* Responsive */

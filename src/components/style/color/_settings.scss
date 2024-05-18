@@ -31,13 +31,13 @@
   --awwd-ref-color-light-10a: rgba(255 255 255 / 0.1);
   --awwd-ref-color-light-5a: rgba(255 255 255 / 0.05);
   // Neutral
+  --awwd-ref-color-neutral-100: #1B1B1E;
   --awwd-ref-color-neutral-80: #3c3d41;
   --awwd-ref-color-neutral-60: #6d6e71;
   --awwd-ref-color-neutral-40: #9d9ea0;
   --awwd-ref-color-neutral-20: #cecfd0;
   --awwd-ref-color-neutral-10: #e7e7e7;
   --awwd-ref-color-neutral-5: #f3f3f3;
-  // Status
   // Status
   --awwd-ref-color-green-50: #73f9e1;
   --awwd-ref-color-green-60: #72e9d3;
@@ -110,11 +110,11 @@
   --awwd-sys-shadow-basic-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-20);
   --awwd-sys-shadow-basic-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-20);
   --awwd-sys-shadow-basic-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-20);
-  --awwd-sys-shadow-med-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-40);
-  --awwd-sys-shadow-med-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-40);
-  --awwd-sys-shadow-med-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-40);
-  --awwd-sys-shadow-med-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-40);
-  --awwd-sys-shadow-med-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-heavy-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-heavy-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-heavy-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-heavy-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-40);
+  --awwd-sys-shadow-heavy-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-40);
   // Storybook Docs
   .docs-story {
     background-color: var(--awwd-ref-color-neutral-5);
@@ -138,7 +138,7 @@
   --awwd-sys-color-status-warning-surface: var(--awwd-ref-color-yellow-60);
   --awwd-sys-color-status-info-surface: var(--awwd-ref-color-blue-60);
   // Theme
-  --awwd-sys-color-theme-surface: var(--awwd-ref-color-neutral-80);
+  --awwd-sys-color-theme-surface: var(--awwd-ref-color-neutral-100);
   // On theme
   --awwd-sys-color-on-theme-surface-100: var(--awwd-ref-color-light-100a);
   --awwd-sys-color-on-theme-surface-60: var(--awwd-ref-color-light-60a);
@@ -148,13 +148,13 @@
   --awwd-sys-shadow-basic-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-40);
   --awwd-sys-shadow-basic-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-40);
   --awwd-sys-shadow-basic-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-40);
-  --awwd-sys-shadow-med-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-60);
-  --awwd-sys-shadow-med-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-60);
-  --awwd-sys-shadow-med-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-60);
-  --awwd-sys-shadow-med-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-60);
-  --awwd-sys-shadow-med-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-60);
+  --awwd-sys-shadow-heavy-long: var(--awwd-ref-shadow-length-40) var(--awwd-ref-color-shadow-60);
+  --awwd-sys-shadow-heavy-med: var(--awwd-ref-shadow-length-20) var(--awwd-ref-color-shadow-60);
+  --awwd-sys-shadow-heavy-rg: var(--awwd-ref-shadow-length-10) var(--awwd-ref-color-shadow-60);
+  --awwd-sys-shadow-heavy-short: var(--awwd-ref-shadow-length-5) var(--awwd-ref-color-shadow-60);
+  --awwd-sys-shadow-heavy-shorter: var(--awwd-ref-shadow-length-3) var(--awwd-ref-color-shadow-60);
   // Storybook Docs
   .docs-story {
-    background-color: var(--awwd-ref-color-neutral-80);
+    background-color: var(--awwd-ref-color-dark-100a);
   }
 }

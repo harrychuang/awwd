@@ -201,8 +201,10 @@
     --awwd-com-color-button-mask-actived: linear-gradient(360deg,
       rgba(0, 0, 0, 0.2) 70%,
       rgba(255, 255, 255, 0.08) 100%);
-    --awwd-com-color-button-default-container: var(--awwd-sys-color-neutral-surface-light);
+    --awwd-com-color-button-default-container: var(--awwd-sys-color-neutral-surface-med);
     --awwd-com-color-button-default-label: var(--awwd-sys-color-on-light-surface);
+    --awwd-com-color-button-gray-container: var(--awwd-sys-color-neutral-surface-darker);
+    --awwd-com-color-button-gray-label: var(--awwd-sys-color-on-dark-surface-80a);
     --awwd-com-color-button-transparentBg-label: var(--awwd-sys-color-on-dark-surface);
   }
 }

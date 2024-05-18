@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Image from 'next/image';
 import './index.scss';
 
 /**
@@ -12,6 +13,7 @@ import './index.scss';
  * <br />
  */
  export const Card = ({
+  actions,
   cornerSize,
   className,
   children,
@@ -19,35 +21,59 @@ import './index.scss';
   heading,
   desc,
   style,
+  photoStyle,
   shadow,
+  type,
+  photo,
   cardPaddingSpacing,
   ...props
 }) => {
-
-  let classNameProps = `awwd-card ` +
+  console.log(!!type && !!photo)
+  // Container classname
+  let cardContainerClassNameProps = `awwd-card ` +
     `${cornerSize ? `awwd-card--corner--${cornerSize}` : ''} ` +
     `${shadow ? `awwd-card--shadow--${shadow}` : ''} ` +
-    `${cardPaddingSpacing ? `awwd-card--padding--${cardPaddingSpacing}` : ''} ` +
     `${fit ? `awwd-card--fit` : ''} ` +
+    `${(type === 'row' || (!!type && !!photo)) ? `awwd-card--type--${type}` : ''} ` +
     `${className}`
+
+  // Content classname
+  let cardContentClassNameProps = `awwd-card__content ` +
+    `${cardPaddingSpacing ? `awwd-card__content--padding--${cardPaddingSpacing}` : ''} `
 
   return (
     <div
       {...props}
-      className={classNameProps}
+      className={cardContainerClassNameProps}
       style={style}
     >
-      <div className='awwd-card__content'>
-        {heading && <h3 className='awwd-card__heading'>{heading}</h3>}
-        {desc && <p className='awwd-card__desc'>{desc}</p>}
+      {photo &&
+        <div className='awwd-card__photo' style={photoStyle}>
+          <Image src={photo} width={300} height={200} alt='photo' />
+        </div>
+      }
+      <div
+        className={cardContentClassNameProps}
+      >
+        {heading || desc ?
+          <section className='awwd-card__content__body'>
+            {heading && <h3 className='awwd-card__heading'>{heading}</h3>}
+            {desc && <p className='awwd-card__desc'>{desc}</p>}
+          </section>
+        : null}
         {children}
+        {actions && <div className='awwd-card__actions'>{actions}</div>}
       </div>
     </div>
   )
 }
 
 Card.propTypes = {
- /**
+  /**
+   * Actions of card.
+   */
+  actions: PropTypes.node,
+  /**
    * It contains the content between the opening and closing tags of a component.
    */
   children: PropTypes.node,
@@ -55,6 +81,10 @@ Card.propTypes = {
    * Card corner's size type: `large` or omitted (meaning `default`)
    */
   cornerSize: PropTypes.string,
+  /**
+   * Types of card. type: `cover` `row` or omitted (meaning `default`)
+   */
+  type: PropTypes.string,
   /**
    * Heading of card
    */
@@ -72,6 +102,10 @@ Card.propTypes = {
    */
   shadow: PropTypes.string,
   /**
+   * Photo of card
+   */
+  photo: PropTypes.string,
+  /**
    * ClassName of card
    */
   className: PropTypes.string,
@@ -83,14 +117,22 @@ Card.propTypes = {
    * Style properties of card, like padding, margin, width..etc
    */
   style: PropTypes.object,
+  /**
+   * Photo style properties of photo, like width, height..etc
+   */
+  photoStyle: PropTypes.object,
 }
 
 Card.defaultProps = {
   className: '',
-  cornerSize: null,
+  cornerSize: 'default',
   heading: null,
   desc: null,
   style: null,
+  photoStyle: null,
+  type: null,
   fit: null,
-  cardPaddingSpacing: false,
+  shadow: 'default',
+  photo: null,
+  cardPaddingSpacing: 'default',
 }

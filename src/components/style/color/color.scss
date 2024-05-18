@@ -21,19 +21,19 @@
     }
     &--heavy{
         &--long {
-            box-shadow: var(--awwd-sys-shadow-med-long);
+            box-shadow: var(--awwd-sys-shadow-heavy-long);
         }
         &--med {
-            box-shadow: var(--awwd-sys-shadow-med-med);
+            box-shadow: var(--awwd-sys-shadow-heavy-med);
         }
         &--rg {
-            box-shadow: var(--awwd-sys-shadow-med-rg);
+            box-shadow: var(--awwd-sys-shadow-heavy-rg);
         }
         &--short {
-            box-shadow: var(--awwd-sys-shadow-med-short);
+            box-shadow: var(--awwd-sys-shadow-heavy-short);
         }
         &--shorter {
-          box-shadow: var(--awwd-sys-shadow-med-shorter);
+          box-shadow: var(--awwd-sys-shadow-heavy-shorter);
         }
     }
 }
