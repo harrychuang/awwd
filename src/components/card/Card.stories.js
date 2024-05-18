@@ -21,6 +21,10 @@ export default {
       options: [null, 'cover'],
       control: { type: 'radio' },
     },
+    align: {
+      options: [null, 'left'],
+      control: { type: 'radio' },
+    },
     fit: {
       options: [false, true],
       control: { type: 'radio' },
@@ -31,6 +35,7 @@ export default {
     }
   },
   args: {
+    align: null,
     cornerSize: 'default',
     shadow: 'default',
     type: null,

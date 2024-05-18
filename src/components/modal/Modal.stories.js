@@ -12,7 +12,7 @@ export default {
   args: {},
 };
 
-export const All = (args) => {
+export const OpenModal = (args) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -34,19 +34,100 @@ export const All = (args) => {
               <Button size="large" type="primary" onClick={handleCloseModal}>OK</Button>
             </>
           }
-          desc="At Shopmatic, we continuously iterate our products and offerings to provide a better user experience to you. Our new smart home screen provides you with clear suggestions and resources to move you to the right path to success. The interface will also automatically adjust to any stage of your business."
           fit={false}
-          fixedActions
+          // fixedActions
           // type='cover'
           // align='left'
-          heading="Welcome to a fresh new experience Welcome to a fresh new experience Welcome to a fresh new experience Welcome to a fresh new experience"
+          heading="Regions of Japan"
+          desc="The Kanto Region (関東, Kantō, literally 'east of the border') contains Japan's largest plain and is very densely populated. The large metropolises of Tokyo and Yokohama are located in the Kanto Region which consists of seven prefectures."
           photo="/demo-img.jpg"
           style={{
-            maxWidth: '500px',
-            // minHeight: '400px'
+            maxWidth: '400px'
           }}
         />
       </Modal>
     </>
   );
 };
+
+export const Default = () => (
+  <Modal closeButton show>
+    <Card
+      actions={
+        <>
+          <Button size="large" type="primary">OK</Button>
+        </>
+      }
+      align='left'
+      heading="Regions of Japan"
+      desc="The Kanto Region (関東, Kantō, literally 'east of the border') contains Japan's largest plain and is very densely populated. The large metropolises of Tokyo and Yokohama are located in the Kanto Region which consists of seven prefectures."
+      style={{
+        maxWidth: '380px'
+      }}
+    />
+  </Modal>
+)
+
+export const HeroImage = () => (
+  <Modal closeButton show>
+    <Card
+      actions={
+        <>
+          <Button size="large" type="primary">OK</Button>
+        </>
+      }
+      align='left'
+      photo="/demo-img.jpg"
+      heading="Regions of Japan"
+      desc="The Kanto Region (関東, Kantō, literally 'east of the border') contains Japan's largest plain and is very densely populated. The large metropolises of Tokyo and Yokohama are located in the Kanto Region which consists of seven prefectures."
+      style={{
+        maxWidth: '380px'
+      }}
+    />
+  </Modal>
+)
+
+export const CoverType = () => (
+  <Modal closeButton show>
+    <Card
+      actions={
+        <>
+          <Button size="large" type="gray">Cancel</Button>
+          <Button size="large" type="primary">OK</Button>
+        </>
+      }
+      type='cover'
+      photo="/demo-img.jpg"
+      heading="Regions of Japan"
+      desc="The Kanto Region (関東, Kantō, literally 'east of the border') contains Japan's largest plain and is very densely populated. The large metropolises of Tokyo and Yokohama are located in the Kanto Region which consists of seven prefectures."
+      style={{
+        maxWidth: '380px',
+        minHeight: '460px'
+      }}
+    />
+  </Modal>
+)
+
+export const LongContent = () => (
+  <Modal closeButton show>
+    <Card
+      actions={
+        <>
+          <Button size="large" type="gray">Cancel</Button>
+          <Button size="large" type="primary">OK</Button>
+        </>
+      }
+      fixedActions
+      photo="/demo-img.jpg"
+      heading="Tokyo and the cultural and natural treasures just at its doorstep"
+      desc={`Japan's first permanent capital was established in the year 710 at Heijo, the city now known as Nara (奈良). \n\n Prior to that, the capital was moved to a new location whenever a new emperor ascended to the throne. However, as the influence and political ambitions of the city's powerful Buddhist monasteries grew to become a serious threat to the government,
+        the capital was moved away from Nara to Nagaoka in 784 and a few years later to Kyoto. \n\n Japan's first permanent capital was established in the year 710 at Heijo, the city now known as Nara (奈良). 
+        Prior to that, the capital was moved to a new location whenever a new emperor ascended to the throne. However, as the influence and political ambitions of the city's powerful Buddhist monasteries grew to become 
+        a serious threat to the government, the capital was moved away from Nara to Nagaoka in 784 and a few years later to Kyoto. \n\n Japan's first permanent capital was established in the year 710 at Heijo, the city now known as Nara (奈良).`}
+      style={{
+        maxWidth: '460px',
+        minHeight: '460px'
+      }}
+    />
+  </Modal>
+)

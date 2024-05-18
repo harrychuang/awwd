@@ -49,7 +49,7 @@ export const Modal = ({
         <div className={modalClassNameProps} style={style} {...props}>
           <div className="awwd-modal-content">
             {closeButton ?
-              <Button className='awwd-modal-close' iconType type='default' rounded onClick={onClose}>
+              <Button className='awwd-modal-close' iconType type='gray' rounded onClick={onClose}>
                 <Icon type='close' />
               </Button>
             : null}

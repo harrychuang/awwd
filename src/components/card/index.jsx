@@ -36,13 +36,13 @@ import './index.scss';
     `${shadow ? `awwd-card--shadow--${shadow}` : ''} ` +
     `${fit ? `awwd-card--fit` : ''} ` +
     `${(type === 'row' || (!!type && !!photo)) ? `awwd-card--type--${type}` : ''} ` +
+    `${!!photo ? `has-photo` : ''} ` +
     `${align ? `awwd-card--align--${align}` : ''} ` +
     `${fixedActions ? 'fixed-actions' : ''} ` +
     `${className}`
 
   // Content classname
   let cardContentClassNameProps = `awwd-card__content ` +
-    `${!!photo ? `has-photo` : ''} ` +
     `${cardPaddingSpacing ? `awwd-card__content--padding--${cardPaddingSpacing}` : ''} `
 
   return (
