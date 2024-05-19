@@ -12,8 +12,8 @@
   align-items: center;
   pointer-events: none;
   z-index: var(--awwd-sys-elevation-base);
+  // Custmixed card
   &.has-close-button {
-    // Custmixed card
     .awwd-card__heading {
       padding-top: var(--awwd-sys-spacing-rg);
       width: calc(100% - var(--awwd-sys-spacing-xxl));

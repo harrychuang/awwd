@@ -23,7 +23,7 @@
   transition: all var(--awwd-sys-transition-ease-out-fast);
   text-align: center;
   position: relative;
-  max-height: 90vh;
+  max-height: calc(100vh - var(--awwd-sys-spacing-xxxl));
   max-width: calc(100vw - var(--awwd-sys-spacing-xl));
   overflow-x: hidden;
   overflow-y: auto;
@@ -185,6 +185,9 @@
         padding-bottom: var(--awwd-sys-spacing-rg);
         &__body{
           text-align: left;
+        }
+        .awwd-card__heading {
+          align-self: flex-start;
         }
       }
       .awwd-card__actions{

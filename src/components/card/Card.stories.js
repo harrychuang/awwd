@@ -1,7 +1,7 @@
 import { Card } from './'
 import { Button } from '../button'
 import { Icon } from '../icon'
-const demoImage = '/demo-img.jpg';
+const demoImage = 'https://noeinoi.com/storybook/demo-img.jpg';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 export default {
