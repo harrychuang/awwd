@@ -125,6 +125,7 @@ export const CoverType = () => (
     heading='Heading'
     desc='Descriptions..'
     type='cover'
+    cornerSize='large'
     actions={
       <>
         <Button type='primary' size='large'>OK</Button>

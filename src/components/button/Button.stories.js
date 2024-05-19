@@ -78,6 +78,17 @@ export const Default = () => (
   </Button>
 )
 
+export const IconType = () => (
+  <>
+    <Button iconType rounded style={elementStyle}>
+      <Icon type='close' />
+    </Button>
+    <Button iconType transparentBg style={elementStyle}>
+      <Icon type='close' />
+    </Button>
+  </>
+)
+
 export const Primary = () => (
   <Button type='primary'>
     Primary
@@ -99,5 +110,17 @@ export const Success = () => (
 export const Info = () => (
   <Button type='info'>
     Info
+  </Button>
+)
+
+export const Warning = () => (
+  <Button type='warning'>
+    Warning
+  </Button>
+)
+
+export const Error = () => (
+  <Button type='error'>
+    Error
   </Button>
 )

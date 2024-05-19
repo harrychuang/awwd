@@ -105,6 +105,7 @@ export const CoverTypeModal = () => (
         }
         type='cover'
         photo={demoImage}
+        cornerSize='large'
         heading="Regions of Japan"
         desc="The Kanto Region (関東, Kantō, literally 'east of the border') contains Japan's largest plain and is very densely populated. The large metropolises of Tokyo and Yokohama are located in the Kanto Region which consists of seven prefectures."
         style={{
@@ -129,10 +130,8 @@ export const LongContentModal = () => (
         fixedActions
         photo={demoImage}
         heading="Tokyo and the cultural and natural treasures just at its doorstep"
-        desc={`This series of articles about credit cards, points and miles, and budgeting for travel is brought to you in partnership with The Points Guy. \n\n
-Advertiser Disclosure: This post contains references to products from one or more of our advertisers. We may receive compensation when you click on links to those products. Terms apply to the offers listed on this page. This relationship may impact how and where links appear on this site. This site does not include all financial companies or all available financial offers. All information about the American Express® Green Card*, Alaska Airlines credit cards, Citi credit cards, the World of Hyatt Credit Card, and AAdvantage credit cards has been collected independently by Lonely Planet. These cards are not available through Lonely Planet. \n\n
-With its unique culture, cuisine and stunning natural beauty, it's no wonder why Japan is a popular destination for travelers from around the world. From ancient temples to modern cities, there is something for everyone — making it the perfect place for a memorable vacation. However, Japan can also be incredibly expensive, thanks to the high cost of food, lodging and airfare. The solution? Points and miles. \n\n
-Traveling to Japan using points and miles is a great way to experience this fascinating country's culture, cuisine and natural beauty without breaking the bank. With an abundance of airline rewards programs offering flights from North America for as little as 40,000 miles round-trip, making your dream trip a reality with some strategic planning.  \n\n
+        desc={`This series of articles about credit cards, points and miles, and budgeting for travel is brought to you in partnership with The Points Guy. Advertiser Disclosure: This post contains references to products from one or more of our advertisers. We may receive compensation when you click on links to those products. Terms apply to the offers listed on this page. This relationship may impact how and where links appear on this site. This site does not include all financial companies or all available financial offers. All information about the American Express® Green Card*, Alaska Airlines credit cards, Citi credit cards, the World of Hyatt Credit Card, and AAdvantage credit cards has been collected independently by Lonely Planet. These cards are not available through Lonely Planet. \n\n
+With its unique culture, cuisine and stunning natural beauty, it's no wonder why Japan is a popular destination for travelers from around the world. From ancient temples to modern cities, there is something for everyone — making it the perfect place for a memorable vacation. However, Japan can also be incredibly expensive, thanks to the high cost of food, lodging and airfare. The solution? Points and miles. Traveling to Japan using points and miles is a great way to experience this fascinating country's culture, cuisine and natural beauty without breaking the bank. With an abundance of airline rewards programs offering flights from North America for as little as 40,000 miles round-trip, making your dream trip a reality with some strategic planning.  \n\n
 From taking advantage of airline loyalty programs or signing up for credit cards with generous rewards points, there are plenty of ways for travelers looking for a budget-friendly journey through Japan.
         `}
         style={{
