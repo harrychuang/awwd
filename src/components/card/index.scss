@@ -20,7 +20,7 @@
   color: var(--awwd-comp-color-card-heading);
   background-color: var(--awwd-comp-color-card-surface);
   display: inline-block;
-  transition: all var(--awwd-sys-transition-ease-out-fast);
+  transition: all var(--awwd-sys-motion-ease-out-fast);
   text-align: center;
   position: relative;
   max-height: calc(100vh - var(--awwd-sys-spacing-xxxl));
@@ -252,7 +252,7 @@
     gap: var(--awwd-sys-spacing-sm);
     flex-direction: column;
     position: relative;
-    transition: all var(--awwd-sys-transition-ease-out-fast);
+    transition: all var(--awwd-sys-motion-ease-out-fast);
     z-index: var(--awwd-sys-elevation-nav);
     &__body {
       display: flex;

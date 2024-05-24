@@ -45,7 +45,7 @@ export default {
       storySort: {
         // Stories Sorting
         order: [
-          'Guides', ['Color', 'Typography', 'Spacing', 'Corner', 'Shadow'],
+          'Guides', ['Token', 'Color', 'Typography', 'Spacing', 'Corner', 'Shadow'],
           'Components', [
             'General', ['Icons', 'Buttons'],
           ]

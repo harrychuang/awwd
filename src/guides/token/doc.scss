@@ -1,0 +1,14 @@
+@import '../../components/style/settings.scss';
+
+.doc-token {
+  display: flex;
+
+  // Modifier
+  .sbdocs-h3 {
+    font-size: 18px;
+  }
+
+  .card-list__item__flexible--sm {
+    min-height: 40px;
+  }
+}

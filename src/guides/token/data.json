@@ -1,0 +1,166 @@
+[
+    {
+        "Title": "Token Prefix", 
+        "Tokens": [
+            {
+                "name": "awwd"
+            }
+        ]
+    },
+    {
+        "Title": "Type", 
+        "Tokens": [
+            {
+                "name": "ref"
+            },
+            {
+                "name": "sys"
+            },
+            {
+                "name": "comp"
+            }
+        ]
+    },
+    {
+        "Title": "Role", 
+        "Tokens": [
+            {
+                "name": "color"
+            },
+            {
+                "name": "font"
+            },
+            {
+                "name": "size"
+            },
+            {
+                "name": "spacing"
+            },
+            {
+                "name": "shadow"
+            },
+            {
+                "name": "border"
+            },
+            {
+                "name": "motion"
+            }
+        ]
+    },
+    {
+        "Title": "Component", 
+        "Tokens": [
+            {
+                "name": "button"
+            },
+            {
+                "name": "input"
+            },
+            {
+                "name": "card"
+            },
+            {
+                "name": "modal"
+            },
+            {
+                "name": "message"
+            },
+            {
+                "name": "avatar"
+            }
+        ]
+    },
+    {
+        "Title": "Variants", 
+        "Tokens": [
+            {
+                "name": "primary"
+            },
+            {
+                "name": "secondary"
+            },
+            {
+                "name": "dark"
+            },
+            {
+                "name": "light"
+            },
+            {
+                "name": "success"
+            },
+            {
+                "name": "info"
+            },
+            {
+                "name": "warning"
+            },
+            {
+                "name": "error"
+            }
+        ]
+    },
+    {
+        "Title": "Target", 
+        "Tokens": [
+            {
+                "name": "heading"
+            },
+            {
+                "name": "surface"
+            },
+            {
+                "name": "corner"
+            }
+        ]
+    },
+    {
+        "Title": "Status", 
+        "Tokens": [
+            {
+                "name": "xxs"
+            },
+            {
+                "name": "xs"
+            },
+            {
+                "name": "sm"
+            },
+            {
+                "name": "reg"
+            },
+            {
+                "name": "med"
+            },
+            {
+                "name": "lg"
+            },
+            {
+                "name": "xl"
+            },
+            {
+                "name": "xxl"
+            },
+            {
+                "name": "actived"
+            },
+            {
+                "name": "horvered"
+            },
+            {
+                "name": "disabled"
+            },
+            {
+                "name": "horvered"
+            },
+            {
+                "name": "fast"
+            },
+            {
+                "name": "slower"
+            },
+            {
+                "name": "slowest"
+            }
+        ]
+    }
+]

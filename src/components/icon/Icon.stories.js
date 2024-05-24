@@ -53,7 +53,7 @@ const DsIconListItems = () => {
 
     return (
       <div key={iconGroup.Title} className='render-list'>
-        <h3>{iconGroup.Title}</h3>
+        <h3 className='sbdocs-h3'>{iconGroup.Title}</h3>
         <ul className='card-list'>
           {iconsListItems}
         </ul>

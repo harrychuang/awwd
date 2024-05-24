@@ -55,7 +55,7 @@
   outline: none;
   padding: 0 var(--awwd-com-size-button-padding);
   position: relative;
-  transition: all var(--awwd-sys-transition-ease-out-fast);
+  transition: all var(--awwd-sys-motion-ease-out-fast);
   vertical-align: middle;
   @include awwd-sys-font-size-body-base;
   &__content {
