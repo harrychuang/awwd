@@ -40,9 +40,6 @@
                 "name": "shadow"
             },
             {
-                "name": "border"
-            },
-            {
                 "name": "motion"
             }
         ]
@@ -51,13 +48,22 @@
         "Title": "Component", 
         "Tokens": [
             {
+                "name": "null"
+            },
+            {
                 "name": "button"
             },
             {
                 "name": "input"
             },
             {
+                "name": "label"
+            },
+            {
                 "name": "card"
+            },
+            {
+                "name": "dropdown"
             },
             {
                 "name": "modal"
@@ -67,12 +73,55 @@
             },
             {
                 "name": "avatar"
+            },
+            {
+                "name": "chart"
+            },
+            {
+                "name": "icon"
+            },
+            {
+                "name": "tooltip"
+            },
+            {
+                "name": "preload"
+            },
+            {
+                "name": "switcher"
+            },
+            {
+                "name": "checks"
+            },
+            {
+                "name": "panel"
+            },
+            {
+                "name": "table"
+            },
+            {
+                "name": "date-picker"
+            },
+            {
+                "name": "time-picker"
+            },
+            {
+                "name": "collapse"
+            },
+            {
+                "name": "logo"
             }
+            
         ]
     },
     {
         "Title": "Variants", 
         "Tokens": [
+            {
+                "name": "null"
+            },
+            {
+                "name": "brand"
+            },
             {
                 "name": "primary"
             },
@@ -84,6 +133,9 @@
             },
             {
                 "name": "light"
+            },
+            {
+                "name": "netural"
             },
             {
                 "name": "success"
@@ -103,19 +155,106 @@
         "Title": "Target", 
         "Tokens": [
             {
-                "name": "heading"
+                "name": "null"
             },
             {
                 "name": "surface"
             },
             {
+                "name": "background"
+            },
+            {
+                "name": "container"
+            },
+            {
                 "name": "corner"
+            },
+            {
+                "name": "face"
+            },
+            {
+                "name": "weight"
+            },
+            {
+                "name": "padding"
+            },
+            {
+                "name": "padding-h"
+            },
+            {
+                "name": "padding-v"
+            },
+            {
+                "name": "border"
+            },
+            {
+                "name": "line-height"
+            },
+            {
+                "name": "heading-1"
+            },
+            {
+                "name": "heading-2"
+            },
+            {
+                "name": "heading-3"
+            },
+            {
+                "name": "heading-4"
+            },
+            {
+                "name": "heading-5"
+            },
+            {
+                "name": "heading-6"
+            },
+            {
+                "name": "subheading"
+            },
+            {
+                "name": "body"
+            },
+            {
+                "name": "caption"
+            },
+            {
+                "name": "label"
             }
         ]
     },
     {
         "Title": "Status", 
         "Tokens": [
+            {
+                "name": "null"
+            },
+            {
+                "name": "10"
+            },
+            {
+                "name": "20"
+            },
+            {
+                "name": "30"
+            },
+            {
+                "name": "40"
+            },
+            {
+                "name": "50"
+            },
+            {
+                "name": "60"
+            },
+            {
+                "name": "70"
+            },
+            {
+                "name": "80"
+            },
+            {
+                "name": "90"
+            },
             {
                 "name": "xxs"
             },
@@ -150,7 +289,13 @@
                 "name": "disabled"
             },
             {
-                "name": "horvered"
+                "name": "selected"
+            },
+            {
+                "name": "focused"
+            },
+            {
+                "name": "checked"
             },
             {
                 "name": "fast"

@@ -1,14 +1,56 @@
 @import '../../components/style/settings.scss';
 
+.token-name {
+  display: inline-flex;
+  padding: var(--awwd-sys-spacing-rg) var(--awwd-sys-spacing-lg);
+  background-color: var(--storybook-doc-color-alpha);
+  border-radius: 40px;
+  color: var(--awwd-sys-color-secondary-surface);
+  border: 3px solid var(--awwd-sys-color-secondary-surface);
+  font-family: var(--awwd-sys-font-face-brand-med);
+  margin-bottom: var(--awwd-sys-spacing-lg);
+  gap: 15px;
+  cursor: pointer;
+  @include awwd-sys-font-size-body-lg;
+
+  .material-icons {
+    position: relative;
+    top: 3px;
+    font-weight: bold;
+    color: var(--awwd-sys-color-secondary-surface) !important;
+  }
+
+  &:hover {
+    color: var(--awwd-sys-color-secondary-surface-light);
+    border: 3px solid var(--awwd-sys-color-secondary-surface-light);
+    .material-icons {
+      color: var(--awwd-sys-color-secondary-surface-light) !important;
+    }
+  }
+}
+
 .doc-token {
   display: flex;
+  gap: 10px;
 
   // Modifier
   .sbdocs-h3 {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .render-list {
+    flex: 1;
   }
 
   .card-list__item__flexible--sm {
     min-height: 40px;
+    min-width: fit-content;
+    padding: 10px 10px;
+    font-size: 14px;
+    font-family: var(--awwd-sys-font-face-brand-med);
+    &.active {
+      color: var(--awwd-sys-color-on-dark-surface);
+      background-color: var(--awwd-sys-color-secondary-surface);
+    }
   }
 }
