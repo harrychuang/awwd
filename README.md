@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+根據您的 `package.json`，這裡是生成的 `README.md` 內容：
+
+```markdown
+# awwd
+
+## Project Overview
+
+`awwd` 是一個使用 Next.js 和 Storybook 開發的項目。此項目包含了開發和構建應用程序所需的各種腳本和依賴。
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js (建議使用最新穩定版)
+- npm (已包含在 Node.js 中)
+
+### Installation
+
+首先，克隆此倉庫到本地：
+
+```bash
+git clone git@github.com:harrychuang/awwd.git
+cd awwd
+```
+
+然後，安裝所有必要的依賴：
+
+```bash
+npm install
+```
+
+### Available Scripts
+
+在項目根目錄中，您可以運行以下腳本：
+
+#### `npm run dev`
+
+在開發模式下運行應用程序。打開 [http://localhost:3000](http://localhost:3000) 查看。
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### `npm run build`
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+構建應用程序以進行生產環境使用。生成的文件將存儲在 `.next` 文件夾中。
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```bash
+npm run build
+```
 
-## Learn More
+#### `npm run start`
 
-To learn more about Next.js, take a look at the following resources:
+在生產模式下運行構建後的應用程序。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### `npm run lint`
 
-## Deploy on Vercel
+運行 ESLint 來檢查代碼。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run lint
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+#### `npm run storybook`
+
+在開發模式下運行 Storybook。打開 [http://localhost:6006](http://localhost:6006) 查看。
+
+```bash
+npm run storybook
+```
+
+#### `npm run build-storybook`
+
+構建 Storybook 以進行生產環境使用。生成的文件將存儲在 `storybook-static` 文件夾中。
+
+```bash
+npm run build-storybook
+```
+
+#### `npm run chromatic`
+
+運行 Chromatic 進行視覺回歸測試。
+
+```bash
+npm run chromatic
+```
+
+## Dependencies
+
+- **antd**: ^5.17.0
+- **next**: 14.2.3
+- **react**: ^18
+- **react-dom**: ^18
+- **react-transition-group**: ^4.4.5
+
+## Dev Dependencies
+
+- **@chromatic-com/storybook**: ^1.3.5
+- **@storybook/addon-designs**: ^8.0.2
+- **@storybook/addon-essentials**: ^8.0.10
+- **@storybook/addon-interactions**: ^8.0.10
+- **@storybook/addon-links**: ^8.0.10
+- **@storybook/addon-onboarding**: ^8.0.10
+- **@storybook/addon-styling-webpack**: ^1.0.0
+- **@storybook/addon-themes**: ^8.0.10
+- **@storybook/addons**: ^7.6.17
+- **@storybook/api**: ^7.6.17
+- **@storybook/blocks**: ^8.0.10
+- **@storybook/manager-api**: ^8.0.10
+- **@storybook/nextjs**: ^8.0.10
+- **@storybook/react**: ^8.0.10
+- **@storybook/test**: ^8.0.10
+- **@storybook/theming**: ^8.0.10
+- **chromatic**: ^11.3.2
+- **clipboard-copy**: ^4.0.1
+- **eslint**: ^8
+- **eslint-config-next**: 14.2.3
+- **eslint-plugin-storybook**: ^0.8.0
+- **material-icons-react**: ^1.0.4
+- **npm**: ^10.7.0
+- **sass**: ^1.77.1
+- **storybook**: ^8.0.10
