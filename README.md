@@ -1,5 +1,3 @@
-根據您的 `package.json`，這裡是生成的 `README.md` 內容：
-
 ```markdown
 # awwd
 
@@ -12,7 +10,7 @@
 ### Prerequisites
 
 - Node.js (建議使用最新穩定版)
-- npm (已包含在 Node.js 中)
+- npm 或 Yarn (已包含在 Node.js 中)
 
 ### Installation
 
@@ -25,68 +23,82 @@ cd awwd
 
 然後，安裝所有必要的依賴：
 
+使用 npm:
+
 ```bash
 npm install
 ```
 
+或者，使用 Yarn:
+
+```bash
+yarn install
+```
+
 ### Available Scripts
 
-在項目根目錄中，您可以運行以下腳本：
-
-#### `npm run dev`
-
-在開發模式下運行應用程序。打開 [http://localhost:3000](http://localhost:3000) 查看。
-
-```bash
-npm run dev
-```
-
-#### `npm run build`
-
-構建應用程序以進行生產環境使用。生成的文件將存儲在 `.next` 文件夾中。
-
-```bash
-npm run build
-```
-
-#### `npm run start`
-
-在生產模式下運行構建後的應用程序。
-
-```bash
-npm run start
-```
-
-#### `npm run lint`
+#### `npm run lint` / `yarn lint`
 
 運行 ESLint 來檢查代碼。
+
+使用 npm:
 
 ```bash
 npm run lint
 ```
 
-#### `npm run storybook`
+或者，使用 Yarn:
+
+```bash
+yarn lint
+```
+
+#### `npm run storybook` / `yarn storybook`
 
 在開發模式下運行 Storybook。打開 [http://localhost:6006](http://localhost:6006) 查看。
+
+使用 npm:
 
 ```bash
 npm run storybook
 ```
 
-#### `npm run build-storybook`
+或者，使用 Yarn:
+
+```bash
+yarn storybook
+```
+
+#### `npm run build-storybook` / `yarn build-storybook`
 
 構建 Storybook 以進行生產環境使用。生成的文件將存儲在 `storybook-static` 文件夾中。
+
+使用 npm:
 
 ```bash
 npm run build-storybook
 ```
 
-#### `npm run chromatic`
+或者，使用 Yarn:
+
+```bash
+yarn build-storybook
+```
+
+#### `npm run chromatic` / `yarn chromatic`
 
 運行 Chromatic 進行視覺回歸測試。
 
+使用 npm:
+
 ```bash
 npm run chromatic
+```
+
+或者，使用 Yarn:
+
+```bash
+yarn chromatic
 ```
 
 ## Dependencies
