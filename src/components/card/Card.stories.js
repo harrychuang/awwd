@@ -18,7 +18,7 @@ export default {
       control: { type: 'radio' },
     },
     type: {
-      options: [null, 'cover'],
+      options: ['default', 'cover', 'row'],
       control: { type: 'radio' },
     },
     align: {
@@ -41,8 +41,8 @@ export default {
     type: null,
     fit: false,
     cardPaddingSpacing: 'default'
-  },
-};
+  }
+}
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 const elementStyle ={
@@ -65,10 +65,22 @@ export const All = (args) => (
           <Button type='primary' size='large'>OK</Button>
         </>
       }
-      style={{...elementStyle, width: '320px', minHeight: '400px'}}
+      style={{
+        ...elementStyle,
+        width: args.type === 'row' ? '100%' : '320px',
+        minHeight: args.type === 'row' ? 'auto' : (args.type === 'cover' ? '400px' : 'auto')
+      }}
     />
   </>
 )
+
+All.parameters = {
+  design: {
+    name: "Figma",
+    type: "figma",
+    url: "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fdesign%2F7lyBDlS0q2e5jFVjcPNx0P%2Fawwd-design-system%3Fnode-id%3D310-11669%26t%3DABzCOHSj2sNDNB5Y-1",
+  },
+};
 
 export const Default = () => (
   <Card type='default'>

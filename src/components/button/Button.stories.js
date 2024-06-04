@@ -9,6 +9,9 @@ export default {
   component: Button,
   tags: ['autodocs'],
   argTypes: {
+    children: {
+      control: { type: 'text' },
+    },
     type: {
       options: ['default','primary', 'secondary' , 'gray', 'success', 'info', 'warning', 'error'],
       control: { type: 'radio' },
@@ -35,6 +38,7 @@ export default {
     }
   },
   args: {
+    children: 'Button',
     type: 'default',
     rounded: false,
     fit: false,
@@ -50,24 +54,28 @@ const elementStyle ={
   marginBottom: 'var(--awwd-sys-spacing-sm)'
 }
 
-export const All = (args) => (
+export const All = ({ children, ...args }) => (
   <>
-    <Button {...args} style={elementStyle}>
-      Button
-    </Button>
-    <Button {...args} style={elementStyle}>
-      <Icon prefix type='arrow-back' />
-      Button with icon
-    </Button>
-    <Button {...args} style={elementStyle}>
-      Button with icon
-      <Icon surfix type='arrow-next' />
-    </Button>
-    <Button iconType {...args} style={elementStyle}>
+    <Button iconType {...args}>
       <Icon type='home' />
     </Button>
-    <Button iconType {...args} transparentBg style={elementStyle}>
+    &nbsp;&nbsp;
+    <Button iconType {...args} transparentBg>
       <Icon type='close' />
+    </Button>
+    &nbsp;&nbsp;
+    <Button {...args}>
+      {children}
+    </Button>
+    &nbsp;&nbsp;
+    <Button {...args}>
+      <Icon prefix type='arrow-back' />
+      {children} with prefix icon
+    </Button>
+    &nbsp;&nbsp;
+    <Button {...args}>
+      {children} with surfix icon
+      <Icon surfix type='arrow-next' />
     </Button>
   </>
 )

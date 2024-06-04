@@ -2,20 +2,23 @@
 
 .token-name {
   display: inline-flex;
-  padding: var(--awwd-sys-spacing-rg) var(--awwd-sys-spacing-lg);
+  align-items: center;
+  display: inline-flex;
+  justify-content: center;
+  padding: var(--awwd-sys-spacing-rg) var(--awwd-sys-spacing-med);
   background-color: var(--storybook-doc-color-alpha);
   border-radius: 40px;
   color: var(--awwd-sys-color-secondary-surface);
   border: 3px solid var(--awwd-sys-color-secondary-surface);
   font-family: var(--awwd-sys-font-face-brand-med);
+  margin-right: var(--awwd-sys-spacing-rg);
   margin-bottom: var(--awwd-sys-spacing-lg);
   gap: 15px;
+  min-width: 17px;
   cursor: pointer;
   @include awwd-sys-font-size-body-lg;
 
   .material-icons {
-    position: relative;
-    top: 3px;
     font-weight: bold;
     color: var(--awwd-sys-color-secondary-surface) !important;
   }
@@ -27,15 +30,44 @@
       color: var(--awwd-sys-color-secondary-surface-light) !important;
     }
   }
+
+  &.switch {
+    color: var(--awwd-sys-color-on-light-surface);
+    background-color: var(--awwd-ref-color-neutral-10);
+    border: 3px solid var(--awwd-ref-color-neutral-10);
+    &--actived{
+      color: var(--awwd-sys-color-on-dark-surface);
+      background-color: var(--awwd-sys-color-secondary-surface);
+      border: 3px solid var(--awwd-sys-color-secondary-surface);
+    }
+  }
 }
 
 .doc-token {
+  --doc-token-input-bg: var(--awwd-sys-color-secondary-surface-dark);
   display: flex;
-  gap: 10px;
+  gap: 5px;
+
+  .custom-token-input {
+    display: inline-block;
+    border: 2px solid var(--awwd-sys-color-secondary-surface-light);
+    background-color: var(--doc-token-input-bg);
+    width: inherit;
+    max-width: 100px;
+    padding: 8px  10px;
+    border-radius: 12px;
+    color: #fff;
+    font-family: var(--awwd-sys-font-face-brand-med);
+    &::placeholder {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
 
   // Modifier
   .sbdocs-h3 {
     font-size: 16px;
+    margin-bottom: 5px;
   }
 
   .render-list {
@@ -43,9 +75,10 @@
   }
 
   .card-list__item__flexible--sm {
-    min-height: 40px;
+    min-height: 32px;
     min-width: fit-content;
-    padding: 10px 10px;
+    padding: 5px 8px;
+    margin: 0 5px 5px 0;
     font-size: 14px;
     font-family: var(--awwd-sys-font-face-brand-med);
     &.active {

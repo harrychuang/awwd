@@ -20,6 +20,8 @@ export default {
 const DsIconListItems = () => {
   const clipboardCopy = useContext(ClipboardCopyContext); // Use useContext to get clipboardCopy
   const [selectedTokens, setSelectedTokens] = useState({});
+  const [isComponentDisabled, setIsComponentDisabled] = useState(true); // Initially set to true
+  const [separator, setSeparator] = useState('-'); // Initially set to '-'
 
   // Set initial state
   useEffect(() => {
@@ -37,22 +39,53 @@ const DsIconListItems = () => {
       ...prevTokens,
       [groupTitle]: tokenName,
     }));
+
+    if (groupTitle === 'Type' && (tokenName === 'ref' || tokenName === 'sys')) {
+      setIsComponentDisabled(true);
+      setSelectedTokens((prevTokens) => ({
+        ...prevTokens,
+        'Component': data.find(group => group.Title === 'Component').Tokens[0].name,
+      }));
+    } else if (groupTitle === 'Type') {
+      setIsComponentDisabled(false);
+    }
+  };
+
+  const handleInputChange = (groupTitle, value) => {
+    setSelectedTokens((prevTokens) => ({
+      ...prevTokens,
+      [groupTitle]: value,
+    }));
   };
 
   const selectedTokensString = Object.values(selectedTokens)
-    .filter(token => token !== null && token !== undefined && token !== "null")
-    .join('-');
+    .filter(token => token !== null && token !== undefined && token !== "null" && token !== "")
+    .join(separator);
 
   return (
     <div>
       <h4 className='token-name' onClick={() => clipboardCopy(selectedTokensString)}>
         {selectedTokensString} <MaterialIcon icon='content_copy' />
       </h4>
+      <h4
+        className={`token-name switch ${separator === '-' ? 'switch--actived' : ''}`}
+        onClick={() => setSeparator('-')}
+      >
+        -
+      </h4>
+      <h4
+        className={`token-name switch ${separator === '/' ? 'switch--actived' : ''}`}
+        onClick={() => setSeparator('/')}
+      >
+        /
+      </h4>
       <section className='doc-token'>
         {data.map((tokenGroup, groupKey) => {
+          const isComponentGroup = tokenGroup.Title === 'Component';
           const tokensListItems = tokenGroup.Tokens.map((tokenItem, key) => {
             const tokenName = tokenItem.name;
             const isSelected = selectedTokens[tokenGroup.Title] === tokenName;
+            const isDisabled = isComponentGroup && isComponentDisabled;
 
             return (
               <button
@@ -60,6 +93,8 @@ const DsIconListItems = () => {
                 key={key}
                 className={`card-list__item card-list__item__flexible card-list__item__flexible--sm ${isSelected ? 'active' : ''}`}
                 onClick={() => handleTokenClick(tokenGroup.Title, tokenName)}
+                disabled={isDisabled}
+                style={isDisabled ? { opacity: 0.5, pointerEvents: 'none' } : {}}
               >
                 {tokenName}
               </button>
@@ -69,6 +104,13 @@ const DsIconListItems = () => {
           return (
             <div key={groupKey} className='render-list'>
               <h3 className='sbdocs-h3'>{tokenGroup.Title}</h3>
+              <input
+                type='text'
+                className='custom-token-input'
+                placeholder={`Custom ${tokenGroup.Title}`}
+                value={selectedTokens[tokenGroup.Title] || ''}
+                onChange={(e) => handleInputChange(tokenGroup.Title, e.target.value)}
+              />
               <ul className='card-list'>
                 {tokensListItems}
               </ul>
@@ -93,7 +135,7 @@ const Template = () => (
     <code>
       {'background-color: var(--awwd-sys-color-primary-surface);'}
     </code>
-    <br /><br />
+    <br />
     {/* Token List */}
     <h2 className='sbdocs-h2'>Token Naming</h2>
     <DsIconListItems />

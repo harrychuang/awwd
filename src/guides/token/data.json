@@ -18,6 +18,12 @@
             },
             {
                 "name": "comp"
+            },
+            {
+                "name": "global"
+            },
+            {
+                "name": "alias"
             }
         ]
     },
@@ -41,6 +47,9 @@
             },
             {
                 "name": "motion"
+            },
+            {
+                "name": "elevation"
             }
         ]
     },
@@ -138,6 +147,12 @@
                 "name": "netural"
             },
             {
+                "name": "gray"
+            },
+            {
+                "name": "default"
+            },
+            {
                 "name": "success"
             },
             {
@@ -148,6 +163,27 @@
             },
             {
                 "name": "error"
+            },
+            {
+                "name": "red"
+            },
+            {
+                "name": "orange"
+            },
+            {
+                "name": "yellow"
+            },
+            {
+                "name": "green"
+            },
+            {
+                "name": "blue"
+            },
+            {
+                "name": "indigo"
+            },
+            {
+                "name": "purple"
             }
         ]
     },
@@ -191,6 +227,9 @@
                 "name": "line-height"
             },
             {
+                "name": "heading"
+            },
+            {
                 "name": "heading-1"
             },
             {
@@ -219,6 +258,12 @@
             },
             {
                 "name": "label"
+            },
+            {
+                "name": "title"
+            },
+            {
+                "name": "subtitle"
             }
         ]
     },
@@ -265,7 +310,7 @@
                 "name": "sm"
             },
             {
-                "name": "reg"
+                "name": "rg"
             },
             {
                 "name": "med"
@@ -278,6 +323,15 @@
             },
             {
                 "name": "xxl"
+            },
+            {
+                "name": "thin"
+            },
+            {
+                "name": "bold"
+            },
+            {
+                "name": "bolder"
             },
             {
                 "name": "actived"
@@ -305,6 +359,24 @@
             },
             {
                 "name": "slowest"
+            },
+            {
+                "name": "base"
+            },
+            {
+                "name": "header"
+            },
+            {
+                "name": "nav"
+            },
+            {
+                "name": "overlay"
+            },
+            {
+                "name": "modal"
+            },
+            {
+                "name": "super"
             }
         ]
     }

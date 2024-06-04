@@ -8,7 +8,8 @@ const config = {
     "@chromatic-com/storybook",
     "@storybook/addon-interactions",
     "@storybook/addon-styling-webpack",
-    "@storybook/addon-themes"
+    "@storybook/addon-themes",
+    "@storybook/addon-designs"
   ],
   framework: {
     name: "@storybook/nextjs",

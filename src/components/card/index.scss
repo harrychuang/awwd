@@ -96,6 +96,18 @@
     .awwd-button {
       flex: 1;
     }
+    // Actions content padding
+    &--padding {
+      &--none {
+        padding: 0 0;
+      }
+      &--default {
+        padding: 0 var(--awwd-comp-spacing-card-padding) var(--awwd-comp-spacing-card-padding) var(--awwd-comp-spacing-card-padding);
+      }
+      &--large {
+        padding: 0 var(--awwd-comp-spacing-card-padding-large) var(--awwd-comp-spacing-card-padding-large) var(--awwd-comp-spacing-card-padding-large);
+      }
+    }
   }
   &.fixed-actions {
     .awwd-card__actions {
@@ -184,6 +196,7 @@
         text-align: left;
         padding-bottom: var(--awwd-sys-spacing-rg);
         &__body{
+          align-self: flex-start;
           text-align: left;
         }
         .awwd-card__heading {

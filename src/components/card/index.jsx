@@ -45,6 +45,10 @@ import './index.scss';
   let cardContentClassNameProps = `awwd-card__content ` +
     `${cardPaddingSpacing ? `awwd-card__content--padding--${cardPaddingSpacing}` : ''} `
 
+  // Content classname
+  let cardActionsClassNameProps = `awwd-card__actions ` +
+    `${cardPaddingSpacing ? `awwd-card__actions--padding--${cardPaddingSpacing}` : ''} `
+
   return (
     <div
       {...props}
@@ -67,7 +71,7 @@ import './index.scss';
         : null}
         {children}
       </div>
-      {actions && <div className='awwd-card__actions'>{actions}</div>}
+      {actions && <div className={cardActionsClassNameProps}>{actions}</div>}
     </div>
   )
 }
