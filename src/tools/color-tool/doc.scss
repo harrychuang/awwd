@@ -1,0 +1,184 @@
+@import '../../components/style/settings.scss';
+
+.awwd-color-tool {
+  --color-tool-input-bg: var(--awwd-sys-color-secondary-surface-dark);
+  
+  .color-input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+  }
+
+  .color-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .color-picker {
+    width: 48px;
+    height: 50px;
+    border: 0px #000 solid;
+    border-radius: 12px;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+    box-sizing: border-box;
+    vertical-align: top;
+    border: #000000 0px solid;
+  }
+
+  .color-text-input {
+    display: inline-block;
+    border: 0px solid var(--awwd-sys-color-secondary-surface-light);
+    background-color: var(--color-tool-input-bg);
+    width: inherit;
+    max-width: 120px;
+    min-height: 18px;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #fff;
+    font-family: var(--awwd-sys-font-face-brand-med);
+    &::placeholder {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  .regenerate-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--awwd-sys-spacing-sm) var(--awwd-sys-spacing-rg);
+    max-height: 42px;
+    background-color: var(--storybook-doc-color-alpha);
+    border-radius: 40px;
+    color: var(--awwd-sys-color-secondary-surface);
+    border: 3px solid var(--awwd-sys-color-secondary-surface);
+    font-family: var(--awwd-sys-font-face-brand-med);
+    cursor: pointer;
+    gap: 8px;
+    @include awwd-sys-font-size-body-base;
+
+    .material-icons {
+      font-weight: bold;
+      color: var(--awwd-sys-color-secondary-surface) !important;
+    }
+
+    &:hover {
+      color: var(--awwd-sys-color-secondary-surface-light);
+      border: 3px solid var(--awwd-sys-color-secondary-surface-light);
+      .material-icons {
+        color: var(--awwd-sys-color-secondary-surface-light) !important;
+      }
+    }
+  }
+
+  // New row layout for color categories
+  .color-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 30px;
+    
+    &:first-of-type {
+      margin-top: 30px;
+    }
+  }
+
+  .color-category {
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .category-title {
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .color-swatch-container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .color-swatch {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    padding: 0 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+
+    &:hover {
+      transform: translateX(5px);
+    }
+
+    .shade-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: inherit;
+    }
+
+    .color-value {
+      font-size: 14px;
+      font-family: monospace;
+      color: inherit;
+    }
+  }
+
+  .main-color-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+
+    &:hover {
+      transform: scale(1.02);
+    }
+
+    .color-name {
+      font-size: 16px;
+      font-weight: 500;
+      color: inherit;
+    }
+
+    .color-value {
+      font-size: 16px;
+      font-family: monospace;
+      color: inherit;
+    }
+  }
+
+  .copied-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--awwd-sys-color-secondary-surface);
+    color: var(--awwd-sys-color-on-dark-surface);
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    animation: fadeInOut 2s ease forwards;
+  }
+
+  @keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(20px); }
+  }
+}
