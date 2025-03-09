@@ -189,11 +189,11 @@ const generateShades = (baseColor) => {
     const L = Math.min(oklab.L + (0.4 * scaleValue), 0.95);
     const a = oklab.a * (1 - 0.3 * scaleValue);
     const b = oklab.b * (1 - 0.3 * scaleValue);
-    shades[i * 100] = oklabToHex(L, a, b);
+    shades[i * 10] = oklabToHex(L, a, b);
   }
   
   // Base color (500)
-  shades[500] = baseColor;
+  shades[50] = baseColor;
   
   // Generate darker shades (600-900)
   for (let i = 6; i <= 9; i++) {
@@ -202,20 +202,23 @@ const generateShades = (baseColor) => {
     const L = Math.max(oklab.L - (0.3 * scaleValue), 0.15);
     const a = oklab.a * (1 + 0.1 * scaleValue);
     const b = oklab.b * (1 + 0.1 * scaleValue);
-    shades[i * 100] = oklabToHex(L, a, b);
+    shades[i * 10] = oklabToHex(L, a, b);
   }
   
   return shades;
 };
 
-// Generate secondary color based on primary with improved algorithm
-const generateSecondaryColor = (primaryHex) => {
+// Generate secondary color based on primary with improved algorithm and randomization
+const generateSecondaryColor = (primaryHex, randomFactor = 0) => {
   const rgb = hexToRgb(primaryHex);
   const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
   
-  // Use a more harmonious hue shift (120 degrees) instead of complementary (180)
-  // This creates more fashionable color combinations
-  let newHue = (hsl.h + 120) % 360;
+  // Random offset for regeneration feature - increased for more noticeable changes
+  const randomOffset = () => (Math.random() - 0.5) * 120 * randomFactor;
+  
+  // Use a more harmonious hue shift with randomization
+  // Base shift is 120 degrees, but can vary with randomFactor
+  let newHue = (hsl.h + 120 + randomOffset()) % 360;
   
   // Maintain high saturation and good lightness for vibrant secondary color
   const newSaturation = Math.min(Math.max(hsl.s, 65), 85);
@@ -227,17 +230,17 @@ const generateSecondaryColor = (primaryHex) => {
 
 // Generate semantic colors with improved algorithm
 const generateSemanticColors = (primaryHex, randomFactor = 0) => {
-  // Random offset for regeneration feature
-  const randomOffset = () => (Math.random() - 0.5) * 20 * randomFactor;
+  // Random offset for regeneration feature - increased for more noticeable changes
+  const randomOffset = () => (Math.random() - 0.5) * 40 * randomFactor;
   
   // Success color (green) - more vibrant
   const successHue = 135 + randomOffset(); // Slightly blue-green for modern look
   const successRgb = hslToRgb(successHue, 75, 45);
   const success = rgbToHex(successRgb.r, successRgb.g, successRgb.b);
   
-  // Error color (red) - more vibrant
-  const errorHue = 5 + randomOffset(); // Slightly orange-red for better visibility
-  const errorRgb = hslToRgb(errorHue, 80, 50);
+  // Error color (red) - with a hint of purple-blue to make it less intensely red
+  const errorHue = 345 + randomOffset(); // Shifted more toward purple (345 instead of 350)
+  const errorRgb = hslToRgb(errorHue, 70, 50); // Further reduced saturation from 75 to 70
   const error = rgbToHex(errorRgb.r, errorRgb.g, errorRgb.b);
   
   // Warning color (yellow/orange) - more vibrant
@@ -271,10 +274,11 @@ const ColorToolComponent = () => {
   const [copiedText, setCopiedText] = useState('');
   const [showCopied, setShowCopied] = useState(false);
 
-  // Generate colors when primary color changes
+  // Generate colors when primary color changes or randomFactor changes
   useEffect(() => {
     if (primaryColor && primaryColor.match(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/)) {
-      const secondary = generateSecondaryColor(primaryColor);
+      // Generate secondary color with randomFactor to allow it to change on regenerate
+      const secondary = generateSecondaryColor(primaryColor, randomFactor);
       const semantic = generateSemanticColors(primaryColor, randomFactor);
       
       setSecondaryColor(secondary);
@@ -329,7 +333,7 @@ const ColorToolComponent = () => {
     
     return (
       <div className="color-category">
-        <h3 className="category-title">{title}</h3>
+        <h3 class="sbdocs-h3">{title}</h3>
         
         <div 
           className="main-color-display"
