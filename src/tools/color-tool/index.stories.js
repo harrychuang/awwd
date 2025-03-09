@@ -177,7 +177,7 @@ const oklabToHex = (L, a, b) => {
   return rgbToHex(rInt, gInt, bInt);
 };
 
-// Generate color shades (100-900) using improved algorithm with more distinct lighter shades
+// Generate color shades (10-90) using improved algorithm with more distinct lighter shades
 const generateShades = (baseColor) => {
   const oklab = hexToOklab(baseColor);
   const shades = {};
@@ -194,34 +194,34 @@ const generateShades = (baseColor) => {
     const a = oklab.a * chromaFactor;
     const b = oklab.b * chromaFactor;
     
-    shades[i * 100] = oklabToHex(L, a, b);
+    shades[i * 10] = oklabToHex(L, a, b);
   }
   
-  // Base color (500)
-  shades[500] = baseColor;
+  // Base color (50)
+  shades[50] = baseColor;
   
-  // Generate darker shades (600-900) with much more distinct differences
+  // Generate darker shades (60-90) with much more distinct differences
   // Reversed order: 600 is darkest, 900 is lightest among the dark shades
   
   // Define specific lightness values for each shade to ensure clear distinction
   const darkerLightness = {
-    600: Math.max(oklab.L - 0.25, 0.20), // Very dark (almost black for some colors)
-    700: Math.max(oklab.L - 0.35, 0.15), // Dark but distinguishable from 600
-    800: Math.max(oklab.L - 0.45, 0.10), // Medium-dark
-    900: Math.max(oklab.L - 0.55, 0.05)  // Lightest of the dark shades
+    60: Math.max(oklab.L - 0.25, 0.20), // Very dark (almost black for some colors)
+    70: Math.max(oklab.L - 0.35, 0.15), // Dark but distinguishable from 600
+    80: Math.max(oklab.L - 0.45, 0.10), // Medium-dark
+    90: Math.max(oklab.L - 0.55, 0.05)  // Lightest of the dark shades
   };
   
   // Define specific chroma multipliers for each shade
   const chromaMultiplier = {
-    600: 1.1,  // Highest saturation for the darkest shade
-    700: 1.2,  // High saturation
-    800: 1.3,  // Medium-high saturation
-    900: 1.4   // Slightly increased saturation
+    60: 1.1,  // Highest saturation for the darkest shade
+    70: 1.2,  // High saturation
+    80: 1.3,  // Medium-high saturation
+    90: 1.4   // Slightly increased saturation
   };
   
   // Generate each dark shade with its specific parameters
   for (let i = 6; i <= 9; i++) {
-    const shade = i * 100;
+    const shade = i * 10;
     const L = darkerLightness[shade];
     const a = oklab.a * chromaMultiplier[shade];
     const b = oklab.b * chromaMultiplier[shade];
