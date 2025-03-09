@@ -194,28 +194,39 @@ const generateShades = (baseColor) => {
     const a = oklab.a * chromaFactor;
     const b = oklab.b * chromaFactor;
     
-    shades[i * 10] = oklabToHex(L, a, b);
+    shades[i * 100] = oklabToHex(L, a, b);
   }
   
   // Base color (500)
-  shades[50] = baseColor;
+  shades[500] = baseColor;
   
-  // Generate darker shades (600-900) with more distinct differences
+  // Generate darker shades (600-900) with much more distinct differences
   // Reversed order: 600 is darkest, 900 is lightest among the dark shades
+  
+  // Define specific lightness values for each shade to ensure clear distinction
+  const darkerLightness = {
+    600: Math.max(oklab.L - 0.25, 0.20), // Very dark (almost black for some colors)
+    700: Math.max(oklab.L - 0.35, 0.15), // Dark but distinguishable from 600
+    800: Math.max(oklab.L - 0.45, 0.10), // Medium-dark
+    900: Math.max(oklab.L - 0.55, 0.05)  // Lightest of the dark shades
+  };
+  
+  // Define specific chroma multipliers for each shade
+  const chromaMultiplier = {
+    600: 1.1,  // Highest saturation for the darkest shade
+    700: 1.2,  // High saturation
+    800: 1.3,  // Medium-high saturation
+    900: 1.4   // Slightly increased saturation
+  };
+  
+  // Generate each dark shade with its specific parameters
   for (let i = 6; i <= 9; i++) {
-    // Create more distinct steps for darker shades using a steeper non-linear scaling
-    // Use exponential scaling to create more dramatic differences between darker shades
-    // Reverse the order: 10 - i means 600 gets the highest value (4), 900 gets the lowest (1)
-    const scaleValue = Math.pow(1.8, 10 - i); // Reversed order: 600 is darkest, 900 is lightest
+    const shade = i * 100;
+    const L = darkerLightness[shade];
+    const a = oklab.a * chromaMultiplier[shade];
+    const b = oklab.b * chromaMultiplier[shade];
     
-    // Create a more dramatic lightness reduction for darker shades
-    const L = Math.max(oklab.L - (0.4 * scaleValue), 0.05);
-    
-    // Increase chroma more aggressively for darker shades to maintain color identity
-    const a = oklab.a * (1 + 0.2 * scaleValue);
-    const b = oklab.b * (1 + 0.2 * scaleValue);
-    
-    shades[i * 10] = oklabToHex(L, a, b);
+    shades[shade] = oklabToHex(L, a, b);
   }
   
   return shades;
