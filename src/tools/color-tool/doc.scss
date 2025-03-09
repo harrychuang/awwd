@@ -47,7 +47,13 @@
     }
   }
 
-  .regenerate-button {
+  .button-container {
+    display: flex;
+    gap: 10px;
+  }
+
+  .regenerate-button,
+  .export-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -74,6 +80,10 @@
         color: var(--awwd-sys-color-secondary-surface-light) !important;
       }
     }
+  }
+
+  .export-button {
+    background-color: var(--storybook-doc-color-beta);
   }
 
   // New row layout for color categories

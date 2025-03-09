@@ -177,31 +177,44 @@ const oklabToHex = (L, a, b) => {
   return rgbToHex(rInt, gInt, bInt);
 };
 
-// Generate color shades (100-900) using improved algorithm
+// Generate color shades (100-900) using improved algorithm with more distinct lighter shades
 const generateShades = (baseColor) => {
   const oklab = hexToOklab(baseColor);
   const shades = {};
   
-  // Generate lighter shades (100-400)
+  // Generate lighter shades (100-400) with more differentiation
   for (let i = 1; i <= 4; i++) {
-    // Increase lightness and slightly reduce chroma for lighter shades
-    const scaleValue = (9 - i) / 10;
-    const L = Math.min(oklab.L + (0.4 * scaleValue), 0.95);
-    const a = oklab.a * (1 - 0.3 * scaleValue);
-    const b = oklab.b * (1 - 0.3 * scaleValue);
+    // Create more distinct steps for lighter shades
+    // Use a non-linear scale to create more visual difference between lighter shades
+    const lightnessFactor = Math.pow(1.5, 5 - i) / Math.pow(1.5, 4); // Non-linear scaling
+    const L = Math.min(oklab.L + (0.5 * lightnessFactor), 0.97);
+    
+    // Reduce chroma more aggressively for lighter shades to create more distinction
+    const chromaFactor = 1 - (0.5 * lightnessFactor);
+    const a = oklab.a * chromaFactor;
+    const b = oklab.b * chromaFactor;
+    
     shades[i * 10] = oklabToHex(L, a, b);
   }
   
   // Base color (500)
   shades[50] = baseColor;
   
-  // Generate darker shades (600-900)
+  // Generate darker shades (600-900) with more distinct differences
+  // Reversed order: 600 is darkest, 900 is lightest among the dark shades
   for (let i = 6; i <= 9; i++) {
-    // Decrease lightness and slightly increase chroma for darker shades
-    const scaleValue = (i - 5) / 5;
-    const L = Math.max(oklab.L - (0.3 * scaleValue), 0.15);
-    const a = oklab.a * (1 + 0.1 * scaleValue);
-    const b = oklab.b * (1 + 0.1 * scaleValue);
+    // Create more distinct steps for darker shades using a steeper non-linear scaling
+    // Use exponential scaling to create more dramatic differences between darker shades
+    // Reverse the order: 10 - i means 600 gets the highest value (4), 900 gets the lowest (1)
+    const scaleValue = Math.pow(1.8, 10 - i); // Reversed order: 600 is darkest, 900 is lightest
+    
+    // Create a more dramatic lightness reduction for darker shades
+    const L = Math.max(oklab.L - (0.4 * scaleValue), 0.05);
+    
+    // Increase chroma more aggressively for darker shades to maintain color identity
+    const a = oklab.a * (1 + 0.2 * scaleValue);
+    const b = oklab.b * (1 + 0.2 * scaleValue);
+    
     shades[i * 10] = oklabToHex(L, a, b);
   }
   
@@ -324,6 +337,90 @@ const ColorToolComponent = () => {
     }, 2000);
   };
 
+  // Generate CSS variables string for export
+  const generateCssVariables = () => {
+    if (!colorShades.primary) return '';
+    
+    let css = `:root {\n`;
+    
+    // Primary color variables
+    css += `  /* Brand Color */\n`;
+    css += `  --color-primary: ${primaryColor};\n`;
+    Object.entries(colorShades.primary).forEach(([shade, color]) => {
+      css += `  --color-primary-${shade}: ${color};\n`;
+    });
+    css += `\n`;
+    
+    // Secondary color variables
+    css += `  /* Secondary Color */\n`;
+    css += `  --color-secondary: ${secondaryColor};\n`;
+    Object.entries(colorShades.secondary).forEach(([shade, color]) => {
+      css += `  --color-secondary-${shade}: ${color};\n`;
+    });
+    css += `\n`;
+    
+    // Semantic color variables
+    css += `  /* Semantic Colors */\n`;
+    
+    // Success
+    css += `  --color-success: ${semanticColors.success};\n`;
+    Object.entries(colorShades.success).forEach(([shade, color]) => {
+      css += `  --color-success-${shade}: ${color};\n`;
+    });
+    css += `\n`;
+    
+    // Info
+    css += `  --color-info: ${semanticColors.info};\n`;
+    Object.entries(colorShades.info).forEach(([shade, color]) => {
+      css += `  --color-info-${shade}: ${color};\n`;
+    });
+    css += `\n`;
+    
+    // Warning
+    css += `  --color-warning: ${semanticColors.warning};\n`;
+    Object.entries(colorShades.warning).forEach(([shade, color]) => {
+      css += `  --color-warning-${shade}: ${color};\n`;
+    });
+    css += `\n`;
+    
+    // Danger (Error)
+    css += `  --color-danger: ${semanticColors.error};\n`;
+    Object.entries(colorShades.error).forEach(([shade, color]) => {
+      css += `  --color-danger-${shade}: ${color};\n`;
+    });
+    
+    css += `}\n`;
+    
+    return css;
+  };
+  
+  // Handle export CSS variables
+  const handleExportCss = () => {
+    const cssContent = generateCssVariables();
+    
+    // Create a blob with the CSS content
+    const blob = new Blob([cssContent], { type: 'text/css' });
+    const url = URL.createObjectURL(blob);
+    
+    // Create a temporary link element to trigger the download
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'color-variables.css';
+    document.body.appendChild(link);
+    link.click();
+    
+    // Clean up
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    // Show notification
+    setCopiedText('CSS variables exported to color-variables.css');
+    setShowCopied(true);
+    setTimeout(() => {
+      setShowCopied(false);
+    }, 2000);
+  };
+
   const renderColorCategory = (name, color, title) => {
     if (!colorShades[name]) return null;
     
@@ -333,7 +430,7 @@ const ColorToolComponent = () => {
     
     return (
       <div className="color-category">
-        <h3 class="sbdocs-h3">{title}</h3>
+        <h3 className="category-title">{title}</h3>
         
         <div 
           className="main-color-display"
@@ -392,10 +489,17 @@ const ColorToolComponent = () => {
           />
         </div>
         
-        <button className="regenerate-button" onClick={handleRegenerateColors}>
-          <MaterialIcon icon="refresh" />
-          Regenerate Colors
-        </button>
+        <div className="button-container">
+          <button className="regenerate-button" onClick={handleRegenerateColors}>
+            <MaterialIcon icon="refresh" />
+            Regenerate Colors
+          </button>
+          
+          <button className="export-button" onClick={handleExportCss}>
+            <MaterialIcon icon="download" />
+            Export CSS Variables
+          </button>
+        </div>
       </div>
       
       {/* Primary and Secondary in the same row */}
@@ -407,7 +511,7 @@ const ColorToolComponent = () => {
       {/* Semantic colors in the same row */}
       <div className="color-row">
         {renderColorCategory('success', semanticColors.success, 'Success')}
-        {renderColorCategory('error', semanticColors.error, 'Error')}
+        {renderColorCategory('error', semanticColors.error, 'Danger')}
         {renderColorCategory('warning', semanticColors.warning, 'Warning')}
         {renderColorCategory('info', semanticColors.info, 'Info')}
       </div>
