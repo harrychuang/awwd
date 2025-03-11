@@ -177,7 +177,7 @@ const oklabToHex = (L, a, b) => {
   return rgbToHex(rInt, gInt, bInt);
 };
 
-// Generate color shades (10-90) using improved algorithm with more distinct lighter shades
+// Generate color shades (100-900) using improved algorithm with more distinct lighter shades
 const generateShades = (baseColor) => {
   const oklab = hexToOklab(baseColor);
   const shades = {};
@@ -197,18 +197,18 @@ const generateShades = (baseColor) => {
     shades[i * 10] = oklabToHex(L, a, b);
   }
   
-  // Base color (50)
+  // Base color (500)
   shades[50] = baseColor;
   
-  // Generate darker shades (60-90) with much more distinct differences
+  // Generate darker shades (600-900) with much more distinct differences
   // Reversed order: 600 is darkest, 900 is lightest among the dark shades
   
   // Define specific lightness values for each shade to ensure clear distinction
   const darkerLightness = {
-    60: Math.max(oklab.L - 0.25, 0.20), // Very dark (almost black for some colors)
-    70: Math.max(oklab.L - 0.35, 0.15), // Dark but distinguishable from 600
-    80: Math.max(oklab.L - 0.45, 0.10), // Medium-dark
-    90: Math.max(oklab.L - 0.55, 0.05)  // Lightest of the dark shades
+    60: Math.max(oklab.L - 0.25, 0.20),  // Lightest of the dark shades
+    90: Math.max(oklab.L - 0.55, 0.05), // Very dark (almost black for some colors)
+    80: Math.max(oklab.L - 0.45, 0.10), // Dark but distinguishable from 600
+    70: Math.max(oklab.L - 0.35, 0.15) // Medium-dark
   };
   
   // Define specific chroma multipliers for each shade
@@ -232,50 +232,72 @@ const generateShades = (baseColor) => {
   return shades;
 };
 
-// Generate secondary color based on primary with improved algorithm and randomization
+// Generate secondary color based on primary with more bold and varied algorithm
 const generateSecondaryColor = (primaryHex, randomFactor = 0) => {
   const rgb = hexToRgb(primaryHex);
   const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
   
+  // Create more variation in the secondary color
+  // Use a wider range of possible hue shifts based on randomFactor
+  const baseHueShift = randomFactor === 0 ? 180 : (Math.random() * 270 + 45) % 360;
+  
   // Random offset for regeneration feature - increased for more noticeable changes
-  const randomOffset = () => (Math.random() - 0.5) * 120 * randomFactor;
+  const randomOffset = () => (Math.random() - 0.5) * 180 * randomFactor;
   
-  // Use a more harmonious hue shift with randomization
-  // Base shift is 120 degrees, but can vary with randomFactor
-  let newHue = (hsl.h + 120 + randomOffset()) % 360;
+  // Use a more varied hue shift with randomization
+  let newHue = (hsl.h + baseHueShift + randomOffset()) % 360;
   
-  // Maintain high saturation and good lightness for vibrant secondary color
-  const newSaturation = Math.min(Math.max(hsl.s, 65), 85);
-  const newLightness = Math.min(Math.max(hsl.l, 45), 60);
+  // Increase saturation and adjust lightness for more vibrant secondary color
+  // Use more variation in saturation and lightness based on randomFactor
+  const saturationBoost = randomFactor === 0 ? 10 : Math.random() * 20;
+  const lightnessShift = randomFactor === 0 ? 0 : (Math.random() - 0.5) * 30;
+  
+  const newSaturation = Math.min(Math.max(hsl.s + saturationBoost, 70), 95);
+  const newLightness = Math.min(Math.max(hsl.l + lightnessShift, 40), 65);
   
   const newRgb = hslToRgb(newHue, newSaturation, newLightness);
   return rgbToHex(newRgb.r, newRgb.g, newRgb.b);
 };
 
-// Generate semantic colors with improved algorithm
+// Generate semantic colors with more bold and vibrant algorithm
 const generateSemanticColors = (primaryHex, randomFactor = 0) => {
+  const rgb = hexToRgb(primaryHex);
+  const primaryHsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+  
   // Random offset for regeneration feature - increased for more noticeable changes
-  const randomOffset = () => (Math.random() - 0.5) * 40 * randomFactor;
+  const randomOffset = () => (Math.random() - 0.5) * 60 * randomFactor; // Increased from 40 to 60
   
-  // Success color (green) - more vibrant
-  const successHue = 135 + randomOffset(); // Slightly blue-green for modern look
-  const successRgb = hslToRgb(successHue, 75, 45);
-  const success = rgbToHex(successRgb.r, successRgb.g, successRgb.b);
+  // Function to create more vibrant colors with some relation to primary
+  const createBoldColor = (baseHue, saturationBoost, lightnessShift) => {
+    // Add some influence from the primary color to maintain harmony
+    const primaryInfluence = randomFactor === 0 ? 0 : (Math.random() * 0.2);
+    const hueShift = randomFactor === 0 ? 0 : (Math.random() - 0.5) * 30;
+    
+    // Calculate final hue with primary influence and random shift
+    const finalHue = (baseHue * (1 - primaryInfluence) + primaryHsl.h * primaryInfluence + hueShift + randomOffset()) % 360;
+    
+    // Boost saturation and adjust lightness for more vibrant colors
+    const satBoost = randomFactor === 0 ? saturationBoost : saturationBoost + (Math.random() * 15);
+    const lightShift = randomFactor === 0 ? lightnessShift : lightnessShift + (Math.random() - 0.5) * 15;
+    
+    const finalSaturation = Math.min(Math.max(85 + satBoost, 70), 95);
+    const finalLightness = Math.min(Math.max(50 + lightShift, 40), 65);
+    
+    const colorRgb = hslToRgb(finalHue, finalSaturation, finalLightness);
+    return rgbToHex(colorRgb.r, colorRgb.g, colorRgb.b);
+  };
   
-  // Error color (red) - with a hint of purple-blue to make it less intensely red
-  const errorHue = 345 + randomOffset(); // Shifted more toward purple (345 instead of 350)
-  const errorRgb = hslToRgb(errorHue, 70, 50); // Further reduced saturation from 75 to 70
-  const error = rgbToHex(errorRgb.r, errorRgb.g, errorRgb.b);
+  // Success color (green) - more vibrant and bold
+  const success = createBoldColor(135, 5, -5); // Green with higher saturation, slightly darker
   
-  // Warning color (yellow/orange) - more vibrant
-  const warningHue = 35 + randomOffset(); // More orange than yellow for better visibility
-  const warningRgb = hslToRgb(warningHue, 85, 55);
-  const warning = rgbToHex(warningRgb.r, warningRgb.g, warningRgb.b);
+  // Error color (red) - bolder with a hint of purple-blue
+  const error = createBoldColor(345, 10, 0); // Red-purple with higher saturation
   
-  // Info color (blue) - more vibrant
-  const infoHue = 210 + randomOffset(); // Slightly purple-blue for modern look
-  const infoRgb = hslToRgb(infoHue, 75, 55);
-  const info = rgbToHex(infoRgb.r, infoRgb.g, infoRgb.b);
+  // Warning color (yellow/orange) - more vibrant and attention-grabbing
+  const warning = createBoldColor(35, 15, 5); // Orange-yellow with higher saturation, slightly lighter
+  
+  // Info color (blue) - more vibrant and modern
+  const info = createBoldColor(210, 5, 0); // Blue with higher saturation
   
   return { success, error, warning, info };
 };
@@ -441,7 +463,7 @@ const ColorToolComponent = () => {
     
     return (
       <div className="color-category">
-        <h3 className="category-title">{title}</h3>
+        <h3 className="sbdocs-h3">{title}</h3>
         
         <div 
           className="main-color-display"
