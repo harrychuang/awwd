@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:color"; // Import the color module
 
 @font-face {
   font-family: 'CubicPixel';
@@ -41,55 +42,99 @@ body.game-active { // Consider adding a class to body when the game is active to
   line-height: 1.5;
 }
 
+.design-token-game-wrapper {
+  font-family: $font-family-8bit;
+  background-color: $primary-background;
+  color: $text-color;
+  padding: $padding-base-8bit;
+  min-height: 100vh;
+}
+
 .game-board-container {
   display: flex;
-  flex-direction: column; // Stack info and cards for smaller screens, or adjust with media queries
+  flex-direction: column; // Always column: info on top, cards below
   gap: $padding-base-8bit * 1.5;
-  max-width: 900px;
+  max-width: 700px; // Adjusted for a single column layout
   margin: 20px auto;
-  background-color: lighten($primary-background, 5%);
+  background-color: color.adjust($primary-background, $lightness: 5%); // Updated lighten
   padding: $padding-base-8bit;
   border-radius: $border-radius-8bit;
   border: $border-width-8bit solid $border-color;
   box-shadow: none;
+  flex-direction: column; // Ensure game info is on top of cards grid
+  &.game-board-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 300px; // Ensure it takes some space for centering
+    gap: $padding-base-8bit * 1.5;
 
-  // For a two-column layout on wider screens:
-  @media (min-width: 768px) {
-    flex-direction: row;
+    .level-description-ready {
+      font-size: 1em;
+      color: color.adjust($text-color, $alpha: -0.15); // Slightly dimmed
+      max-width: 80%;
+      line-height: 1.6;
+      margin-bottom: $padding-base-8bit;
+    }
+
+    .start-level-button,
+    .restart-game-button-alt {
+      padding: ($gap-base-8bit * 1.2) ($padding-base-8bit * 2);
+      font-size: 1.2em;
+      min-width: 200px;
+      // Inherits general button styles from below
+    }
+    .restart-game-button-alt {
+        background-color: $border-color;
+        &:hover {
+            background-color: color.adjust($border-color, $lightness: 10%);
+        }
+    }
   }
 }
 
 .game-info-panel {
-  flex: 1;
+  flex: 0 0 auto; // Don't grow, take content size
   padding: $padding-base-8bit;
   background-color: $card-background;
   border-radius: $border-radius-8bit;
   border: $border-width-8bit solid $border-color;
   box-shadow: none;
   display: flex;
-  flex-direction: column; // Ensure items stack nicely
+  flex-direction: column;
   gap: $gap-base-8bit;
 
-
-  h2 {
+  h2 { // Game Title
     margin-top: 0;
     color: $secondary-accent;
     font-weight: normal;
     text-align: center;
-    margin-bottom: $padding-base-8bit;
-    font-size: 1.2em; // Adjust for pixel font
-    // text-shadow: $border-width-8bit $border-width-8bit darken($secondary-accent, 30%);
+    margin-bottom: math.div($gap-base-8bit, 3); // Reduced margin for subtitle
+    font-size: 28px; // Increased title font size
+  }
+
+  .level-subtitle {
+    color: $text-color; // Or a slightly different color like a lighter gray or primary accent
+    font-size: 1.1em; // Adjust size as needed, smaller than h2
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: $padding-base-8bit * 0.75;
+    font-weight: normal; // normal or lighter for subtitle
+    letter-spacing: 1px; // Optional: add some letter spacing
   }
 
   .info-item {
+    color: #fff;
     margin-bottom: $gap-base-8bit;
-    font-size: 0.9em; // Adjust for pixel font
+    font-size: 0.9em;
 
     strong {
       min-width: 80px;
       color: $text-color;
       font-weight: normal;
-      display: inline-block; // Helps with alignment
+      display: inline-block;
       margin-right: $gap-base-8bit * 0.5;
     }
   }
@@ -103,16 +148,34 @@ body.game-active { // Consider adding a class to body when the game is active to
     vertical-align: middle;
     margin-left: math.div($gap-base-8bit, 4);
     margin-right: math.div($gap-base-8bit, 2);
-    image-rendering: pixelated; // Helps if the color itself should look blocky
+    image-rendering: pixelated;
   }
 
-  button, .system-token-button {
+  .system-color-input-area {
+    input[type="text"] {
+      font-family: $font-family-8bit;
+      padding: 6px 8px;
+      margin-bottom: $gap-base-8bit * 0.5;
+      width: calc(100% - 18px);
+      border: $border-width-8bit solid $border-color;
+      background-color: color.adjust($card-background, $lightness: 5%);
+      color: $text-color;
+      box-sizing: border-box;
+      outline: none;
+      &:focus {
+        border-color: $secondary-accent;
+      }
+    }
+  }
+
+  button,
+  .system-token-button {
     padding: ($gap-base-8bit * 0.8) $padding-base-8bit;
     color: $text-color;
     border: $border-width-8bit solid $border-color;
     border-radius: $border-radius-8bit;
     cursor: pointer;
-    font-size: 0.9em; // Adjust for pixel font
+    font-size: 0.9em;
     font-family: $font-family-8bit;
     font-weight: normal;
     transition: none;
@@ -120,56 +183,70 @@ body.game-active { // Consider adding a class to body when the game is active to
     margin-top: $gap-base-8bit;
     text-transform: uppercase;
     box-shadow: none;
-    position: relative; // For pseudo-element shadow or active state
-
-    // Simple inset shadow effect
-    // box-shadow: inset ($border-width-8bit * -0.5) ($border-width-8bit * -0.5) 0px 0px darken($border-color, 20%),
-    //             inset ($border-width-8bit * 0.5) ($border-width-8bit * 0.5) 0px 0px lighten($border-color, 20%);
-
+    position: relative;
 
     &:hover {
       transform: none;
-      // Simple hover: lighten background
     }
-     &:active {
-      transform: translate($border-width-8bit * 0.5, $border-width-8bit * 0.5); // Slight push effect
-      // box-shadow: inset 0 0 0px 0px darken($border-color, 10%); // Flatten shadow on click
+
+    &:active {
+      transform: translate(1px, 1px);
     }
   }
-  
+
   button:not(.system-token-button) {
-      background-color: $primary-accent;
-      &:hover {
-         background-color: lighten($primary-accent, 10%);
-      }
-      &:active {
-        background-color: darken($primary-accent, 5%);
-      }
+    background-color: $primary-accent;
+
+    &:hover {
+      background-color: color.adjust($primary-accent, $lightness: 10%); // Updated lighten
+    }
+
+    &:active {
+      background-color: color.adjust($primary-accent, $lightness: -5%); // Updated darken
+    }
   }
-  
+
   .system-token-button {
     background-color: $secondary-accent;
     color: $primary-background;
-     &:hover {
-      background-color: lighten($secondary-accent, 10%);
+
+    &:hover {
+      background-color: color.adjust($secondary-accent, $lightness: 10%); // Updated lighten
     }
+
     &:active {
-      background-color: darken($secondary-accent, 5%);
+      background-color: color.adjust($secondary-accent, $lightness: -5%); // Updated darken
     }
   }
 }
 
 .cards-grid-container {
-  flex: 2;
+  flex: 1; // Allow card grid to take remaining space if needed
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax($card-size-8bit, 1fr));
   gap: $gap-base-8bit * 1.2;
   padding: $padding-base-8bit;
   align-content: flex-start;
   border: $border-width-8bit solid $border-color;
-  background-color: lighten($primary-background, 2%);
+  background-color: color.adjust($primary-background, $lightness: 2%); // Updated lighten
   border-radius: $border-radius-8bit;
-  min-height: 200px; // Ensure it has some height
+  min-height: 250px; // Ensure it has some height, adjust as needed
+  &.hidden-deck {
+    // display: none; // Option 1: Completely hide
+    // Option 2: Visual cue of a card deck (example)
+    background-color: color.adjust($primary-background, $lightness: -5%);
+    border-style: dashed;
+    min-height: 200px; // Ensure it's visible
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: color.adjust($text-color, $alpha: -0.4);
+    font-size: 1.5em;
+    content: "卡牌區"; // May not work with display:grid, use pseudo-element or child
+    &:before { // Using a pseudo-element for text
+        content: "卡牌區";
+    }
+  }
 }
 
 .token-card {
@@ -183,44 +260,213 @@ body.game-active { // Consider adding a class to body when the game is active to
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $card-background; // Default card color
-  image-rendering: pixelated; // If card content/color should be sharp pixels
-  position: relative; // For active state
+  background-color: $card-background;
+  image-rendering: pixelated;
+  position: relative;
+  overflow: hidden; // Hide parts of the input that might overflow if not perfectly sized
 
   &:hover {
     transform: none;
-    background-color: lighten($card-background, 15%);
-    border-color: lighten($border-color, 20%);
+    background-color: color.adjust($card-background, $lightness: 15%); // Updated lighten
+    border-color: color.adjust($border-color, $lightness: 20%); // Updated lighten
   }
 
   &:active {
-    transform: translate(1px, 1px); // Simpler active state
-    background-color: darken($card-background, 10%);
+    transform: translate(1px, 1px);
+    background-color: color.adjust($card-background, $lightness: -10%); // Updated darken
   }
 
   &:disabled {
     cursor: not-allowed;
     opacity: 0.7;
-    background-color: darken($card-background, 5%);
-    border-color: darken($border-color, 10%);
-     &:active {
-        transform: none; // No active state for disabled
-     }
-  }
-  
-  &.matched { // Style for matched cards
-    border-color: $tertiary-accent;
-    background-color: $tertiary-accent; // Or a shade of it
-    // Add a visual cue like a checkmark or different border style if needed
-    // For example, using an ::after pseudo-element for a pixel checkmark
+    background-color: color.adjust($card-background, $lightness: -5%); // Updated darken
+    border-color: color.adjust($border-color, $lightness: -10%); // Updated darken
+
+    &:active {
+      transform: none;
+    }
   }
 
-  // If you want a "raised" effect on non-disabled cards:
-  // box-shadow: $border-width-8bit $border-width-8bit 0 0 darken($border-color, 20%);
-  // &:active {
-  //   box-shadow: none;
-  //   transform: translate($border-width-8bit, $border-width-8bit);
-  // }
+  &.matched {
+    border-color: $tertiary-accent;
+    background-color: $tertiary-accent;
+  }
+
+  // When card is in editing mode, the button itself might be hidden or transparent
+  // The input field will be rendered instead.
+  &.editing {
+    // Styles for the button when it's being edited (mostly to make it a container)
+    // background-color: transparent !important; // Ensure input is visible
+    // border-color: $secondary-accent; // Highlight editing card
+    padding: 0; // Remove padding if input takes full space
+  }
+}
+
+.token-card-input {
+  width: 100%;
+  height: 100%;
+  border: $border-width-8bit solid $secondary-accent; // Highlight with accent color
+  text-align: center;
+  background-color: color.adjust($card-background, $lightness: 15%); // Lighter than card for input
+  color: $text-color; 
+  font-size: 13px; // Slightly smaller to fit color codes well
+  box-sizing: border-box;
+  font-family: $font-family-8bit; // Crucial for 8-bit style
+  outline: none;
+  padding: 5px; // Add some padding within the input
+
+  &::placeholder {
+    color: color.adjust($text-color, $alpha: -0.5); // Dimmed placeholder text
+    font-family: $font-family-8bit;
+  }
+}
+
+.game-controls-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $gap-base-8bit;
+  margin-top: $padding-base-8bit * 1.5;
+  width: 100%;
+  max-width: 500px; // Match game board width or as desired
+  margin-left: auto;
+  margin-right: auto;
+
+  button, .button-like-message {
+    padding: ($gap-base-8bit * 1) ($padding-base-8bit * 1.5);
+    color: $text-color;
+    border: $border-width-8bit solid $border-color;
+    border-radius: $border-radius-8bit;
+    cursor: pointer;
+    font-size: 1em; // Adjusted base size for these buttons
+    font-family: $font-family-8bit;
+    font-weight: normal;
+    transition: none;
+    width: 100%;
+    text-transform: uppercase;
+    box-shadow: none;
+    position: relative;
+    text-align: center;
+
+    &:hover {
+      transform: none;
+    }
+    &:active {
+      transform: translate(1px, 1px);
+    }
+  }
+
+  .next-level-button {
+    background-color: $tertiary-accent; // Green for next
+    color: $primary-background;
+    font-size: 1.2em;
+    &:hover {
+      background-color: color.adjust($tertiary-accent, $lightness: 10%);
+    }
+  }
+
+  .restart-game-button-main {
+    background-color: $primary-accent; // Red for main restart
+    font-size: 1.1em;
+    &:hover {
+      background-color: color.adjust($primary-accent, $lightness: 10%);
+    }
+  }
+  
+  .restart-game-button-ingame {
+    background-color: $border-color; // More subdued for in-game restart/quit
+    font-size: 0.9em;
+    &:hover {
+        background-color: color.adjust($border-color, $lightness: 10%);
+    }
+  }
+
+  .all-levels-complete-message {
+    text-align: center;
+    font-size: 1.2em;
+    color: $secondary-accent;
+    p {
+      margin-bottom: $gap-base-8bit;
+    }
+  }
+}
+
+// Styles for the content within the generic Modal when used for game errors
+.game-error-modal-content {
+  padding: $padding-base-8bit * 1.5;
+  font-family: $font-family-8bit;
+  background-color: $card-background; // Use a common game panel background
+  color: $text-color;
+  border: $border-width-8bit solid $border-color;
+  border-radius: $border-radius-8bit; // Consistent with game elements
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: $gap-base-8bit * 1.5;
+
+  h4 {
+    font-size: 1.3em;
+    color: $primary-accent; // Use an accent color for error title
+    margin: 0 0 ($gap-base-8bit * 0.5) 0;
+    font-weight: normal;
+  }
+
+  p {
+    font-size: 1em;
+    line-height: 1.6;
+    margin: 0;
+    white-space: pre-wrap; // Ensure multi-line messages are formatted
+  }
+
+  .modal-confirm-button {
+    // Inherit from .game-controls-area button or define specific styles
+    padding: ($gap-base-8bit * 0.8) $padding-base-8bit;
+    color: $text-color;
+    background-color: $primary-accent;
+    border: $border-width-8bit solid $border-color;
+    border-radius: $border-radius-8bit;
+    cursor: pointer;
+    font-size: 1em;
+    font-family: $font-family-8bit;
+    font-weight: normal;
+    text-transform: uppercase;
+    align-self: center; // Center button in the flex column
+    min-width: 150px;
+    box-shadow: none;
+
+    &:hover {
+      background-color: color.adjust($primary-accent, $lightness: 10%);
+    }
+    &:active {
+      transform: translate(1px, 1px);
+      background-color: color.adjust($primary-accent, $lightness: -5%);
+    }
+  }
+}
+
+// Optional: If the awwd-modal-overlay or awwd-modal-content (from generic modal) 
+// needs slight adjustments for the game context, you can add them here.
+// For example, to ensure the modal itself (the Card component used by Modal) also gets a border.
+.awwd-modal {
+  &.awwd-modal-content-enter-done {
+    .awwd-modal-content > .awwd-card { // Target the Card component inside the modal
+      border: $border-width-8bit solid $secondary-accent; // Example: Yellow border for the modal frame
+      background-color: transparent; // Make card background transparent if .game-error-modal-content provides its own
+      box-shadow: none; // Remove default card shadow if any
+      padding: 0; // Remove default card padding if .game-error-modal-content handles it
+    }
+  }
+  .awwd-modal-close { // Style the close button if needed
+    // Example: Adjust position or colors for 8-bit style
+    // top: $padding-base-8bit;
+    // right: $padding-base-8bit;
+    // svg path { fill: $primary-accent; }
+  }
+}
+
+.awwd-modal-overlay {
+    // Example: Make overlay darker if needed
+    // background-color: rgba(0,0,0,0.7);
 }
 
 /* 

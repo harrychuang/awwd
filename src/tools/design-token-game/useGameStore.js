@@ -2,92 +2,152 @@ import { create } from 'zustand';
 import { createLevels } from './types'; // 我們在 types.ts 中定義的關卡
 
 const initialLevels = createLevels();
+const TIMER_INTERVAL = 10; // milliseconds
 
 export const useGameStore = create((set, get) => ({
   // --- STATE ---
   levels: initialLevels,
   currentLevelIndex: 0,
-  currentLevelConfig: initialLevels[0],
-  cards: [], // TokenCardData[]
-  gameStatus: 'loading', // 'loading', 'ready', 'playing', 'levelComplete', 'gameOver'
-  timeLeft: 0,
-  score: 0,
-  targetColor: initialLevels[0].targetColor, // 初始化目標顏色
+  currentLevelConfig: null, // Will be set by playLevel
+  cards: [],
+  // 'init': Before anything, show start button for game
+  // 'playing': Actively in a level, timer running
+  // 'levelTransition': Briefly after a level is complete, before next one starts automatically
+  // 'allLevelsComplete': All levels finished, show total time
+  // 'error': Error state
+  gameStatus: 'init', 
+  elapsedTime: 0, // Stores total milliseconds for the entire game session
+  elapsedTimeAtLevelStart: 0,
+  lastLevelTimeTaken: 0,
+  score: 0, // Score might be less relevant now, or based on total time
+  targetColor: '#FFFFFF',
+  timerIntervalId: null,
 
   // --- ACTIONS ---
-  startGame: () => {
-    set({ currentLevelIndex: 0, gameStatus: 'loading' });
-    get().loadLevel(get().levels[0]);
+  stopTimer: () => {
+    const { timerIntervalId } = get();
+    if (timerIntervalId) {
+      clearInterval(timerIntervalId);
+      set({ timerIntervalId: null });
+    }
   },
 
-  loadLevel: (levelConfig) => {
-    if (!levelConfig) {
-      set({ gameStatus: 'allLevelsComplete' }); // Or some other final state
+  // Called when the user clicks the very first "Start Game" button
+  startGameSession: () => {
+    get().stopTimer(); // Ensure any previous timer is stopped
+    const firstLevelConfig = initialLevels[0];
+    set({
+      currentLevelIndex: 0,
+      score: 0,
+      elapsedTime: 0,
+      elapsedTimeAtLevelStart: 0,
+      lastLevelTimeTaken: 0,
+      // currentLevelConfig will be set by playLevel, but we can prepare it for loadingFirstLevel display
+      currentLevelConfig: firstLevelConfig, 
+      gameStatus: 'loadingFirstLevel',
+      cards: [],
+    });
+    // playLevel will be called from GameBoard after this, or we can call it here.
+    // For consistency with goToNextLevel, let's have it called from GameBoard or an effect.
+  },
+
+  // Called to load cards, set target, and START/RESUME timer for a level
+  playLevel: (levelConfigToPlay) => {
+    if (!levelConfigToPlay) {
+      console.error("playLevel called with no levelConfig!");
+      set({ gameStatus: 'error' });
       return;
     }
-    const newCards = Array.from({ length: levelConfig.cardCount }, (_, i) => ({
-      id: `card-${levelConfig.id}-${i}`,
-      initialColor: levelConfig.colorPalette[i % levelConfig.colorPalette.length],
-      currentColor: levelConfig.colorPalette[i % levelConfig.colorPalette.length], // 開始時與初始顏色相同
-      isMatched: false,
-    }));
+    console.log("[DEBUG store] playLevel - Setting currentLevelConfig to:", levelConfigToPlay);
+    set({ elapsedTimeAtLevelStart: get().elapsedTime });
+
+    // Timer is only stopped if it's a full game restart or all levels complete.
+    // If timerIntervalId is null (e.g. first level, or after a full stop), start it.
+    if (!get().timerIntervalId) {
+        const intervalId = setInterval(() => {
+            set((state) => ({ elapsedTime: state.elapsedTime + TIMER_INTERVAL }));
+        }, TIMER_INTERVAL);
+        set({ timerIntervalId: intervalId });
+    }
+
+    const newCards = Array.from({ length: levelConfigToPlay.cardCount }, (_, i) => {
+      const initialColor = levelConfigToPlay.colorPalette && levelConfigToPlay.colorPalette.length > 0
+        ? levelConfigToPlay.colorPalette[i % levelConfigToPlay.colorPalette.length]
+        : '#CCCCCC';
+      return {
+        id: `card-${levelConfigToPlay.id}-${i}`,
+        initialColor: initialColor,
+        currentColor: initialColor,
+        isMatched: false,
+      };
+    });
 
     set({
-      currentLevelConfig: levelConfig,
+      currentLevelConfig: levelConfigToPlay, // Crucially set currentLevelConfig here
       cards: newCards,
-      targetColor: levelConfig.targetColor,
-      timeLeft: levelConfig.timeLimit,
-      gameStatus: 'playing', // 或者 'ready' 然後有個開始按鈕
+      targetColor: levelConfigToPlay.targetColor,
+      gameStatus: 'playing',
+      // elapsedTime continues, not reset here
     });
-    // TODO: 啟動計時器
   },
 
-  updateCardColor: (cardId) => {
-    const { cards, targetColor, currentLevelConfig } = get();
-    if (currentLevelConfig.type === 'reference') {
-      set({
-        cards: cards.map(card =>
-          card.id === cardId ? { ...card, currentColor: targetColor, isMatched: card.currentColor !== targetColor } : card
-        ),
-      });
-      get().checkLevelCompletion();
-    }
-    // System token logic will be handled by a different action
+  updateCardColor: (cardId, newColor) => {
+    set((state) => ({
+      cards: state.cards.map((card) => {
+        if (card.id === cardId) {
+          return { ...card, currentColor: newColor, isMatched: newColor.toLowerCase() === state.targetColor.toLowerCase() };
+        }
+        return card;
+      }),
+    }));
+    get().checkLevelCompletion();
   },
 
-  // Placeholder for system token update
-  updateSystemTokenColor: () => {
-    const { cards, targetColor, currentLevelConfig } = get();
-    if (currentLevelConfig.type === 'system') {
-      set({
-        cards: cards.map(card => ({ ...card, currentColor: targetColor, isMatched: true })),
-      });
-      get().checkLevelCompletion();
-    }
+  updateSystemTokenColor: (newColor) => {
+    set((state) => ({
+      cards: state.cards.map((card) => ({
+        ...card,
+        currentColor: newColor,
+        isMatched: newColor.toLowerCase() === state.targetColor.toLowerCase(),
+      })),
+    }));
+    get().checkLevelCompletion();
   },
 
   checkLevelCompletion: () => {
-    const { cards } = get();
-    const allMatched = cards.every(card => card.currentColor === get().targetColor);
-    if (allMatched) {
-      // TODO: 加分, 進入下一關的邏輯
-      set({ gameStatus: 'levelComplete' });
-      console.log("Level Complete!");
-      // get().goToNextLevel(); // 之後會加入
+    const { cards, gameStatus, elapsedTime, elapsedTimeAtLevelStart } = get();
+    if (gameStatus !== 'playing') return;
+
+    const allMatched = cards.every(card => card.isMatched);
+    if (allMatched && cards.length > 0) {
+      const timeForLevel = elapsedTime - elapsedTimeAtLevelStart;
+      set({
+        lastLevelTimeTaken: timeForLevel,
+        gameStatus: 'levelCompleteModal',
+      });
     }
   },
   
-  goToNextLevel: () => {
+  // Called after 'levelTransition' to move to the next level or end the game
+  proceedToNextOrEnd: () => {
     const { currentLevelIndex, levels } = get();
     const nextLevelIndex = currentLevelIndex + 1;
+
     if (nextLevelIndex < levels.length) {
-      set({ currentLevelIndex: nextLevelIndex, gameStatus: 'loading' });
-      get().loadLevel(levels[nextLevelIndex]);
+      const nextLevelConfig = levels[nextLevelIndex];
+      console.log('[DEBUG store] proceedToNextOrEnd - Preparing nextLevelConfig:', nextLevelConfig, 'nextLevelIndex:', nextLevelIndex);
+      set({
+        currentLevelIndex: nextLevelIndex,
+        // DO NOT set currentLevelConfig here. It will be set by playLevel.
+        // currentLevelConfig: null, // Explicitly ensure it's not stale if necessary, or just remove
+        gameStatus: 'loadingNextLevel',
+        cards: [],
+      });
+      return nextLevelConfig; // Return the config for GameBoard to use
     } else {
+      get().stopTimer(); // All levels are complete, now stop the timer
       set({ gameStatus: 'allLevelsComplete' });
-      console.log("All levels completed!");
+      return null; // No next level
     }
   },
-
-  // TODO: tickTimer, gameOver actions
 })); 
