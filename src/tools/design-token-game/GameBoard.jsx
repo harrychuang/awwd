@@ -12,6 +12,33 @@ const HeartIcon = 'https://noeinoi.com/storybook/game/heart-icon.png';
 const SwordIcon = 'https://noeinoi.com/storybook/game/sword-icon.png';
 const GrassIcon = 'https://noeinoi.com/storybook/game/grass-icon.png';
 
+// 語言切換按鈕樣式
+const LanguageToggleButton = ({ onClick, currentLanguage }) => (
+  <button 
+    onClick={onClick}
+    style={{
+      position: 'absolute',
+      top: '50px',
+      right: '50px',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      color: '#FFCC00',
+      border: '2px solid #76767F',
+      borderRadius: '0px',
+      padding: '4px 8px',
+      fontFamily: 'CubicPixel, "Press Start 2P", monospace',
+      fontSize: '0.8em',
+      cursor: 'pointer',
+      zIndex: 1000,
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px'
+    }}
+  >
+    <span>🌐</span>
+    {currentLanguage === 'zh' ? 'EN' : '中'}
+  </button>
+);
+
 const GameBoard = () => {
   const {
     currentLevelConfig,
@@ -24,7 +51,10 @@ const GameBoard = () => {
     playLevel,
     proceedToNextOrEnd,
     updateCardColor,
-    updateSystemTokenColor
+    updateSystemTokenColor,
+    language,
+    toggleLanguage,
+    t
   } = useGameStore();
 
   const [systemColorInput, setSystemColorInput] = useState('#FFFFFF');
@@ -82,7 +112,7 @@ const GameBoard = () => {
     if (/^#[0-9A-F]{6}$/i.test(trimmedColor) || /^#[0-9A-F]{3}$/i.test(trimmedColor)) {
       updateCardColor(cardId, trimmedColor);
     } else {
-      showErrorModal(`提交的色碼 "${enteredColor}" 格式無效。請使用例如 #RRGGBB 或 #RGB 的 16 進位色碼。`);
+      showErrorModal(t('invalidColorCode', { colorCode: enteredColor }));
     }
     setEditingCardId(null);
   };
@@ -96,7 +126,7 @@ const GameBoard = () => {
     if (/^#[0-9A-F]{6}$/i.test(trimmedSystemColor) || /^#[0-9A-F]{3}$/i.test(trimmedSystemColor)) {
       updateSystemTokenColor(trimmedSystemColor);
     } else {
-      showErrorModal(`系統 Token 色碼 "${systemColorInput}" 格式無效。請使用例如 #RRGGBB 或 #RGB 的 16 進位色碼。`);
+      showErrorModal(t('invalidSystemToken', { colorCode: systemColorInput }));
     }
   };
 
@@ -202,7 +232,7 @@ const GameBoard = () => {
         frameCtx.font = 'bold 24px CubicPixel, "Press Start 2P", monospace';
         frameCtx.fillStyle = '#ffcc00';
         frameCtx.textAlign = 'center';
-        frameCtx.fillText('DESIGN TOKEN MASTER', frameCanvas.width / 2, frameSize - 3);
+        frameCtx.fillText(t('designTokenMaster'), frameCanvas.width / 2, frameSize - 3);
         
         // 創建下載連結
         const link = document.createElement('a');
@@ -221,7 +251,7 @@ const GameBoard = () => {
         resultRef.current.classList.remove('taking-screenshot');
       }).catch(err => {
         console.error('截圖失敗:', err);
-        alert('截圖失敗，請再試一次');
+        alert(t('screenshotFailed'));
         
         // 還原動畫和樣式
         if (rewardImg) {
@@ -237,14 +267,23 @@ const GameBoard = () => {
   };
 
   if (gameStatus === 'init') {
-    return <div className="design-token-game-wrapper"><div className="game-board-container game-board-centered"><p>遊戲準備中...</p></div></div>;
+    return (
+      <div className="design-token-game-wrapper">
+        <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        <div className="game-board-container game-board-centered">
+          <p>{t('loading')}</p>
+        </div>
+      </div>
+    );
   }
+  
   if (gameStatus === 'error') {
     return (
       <div className="design-token-game-wrapper">
+        <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
         <div className="game-board-container game-board-centered">
-          <p>載入遊戲時發生錯誤！</p>
-          <button onClick={handleRestartGame}>重試</button>
+          <p>{t('error')}</p>
+          <button onClick={handleRestartGame}>{t('retry')}</button>
         </div>
       </div>
     );
@@ -253,52 +292,46 @@ const GameBoard = () => {
   if (gameStatus === 'loadingFirstLevel' && currentLevelConfig) {
     return (
       <div className="design-token-game-wrapper">
+        <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
         <div className="game-board-container game-board-centered">
-          <h2 style={{ fontSize: '2.5em', color: '#FFCC00', marginBottom: '10px' }}>Design Token 的奇幻冒險</h2>
-          {/* <h3 className="level-subtitle" style={{ fontSize: '1.3em', marginBottom: '20px' }}>Design Token 的奇幻冒險</h3> */}
+          <h2 style={{ fontSize: '2.5em', color: '#FFCC00', marginBottom: '10px' }}>{t('gameTitle')}</h2>
           <p className="level-description-ready" style={{ marginBottom: '30px' }}>
-            想像你是色彩魔法師！在這個世界中有兩種魔法：一種是逐一施法(Reference Token)，一種是連鎖魔法(System Token)。
-            <br/><br/>
-            當你使用「逐一施法」時，你需要對每張卡片單獨下咒語，費時又容易出錯。而「連鎖魔法」則一次影響所有卡片，一勞永逸！
-            <br/><br/>
-            在真實專案中，直接使用Reference Token就像修改100個文件；使用System Token則只需修改1個文件就能影響所有地方。
-            <br/><br/>
-            準備好體驗魔法的差異了嗎？完成5個關卡，成為設計系統的魔法大師！
+            {t('introDescription')}
           </p>
           
           <div className="rewards-explanation" style={{ width: '80%', marginBottom: '30px', backgroundColor: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '10px' }}>
-            <h3 style={{ marginBottom: '15px', color: '#FFCC00' }}>完成任務可獲得獎章：</h3>
+            <h3 style={{ marginBottom: '15px', color: '#FFCC00' }}>{t('rewardExplanation')}</h3>
             <div className="rewards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px' }}>
               <div className="reward-item" style={{ textAlign: 'center' }}>
-                <img src={MagicianIcon} alt="魔法師" style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
-                <p>0-9 秒</p>
-                <p style={{ fontSize: '0.7em', color: '#CCCCCC' }}>魔法師等級</p>
+                <img src={MagicianIcon} alt={t('magicianLevel')} style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
+                <p>0-12 {t('seconds')}</p>
+                <p style={{ fontSize: '0.7em', color: '#CCCCCC' }}>{t('magicianLevel')}</p>
               </div>
               <div className="reward-item" style={{ textAlign: 'center' }}>
-                <img src={DiamondIcon} alt="鑽石" style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
-                <p>10-15 秒</p>
-                <p style={{ fontSize: '0.7em', color: '#CCCCCC' }}>寶石等級</p>
+                <img src={SwordIcon} alt={t('warriorLevel')} style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
+                <p>13-16 {t('seconds')}</p>
+                <p style={{ fontSize: '0.7em', color: '#CCCCCC' }}>{t('warriorLevel')}</p>
               </div>
               <div className="reward-item" style={{ textAlign: 'center' }}>
-                <img src={HeartIcon} alt="愛心" style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
-                <p>16-20 秒</p>
-                <p style={{ fontSize: '0.7em', color: '#CCCCCC' }}>熱心等級</p>
+                <img src={DiamondIcon} alt={t('gemLevel')} style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
+                <p>17-20 {t('seconds')}</p>
+                <p style={{ fontSize: '0.7em', color: '#CCCCCC' }}>{t('gemLevel')}</p>
               </div>
               <div className="reward-item" style={{ textAlign: 'center' }}>
-                <img src={SwordIcon} alt="劍" style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
-                <p>21-40 秒</p>
-                <p style={{ fontSize: '0.7em', color: '#CCCCCC' }}>勇者等級</p>
+                <img src={HeartIcon} alt={t('heartLevel')} style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
+                <p>21-40 {t('seconds')}</p>
+                <p style={{ fontSize: '0.7em', color: '#CCCCCC' }}>{t('heartLevel')}</p>
               </div>
               <div className="reward-item" style={{ textAlign: 'center' }}>
-                <img src={GrassIcon} alt="草地" style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
-                <p>40+ 秒</p>
-                <p style={{ fontSize: '0.7em', color: '#CCCCCC' }}>新手等級</p>
+                <img src={GrassIcon} alt={t('noviceLevel')} style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
+                <p>40+ {t('seconds')}</p>
+                <p style={{ fontSize: '0.7em', color: '#CCCCCC' }}>{t('noviceLevel')}</p>
               </div>
             </div>
-            <p style={{ marginTop: '15px', textAlign: 'center', fontSize: '0.9em' }}>越快完成挑戰，獲得的獎章越稀有！善用System Token來提高效率！</p>
+            <p style={{ marginTop: '15px', textAlign: 'center', fontSize: '0.9em' }}>{t('rewardTip')}</p>
           </div>
           
-          <button onClick={handleInitialGameStart} className="start-level-button" style={{ fontSize: '1.4em', padding: '15px 30px' }}>開始冒險</button>
+          <button onClick={handleInitialGameStart} className="start-level-button" style={{ fontSize: '1.4em', padding: '15px 30px' }}>{t('startAdventure')}</button>
         </div>
       </div>
     );
@@ -310,22 +343,23 @@ const GameBoard = () => {
 
     return (
       <div className="design-token-game-wrapper">
+        <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
         <>
           <div className="game-board-container">
             <div className="game-info-panel">
               <h2>{currentLevelConfig.name}</h2>
-              <h3 className="level-subtitle">{levelTypeDisplay} 挑戰 - 第 {currentLevelIndex + 1} 關</h3>
-              <div className="info-item game-timer"><strong>時間:</strong><span className="game-timer-value">{formatTime(elapsedTime)}</span> 秒</div>
-              <div className="info-item"><strong>目標顏色:</strong>
+              <h3 className="level-subtitle">{levelTypeDisplay} {t('challenge')} - {t('level')} {currentLevelIndex + 1} {t('levelSuffix')}</h3>
+              <div className="info-item game-timer"><strong>{t('time')}</strong><span className="game-timer-value">{formatTime(elapsedTime)}</span> {t('seconds')}</div>
+              <div className="info-item"><strong>{t('targetColor')}</strong>
                 <span className="color-swatch" style={{ backgroundColor: targetColor }}></span> {targetColor}
               </div>
-              {isGamePlaying && <div className="info-item"><strong>說明:</strong> {currentLevelConfig.description}</div>}
+              {isGamePlaying && <div className="info-item"><strong>{t('description')}</strong> {currentLevelConfig.description}</div>}
               
               {gameStatus === 'levelCompleteScreen' && (
                 <div className="level-complete-message-inline">
-                  <h4>太棒了！關卡 {currentLevelIndex + 1} 完成！</h4>
+                  <h4>{t('levelComplete', { level: currentLevelIndex + 1 })}</h4>
                   <button onClick={handleGoToNextLevel} className="next-level-button-inline">
-                    {currentLevelIndex === 4 ? "通關完成送出結果!" : "下一關"}
+                    {currentLevelIndex === 4 ? t('submitResults') : t('nextLevel')}
                   </button>
                 </div>
               )}
@@ -336,7 +370,7 @@ const GameBoard = () => {
                     <span style={{ fontFamily: 'monospace', backgroundColor: 'rgba(0,0,0,0.2)', padding: '4px 8px', borderRadius: '4px' }}>awwd-color-primary-50:</span>
                   </p>
                   <input type="text" value={systemColorInput} style={{ width: '100%', padding: '10px 10px' }} onChange={handleSystemColorInputChange} placeholder="#RRGGBB" />
-                  <button onClick={handleUpdateSystemColor} className="system-token-button">更新系統顏色</button>
+                  <button onClick={handleUpdateSystemColor} className="system-token-button">{t('updateSystemColor')}</button>
                 </div>
               )}
             </div>
@@ -359,7 +393,7 @@ const GameBoard = () => {
             </div>
           </div>
           <div className="game-controls-area">
-            {isGamePlaying && <button onClick={handleRestartGame} className="restart-game-button-ingame">放棄並重來</button>}
+            {isGamePlaying && <button onClick={handleRestartGame} className="restart-game-button-ingame">{t('abandonAndRestart')}</button>}
           </div>
         </>
       </div>
@@ -369,30 +403,30 @@ const GameBoard = () => {
   if (gameStatus === 'allLevelsComplete') {
      // 根據完成時間決定獎章
      const getRewardIcon = (time) => {
-       if (time < 9000) return { 
+       if (time < 12000) return { 
          icon: MagicianIcon, 
-         name: '魔法師',
-         description: '哇！你的速度比System Token還快！你確定你不是Design System的魔法師轉世？設計系統的未來就靠你了！'
+         name: t('magicianLevel'),
+         description: t('magicianReward')
        };
-       if (time < 15000) return { 
-         icon: DiamondIcon, 
-         name: '鑽石',
-         description: '閃閃發光的表現！這就是連鎖魔法的威力，一次修改影響全局，你已經掌握了Design Token的精髓！'
+       if (time < 16000) return { 
+         icon: SwordIcon, 
+         name: t('warriorLevel'),
+         description: t('swordReward')
        };
        if (time < 20000) return { 
-         icon: HeartIcon, 
-         name: '愛心',
-         description: '漂亮的完成時間！你對設計系統的愛護讓人感動，繼續保持這份熱情，你會成為團隊的設計英雄！'
+         icon: DiamondIcon, 
+         name: t('gemLevel'),
+         description: t('diamondReward')
        };
        if (time < 40000) return { 
-         icon: SwordIcon, 
-         name: '劍',
-         description: '你用勇氣與耐心征服了這個挑戰！還不夠快？別擔心，熟能生巧，下次試著更多使用System Token吧！'
+         icon: HeartIcon, 
+         name: t('heartLevel'),
+         description: t('heartReward')
        };
        return { 
          icon: GrassIcon, 
-         name: '草地',
-         description: '嗯...看來Reference Token讓你浪費了不少時間啊？別灰心！記住這個教訓：在大型專案中，System Token才是提高效率的關鍵！'
+         name: t('noviceLevel'),
+         description: t('grassReward')
        };
      };
      
@@ -400,6 +434,7 @@ const GameBoard = () => {
      
      return (
         <div className="design-token-game-wrapper">
+          <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
             <div className="game-board-container game-board-centered">
                 <div ref={resultRef} className="all-levels-complete-message"
                   style={{
@@ -411,15 +446,15 @@ const GameBoard = () => {
                     maxWidth: '90%'
                   }}>
                     <div className="screenshot-header" style={{ marginBottom: '15px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                      <div className="pixel-logo" style={{ fontSize: '1.2em', color: '#FFCC00', fontWeight: 'bold', letterSpacing: '1px' }}>DESIGN TOKEN MASTER</div>
+                      <div className="pixel-logo" style={{ fontSize: '1.2em', color: '#FFCC00', fontWeight: 'bold', letterSpacing: '1px' }}>{t('designTokenMaster')}</div>
                     </div>
                     
-                    <h2 style={{ fontSize: '2em' }}>遊戲完成！</h2><br/>
-                    <p>太強了！你已完成所有Design Token挑戰！</p><br/>
-                    <div className="final-time" style={{ fontSize: '1.5em' }}>總共用時: <span className="game-timer-value" style={{ fontSize: '2em', color: 'yellow' }}>{formatTime(elapsedTime)}</span> 秒</div><br/>
+                    <h2 style={{ fontSize: '2em' }}>{t('gameCompleted')}</h2><br/>
+                    <p>{t('greatPerformance')}</p><br/>
+                    <div className="final-time" style={{ fontSize: '1.5em' }}>{t('totalTime')} <span className="game-timer-value" style={{ fontSize: '2em', color: 'yellow' }}>{formatTime(elapsedTime)}</span> {t('seconds')}</div><br/>
                     
                     <div className="reward-display" style={{ marginTop: '20px', marginBottom: '30px', textAlign: 'center' }}>
-                      <h3 style={{ color: '#FFCC00', marginBottom: '15px' }}>你獲得了：</h3>
+                      <h3 style={{ color: '#FFCC00', marginBottom: '15px' }}>{t('youEarned')}</h3>
                       <img 
                         src={reward.icon} 
                         alt={reward.name} 
@@ -430,7 +465,7 @@ const GameBoard = () => {
                           animation: 'reward-pulse 1.5s infinite ease-in-out'
                         }} 
                       />
-                      <p style={{ fontSize: '1.2em', color: '#FFCC00', marginBottom: '20px' }}>{reward.name}獎章</p>
+                      <p style={{ fontSize: '1.2em', color: '#FFCC00', marginBottom: '20px' }}>{reward.name} {t('badgeSuffix')}</p>
                       <p style={{ 
                         fontSize: '1em', 
                         backgroundColor: 'rgba(0,0,0,0.3)', 
@@ -442,7 +477,7 @@ const GameBoard = () => {
                     </div>
                     
                     <div style={{ display: 'flex', gap: '15px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                      <button onClick={handleRestartGame} className="restart-game-button-main" style={{ fontSize: '1.5em' }}>再玩一次</button>
+                      <button onClick={handleRestartGame} className="restart-game-button-main" style={{ fontSize: '1.5em' }}>{t('playAgain')}</button>
                       <button 
                         onClick={captureAndDownload} 
                         className="share-button" 
@@ -462,7 +497,7 @@ const GameBoard = () => {
                         }}
                       >
                         <span style={{ fontSize: '1.2em' }}>📷</span>
-                        分享成績
+                        {t('shareResults')}
                       </button>
                     </div>
                     <p style={{ 
@@ -471,7 +506,7 @@ const GameBoard = () => {
                       color: '#CCCCCC',
                       opacity: 0.8
                     }}>
-                      點擊「分享成績」下載遊戲成績截圖
+                      {t('shareHint')}
                     </p>
                 </div>
             </div>
@@ -480,7 +515,14 @@ const GameBoard = () => {
   }
   
   console.log('[DEBUG GameBoard] Fallback render - gameStatus:', gameStatus, 'currentLevelConfig from store:', currentLevelConfig);
-  return <div className="design-token-game-wrapper"><div className="game-board-container game-board-centered"><p>載入中或狀態錯誤...</p></div></div>;
+  return (
+    <div className="design-token-game-wrapper">
+      <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+      <div className="game-board-container game-board-centered">
+        <p>{t('loadingOrError')}</p>
+      </div>
+    </div>
+  );
 };
 
 export default GameBoard; 

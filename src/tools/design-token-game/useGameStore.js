@@ -1,5 +1,12 @@
 import { create } from 'zustand';
 import { createLevels } from './types'; // 我們在 types.ts 中定義的關卡
+import translations from './i18n'; // 導入語言文件
+
+// 檢測瀏覽器默認語言
+const getBrowserLanguage = () => {
+  const browserLang = navigator.language || navigator.userLanguage;
+  return browserLang.startsWith('zh') ? 'zh' : 'en';
+};
 
 const initialLevels = createLevels();
 const TIMER_INTERVAL = 10; // milliseconds
@@ -21,6 +28,27 @@ export const useGameStore = create((set, get) => ({
   score: 0, // Score might be less relevant now, or based on total time
   targetColor: '#FFFFFF',
   timerIntervalId: null,
+  language: getBrowserLanguage(), // 初始語言，根據瀏覽器設定
+  
+  // 獲取當前語言的翻譯文本
+  t: (key, params = {}) => {
+    const { language } = get();
+    let text = translations[language]?.[key] || key;
+    
+    // 如果有參數，替換掉文本中的佔位符
+    Object.keys(params).forEach(param => {
+      text = text.replace(`{${param}}`, params[param]);
+    });
+    
+    return text;
+  },
+  
+  // 切換語言
+  toggleLanguage: () => {
+    const { language } = get();
+    const newLanguage = language === 'zh' ? 'en' : 'zh';
+    set({ language: newLanguage });
+  },
 
   // --- ACTIONS ---
   stopTimer: () => {
