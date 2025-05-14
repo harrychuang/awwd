@@ -150,8 +150,8 @@ const GameBoard = () => {
 
               {currentLevelConfig.type === 'system' && isGamePlaying && (
                 <div className="system-color-input-area">
-                  <p>System Token 色彩:</p>
-                  <input type="text" value={systemColorInput} onChange={handleSystemColorInputChange} placeholder="#RRGGBB" />
+                  <p style={{ marginBottom: '15px' }}>System Token 色彩:</p>
+                  <input type="text" value={systemColorInput} style={{ width: '100%', padding: '10px 10px' }} onChange={handleSystemColorInputChange} placeholder="#RRGGBB" />
                   <button onClick={handleUpdateSystemColor} className="system-token-button">更新系統顏色</button>
                 </div>
               )}
@@ -186,10 +186,10 @@ const GameBoard = () => {
         <div className="design-token-game-wrapper">
             <div className="game-board-container game-board-centered">
                 <div className="all-levels-complete-message">
-                    <h2>遊戲完成！</h2>
-                    <p>太強了！你已完成所有Design Token挑戰！</p>
-                    <div className="final-time">總共用時: <span className="game-timer-value">{formatTime(elapsedTime)}</span> 秒</div>
-                    <button onClick={handleRestartGame} className="restart-game-button-main">再玩一次</button>
+                    <h2 style={{ fontSize: '2em' }}>遊戲完成！</h2><br/>
+                    <p>太強了！你已完成所有Design Token挑戰！</p><br/>
+                    <div className="final-time" style={{ fontSize: '1.5em' }}>總共用時: <span className="game-timer-value" style={{ fontSize: '2em', color: 'yellow' }}>{formatTime(elapsedTime)}</span> 秒</div><br/>
+                    <button onClick={handleRestartGame} className="restart-game-button-main" style={{ fontSize: '1.5em' }}>再玩一次</button>
                 </div>
             </div>
         </div>

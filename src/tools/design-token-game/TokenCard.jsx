@@ -15,7 +15,9 @@ const TokenCard = ({
   targetColor // For default input value
 }) => {
   const [inputValue, setInputValue] = useState(color);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const inputRef = useRef(null); // To focus the input when it appears
+  const cardRef = useRef(null); // Reference to the card element for animation
 
   // When isEditing becomes true, update inputValue to current card color and focus the input
   useEffect(() => {
@@ -27,6 +29,23 @@ const TokenCard = ({
       }
     }
   }, [isEditing, color, targetColor]);
+
+  // 添加匹配成功時的動畫效果
+  useEffect(() => {
+    if (isMatched && !hasAnimated && cardRef.current) {
+      cardRef.current.classList.add('bounce-animation');
+      setHasAnimated(true);
+      
+      // 動畫結束後移除動畫類別
+      const timeoutId = setTimeout(() => {
+        if (cardRef.current) {
+          cardRef.current.classList.remove('bounce-animation');
+        }
+      }, 1000); // 動畫持續時間
+      
+      return () => clearTimeout(timeoutId);
+    }
+  }, [isMatched, hasAnimated]);
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
@@ -82,6 +101,7 @@ const TokenCard = ({
 
   return (
     <button
+      ref={cardRef}
       className={`token-card ${isMatched ? 'matched' : ''} ${isEditing ? 'editing' : ''}`}
       style={{ backgroundColor: !isEditing ? color : 'transparent' }} // Hide card color if editing
       onClick={() => onCardClick(id)}

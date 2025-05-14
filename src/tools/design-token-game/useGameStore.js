@@ -120,8 +120,12 @@ export const useGameStore = create((set, get) => ({
     const allMatched = cards.every(card => card.isMatched);
     if (allMatched && cards.length > 0) {
       get().stopTimer(); // Pause the timer
-      set({ gameStatus: 'levelCompleteScreen' }); 
-      console.log("[DEBUG store] checkLevelCompletion - gameStatus: levelCompleteScreen, completed index:", get().currentLevelIndex);
+      
+      // 添加延遲，讓卡片動畫有時間顯示
+      setTimeout(() => {
+        set({ gameStatus: 'levelCompleteScreen' });
+        console.log("[DEBUG store] checkLevelCompletion - gameStatus: levelCompleteScreen, completed index:", get().currentLevelIndex);
+      }, 800); // 延遲800毫秒，讓動畫有時間完成
     }
   },
   
