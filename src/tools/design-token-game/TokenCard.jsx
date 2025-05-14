@@ -1,34 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './style.scss'; // 共用 GameBoard 的樣式檔案
-
-// 設計元素註解列表
-const designElementComments = [
-  "Icon的顏色",
-  "卡片的背景色",
-  "按鈕的顏色",
-  "標題的顏色",
-  "強調文字顏色",
-  "邊框顏色",
-  "連結顏色",
-  "提示文字顏色",
-  "警告訊息顏色",
-  "成功訊息顏色",
-  "標籤背景色",
-  "頁尾文字顏色",
-  "導航列背景",
-  "分隔線顏色",
-  "次要按鈕顏色",
-  "輸入框邊框色",
-  "焦點狀態色",
-  "進度條顏色",
-  "表格標頭色",
-  "滑鼠懸停效果"
-];
+import { useGameStore } from './useGameStore'; // 導入 useGameStore 以取得當前語言與翻譯功能
 
 // 從註解列表中隨機選擇一個
-const getRandomComment = () => {
-  const randomIndex = Math.floor(Math.random() * designElementComments.length);
-  return designElementComments[randomIndex];
+const getRandomCommentIndex = () => {
+  return Math.floor(Math.random() * 20); // 假設有20個元素
 };
 
 // 根據您的需求，Framer Motion 可以在之後加入以實現動畫效果
@@ -45,9 +21,10 @@ const TokenCard = ({
   targetColor, // For default input value
   animationDelay = 0 // 新增動畫延遲參數，默認為0
 }) => {
+  const { language, t } = useGameStore(); // 取得當前語言與翻譯功能
   const [inputValue, setInputValue] = useState(color);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [elementComment] = useState(getRandomComment); // 為每個卡片生成一個隨機註解
+  const [elementCommentIndex] = useState(getRandomCommentIndex); // 為每個卡片生成一個隨機註解索引
   const inputRef = useRef(null); // To focus the input when it appears
   const cardRef = useRef(null); // Reference to the card element for animation
 
@@ -137,6 +114,9 @@ const TokenCard = ({
       />
     );
   }
+
+  // 使用當前語言取得對應的設計元素註解文字
+  const elementComment = t('designElements')[elementCommentIndex];
 
   return (
     <button

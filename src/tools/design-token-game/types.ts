@@ -1,12 +1,15 @@
+import { type } from "os";
+import translations from './i18n';
+
 export interface LevelConfig {
   id: number;
-  name: string; // 例如 "第一關：初識 Reference Token"
-  type: "reference" | "system"; // 關卡類型
-  cardCount: number; // 卡牌數量
-  timeLimit: number; // 時間限制 (秒)
-  targetColor: string; // 本關卡的目標顏色 (例如 "#FF0000")
-  colorPalette: string[]; // 用於生成卡牌初始顏色的調色盤
-  description: string; // 關卡說明文字
+  name: string;
+  type: 'system' | 'reference' | 'component';
+  cardCount: number;
+  timeLimit: number;
+  targetColor: string;
+  colorPalette: string[];
+  description: string;
 }
 
 export interface TokenCardData {
@@ -16,10 +19,51 @@ export interface TokenCardData {
   isMatched: boolean; // 卡牌顏色是否已與目標顏色匹配
 }
 
-const initialColorPalettes = {
-  easy: ["#AEAEB2", "#8E8E93"], // 灰色系
-  medium: ["#FF9500", "#FFCC00", "#FFDB5A"], // 橘黃色系
-  hard: ["#34C759", "#007AFF", "#AF52DE", "#5856D6"], // 多色彩
+// 用於初始狀態的顏色
+export const initialColorPalettes = {
+  easy: [
+    "#8294C4",
+    "#ACB1D6",
+    "#DBDFEA",
+    "#FFEAD2",
+  ],
+  medium: [
+    "#7C73C0",
+    "#9D8AC9",
+    "#B9A0D9",
+    "#CFB6E5",
+    "#E2C7F3",
+    "#EAD9F5",
+  ],
+  hard: [
+    "#FF9494",
+    "#FFB4B4",
+    "#FFD6D6",
+    "#FFE8E8",
+    "#FFD1D1",
+    "#FFF8F8",
+    "#EFD9D9",
+    "#F5E8E8",
+  ]
+};
+
+// 這裡定義一個隨機的一組目標顏色供各關卡使用
+const getRandomColorSet = () => {
+  const targetColors = [
+    "#FF5733", // 橙紅色
+    "#00A86B", // 綠色
+    "#4682B4", // 鋼藍色
+    "#9370DB", // 中紫色
+    "#FF69B4", // 熱粉紅
+    "#FFD700", // 金黃色
+    "#F08080", // 淺珊瑚色
+    "#20B2AA", // 淺海綠色
+    "#6495ED", // 矢車菊藍
+    "#FFA07A", // 淺鮭色
+  ];
+  
+  // 隨機打亂順序
+  return [...targetColors].sort(() => Math.random() - 0.5).slice(0, 5);
 };
 
 // 生成隨機顏色函數
@@ -92,53 +136,53 @@ export const createLevels = (): LevelConfig[] => {
   return [
     {
       id: 1,
-      name: "第一關：點點相連",
+      name: "levelName1",
       type: "reference",
       cardCount: 4,
       timeLimit: 40, // 秒
       targetColor: randomTargetColors[0], // 隨機顏色
       colorPalette: initialColorPalettes.easy,
-      description: "挑戰開始！請點擊每一張卡牌，將它們的顏色都變成指定的目標顏色。",
+      description: "levelDesc1",
     },
     {
       id: 2,
-      name: "第二關：系統之力初顯",
+      name: "levelName2",
       type: "system",
       cardCount: 4,
       timeLimit: 30, // 秒
       targetColor: randomTargetColors[1], // 隨機顏色
       colorPalette: initialColorPalettes.easy,
-      description: "試試看 System Token 的威力！只需要改變上方的「系統顏色」，所有卡牌顏色將會同步更新為目標顏色。",
+      description: "levelDesc2",
     },
     {
       id: 3,
-      name: "第三關：眼明手快",
+      name: "levelName3",
       type: "reference",
       cardCount: 6,
       timeLimit: 50, // 秒
       targetColor: randomTargetColors[2], // 隨機顏色
       colorPalette: initialColorPalettes.medium,
-      description: "卡牌變多了！繼續使用 Reference Token 的方式，逐一點擊卡牌，將它們都變成目標顏色。",
+      description: "levelDesc3",
     },
     {
       id: 4,
-      name: "第四關：效率的奧秘",
+      name: "levelName4",
       type: "system",
       cardCount: 6,
       timeLimit: 35, // 秒
       targetColor: randomTargetColors[3], // 隨機顏色
       colorPalette: initialColorPalettes.medium,
-      description: "再次感受 System Token 的便捷。一次調整，所有卡牌都會變成目標顏色。",
+      description: "levelDesc4",
     },
     {
       id: 5,
-      name: "第五關：終極挑戰",
+      name: "levelName5",
       type: "reference", // 保持 Reference 以強調其在複雜情況下的成本
       cardCount: 8,
       timeLimit: 60, // 秒
       targetColor: randomTargetColors[4], // 隨機顏色
       colorPalette: initialColorPalettes.hard,
-      description: "最後一關！面對更多的卡牌，展現你修改 Reference Token 的耐心與技巧，將它們全部變為目標顏色吧！",
+      description: "levelDesc5",
     },
   ];
 }; 

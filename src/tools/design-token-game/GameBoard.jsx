@@ -295,7 +295,13 @@ const GameBoard = () => {
         <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
         <div className="game-board-container game-board-centered">
           <h2 style={{ fontSize: '2.5em', color: '#FFCC00', marginBottom: '10px' }}>{t('gameTitle')}</h2>
-          <p className="level-description-ready" style={{ marginBottom: '30px' }}>
+          <p className="level-description-ready" style={{ 
+            marginBottom: '30px',
+            whiteSpace: 'pre-line',
+            lineHeight: '1.5',
+            textAlign: 'left',
+            padding: '0 20px'
+          }}>
             {t('introDescription')}
           </p>
           
@@ -339,7 +345,7 @@ const GameBoard = () => {
   
   if (currentLevelConfig && (gameStatus === 'playing' || gameStatus === 'levelCompleteScreen')) {
     const isGamePlaying = gameStatus === 'playing';
-    const levelTypeDisplay = currentLevelConfig.type === 'reference' ? 'Reference Token' : currentLevelConfig.type === 'system' ? 'System Token' : 'Component Token';
+    const levelTypeDisplay = currentLevelConfig.type === 'reference' ? 'Hardcoded Value' : currentLevelConfig.type === 'system' ? 'Design Token' : 'Component Token';
 
     return (
       <div className="design-token-game-wrapper">
@@ -347,13 +353,13 @@ const GameBoard = () => {
         <>
           <div className="game-board-container">
             <div className="game-info-panel">
-              <h2>{currentLevelConfig.name}</h2>
+              <h2>{t(currentLevelConfig.name)}</h2>
               <h3 className="level-subtitle">{levelTypeDisplay} {t('challenge')} - {t('level')} {currentLevelIndex + 1} {t('levelSuffix')}</h3>
               <div className="info-item game-timer"><strong>{t('time')}</strong><span className="game-timer-value">{formatTime(elapsedTime)}</span> {t('seconds')}</div>
               <div className="info-item"><strong>{t('targetColor')}</strong>
                 <span className="color-swatch" style={{ backgroundColor: targetColor }}></span> {targetColor}
               </div>
-              {isGamePlaying && <div className="info-item"><strong>{t('description')}</strong> {currentLevelConfig.description}</div>}
+              {isGamePlaying && <div className="info-item"><strong>{t('description')}</strong> {t(currentLevelConfig.description)}</div>}
               
               {gameStatus === 'levelCompleteScreen' && (
                 <div className="level-complete-message-inline">
