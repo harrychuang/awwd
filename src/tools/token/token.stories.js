@@ -9,7 +9,7 @@ import './doc.scss'
 import data from './data.json'
 
 export default {
-  title: 'Guides/Token',
+  title: 'Tools/Token',
   parameters: { 
     docs: { 
       page: null,
