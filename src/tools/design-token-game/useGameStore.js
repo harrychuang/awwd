@@ -114,18 +114,23 @@ export const useGameStore = create((set, get) => ({
   },
 
   checkLevelCompletion: () => {
-    const { cards, gameStatus } = get();
+    const { cards, gameStatus, currentLevelConfig } = get();
     if (gameStatus !== 'playing') return;
 
     const allMatched = cards.every(card => card.isMatched);
     if (allMatched && cards.length > 0) {
       get().stopTimer(); // Pause the timer
       
+      // 如果是系統令牌關卡，提供更長時間以顯示序列動畫
+      const isSystemLevel = currentLevelConfig?.type === 'system';
+      // 計算序列動畫總時間 = 卡片數量 * 每卡片延遲(100ms) + 基本動畫時間(1000ms)
+      const sequentialAnimationTime = isSystemLevel ? (cards.length * 100) + 1000 : 800;
+      
       // 添加延遲，讓卡片動畫有時間顯示
       setTimeout(() => {
         set({ gameStatus: 'levelCompleteScreen' });
         console.log("[DEBUG store] checkLevelCompletion - gameStatus: levelCompleteScreen, completed index:", get().currentLevelIndex);
-      }, 800); // 延遲800毫秒，讓動畫有時間完成
+      }, sequentialAnimationTime); // 根據關卡類型和卡片數量調整延遲時間
     }
   },
   

@@ -12,7 +12,8 @@ const TokenCard = ({
   isMatched, 
   isEditing, 
   onColorSubmit,
-  targetColor // For default input value
+  targetColor, // For default input value
+  animationDelay = 0 // 新增動畫延遲參數，默認為0
 }) => {
   const [inputValue, setInputValue] = useState(color);
   const [hasAnimated, setHasAnimated] = useState(false);
@@ -30,22 +31,29 @@ const TokenCard = ({
     }
   }, [isEditing, color, targetColor]);
 
-  // 添加匹配成功時的動畫效果
+  // 添加匹配成功時的動畫效果，加入延遲
   useEffect(() => {
     if (isMatched && !hasAnimated && cardRef.current) {
-      cardRef.current.classList.add('bounce-animation');
-      setHasAnimated(true);
-      
-      // 動畫結束後移除動畫類別
-      const timeoutId = setTimeout(() => {
+      // 使用延遲時間
+      const animationTimeoutId = setTimeout(() => {
         if (cardRef.current) {
-          cardRef.current.classList.remove('bounce-animation');
+          cardRef.current.classList.add('bounce-animation');
+          setHasAnimated(true);
+          
+          // 動畫結束後移除動畫類別
+          const cleanupTimeoutId = setTimeout(() => {
+            if (cardRef.current) {
+              cardRef.current.classList.remove('bounce-animation');
+            }
+          }, 1000); // 動畫持續時間
+          
+          return () => clearTimeout(cleanupTimeoutId);
         }
-      }, 1000); // 動畫持續時間
+      }, animationDelay); // 使用傳入的延遲時間
       
-      return () => clearTimeout(timeoutId);
+      return () => clearTimeout(animationTimeoutId);
     }
-  }, [isMatched, hasAnimated]);
+  }, [isMatched, hasAnimated, animationDelay]);
 
   const handleChange = (event) => {
     setInputValue(event.target.value);

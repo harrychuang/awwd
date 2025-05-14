@@ -115,10 +115,18 @@ const GameBoard = () => {
     return (
       <div className="design-token-game-wrapper">
         <div className="game-board-container game-board-centered">
-          <h2>{currentLevelConfig.name}</h2>
-          <h3 className="level-subtitle">{currentLevelConfig.type === 'reference' ? 'Reference Token' : 'System Token'} 挑戰 - 第 {currentLevelIndex + 1} 關</h3>
-          <p className="level-description-ready">{currentLevelConfig.description}</p>
-          <button onClick={handleInitialGameStart} className="start-level-button">開始遊戲</button>
+          <h2 style={{ fontSize: '2.5em', color: '#FFCC00', marginBottom: '10px' }}>Design Token 的奇幻冒險</h2>
+          {/* <h3 className="level-subtitle" style={{ fontSize: '1.3em', marginBottom: '20px' }}>Design Token 的奇幻冒險</h3> */}
+          <p className="level-description-ready" style={{ marginBottom: '30px' }}>
+            想像你是色彩魔法師！在這個世界中有兩種魔法：一種是逐一施法(Reference Token)，一種是連鎖魔法(System Token)。
+            <br/><br/>
+            當你使用「逐一施法」時，你需要對每張卡片單獨下咒語，費時又容易出錯。而「連鎖魔法」則一次影響所有卡片，一勞永逸！
+            <br/><br/>
+            在真實專案中，直接使用Reference Token就像修改100個文件；使用System Token則只需修改1個文件就能影響所有地方。
+            <br/><br/>
+            準備好體驗魔法的差異了嗎？完成5個關卡，成為設計系統的魔法大師！
+          </p>
+          <button onClick={handleInitialGameStart} className="start-level-button" style={{ fontSize: '1.4em', padding: '15px 30px' }}>開始冒險</button>
         </div>
       </div>
     );
@@ -144,13 +152,17 @@ const GameBoard = () => {
               {gameStatus === 'levelCompleteScreen' && (
                 <div className="level-complete-message-inline">
                   <h4>太棒了！關卡 {currentLevelIndex + 1} 完成！</h4>
-                  <button onClick={handleGoToNextLevel} className="next-level-button-inline">下一關</button>
+                  <button onClick={handleGoToNextLevel} className="next-level-button-inline">
+                    {currentLevelIndex === 4 ? "通關完成送出結果!" : "下一關"}
+                  </button>
                 </div>
               )}
 
               {currentLevelConfig.type === 'system' && isGamePlaying && (
                 <div className="system-color-input-area">
-                  <p style={{ marginBottom: '15px' }}>System Token 色彩:</p>
+                  <p style={{ marginBottom: '15px' }}>
+                    <span style={{ fontFamily: 'monospace', backgroundColor: 'rgba(0,0,0,0.2)', padding: '4px 8px', borderRadius: '4px' }}>awwd-color-primary-50:</span>
+                  </p>
                   <input type="text" value={systemColorInput} style={{ width: '100%', padding: '10px 10px' }} onChange={handleSystemColorInputChange} placeholder="#RRGGBB" />
                   <button onClick={handleUpdateSystemColor} className="system-token-button">更新系統顏色</button>
                 </div>
@@ -158,7 +170,7 @@ const GameBoard = () => {
             </div>
 
             <div className={`cards-grid-container ${!isGamePlaying ? 'cards-locked' : ''}`}>
-              {cards.map(card => (
+              {cards.map((card, index) => (
                 <TokenCard 
                   key={card.id} 
                   id={card.id} 
@@ -169,6 +181,7 @@ const GameBoard = () => {
                   isEditing={editingCardId === card.id}
                   onColorSubmit={(enteredColor) => handleCardColorSubmit(card.id, enteredColor)}
                   targetColor={targetColor}
+                  animationDelay={currentLevelConfig.type === 'system' ? index * 100 : 0}
                 />
               ))}
             </div>

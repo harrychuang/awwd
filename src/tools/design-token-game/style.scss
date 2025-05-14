@@ -53,15 +53,18 @@ body.game-active { // Consider adding a class to body when the game is active to
 .game-board-container {
   display: flex;
   flex-direction: column; // Always column: info on top, cards below
-  gap: $padding-base-8bit * 1.5;
+  gap: 20px;
   max-width: 700px; // Adjusted for a single column layout
   margin: 20px auto;
   background-color: color.adjust($primary-background, $lightness: 5%); // Updated lighten
-  padding: $padding-base-8bit;
+  padding: 40px;
   border-radius: $border-radius-8bit;
   border: $border-width-8bit solid $border-color;
   box-shadow: none;
   flex-direction: column; // Ensure game info is on top of cards grid
+  h2 {
+    font-size: 3.2em;
+  }
   &.game-board-centered {
     display: flex;
     flex-direction: column;
@@ -110,12 +113,12 @@ body.game-active { // Consider adding a class to body when the game is active to
     font-weight: normal;
     text-align: center;
     margin-bottom: math.div($gap-base-8bit, 3); // Reduced margin for subtitle
-    font-size: 28px; // Increased title font size
+    font-size: 40px; // Increased title font size
   }
 
   .level-subtitle {
     color: $text-color; // Or a slightly different color like a lighter gray or primary accent
-    font-size: 1.1em; // Adjust size as needed, smaller than h2
+    font-size: 2em; // Adjust size as needed, smaller than h2
     text-align: center;
     margin-top: 0;
     margin-bottom: $padding-base-8bit * 0.75;
@@ -151,7 +154,6 @@ body.game-active { // Consider adding a class to body when the game is active to
       }
       
       strong {
-        color: $secondary-accent;
         font-weight: bold;
         display: inline;
         margin-right: $gap-base-8bit;
