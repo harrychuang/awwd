@@ -98,9 +98,7 @@ body.game-active { // Consider adding a class to body when the game is active to
 .game-info-panel {
   flex: 0 0 auto; // Don't grow, take content size
   padding: $padding-base-8bit;
-  background-color: $card-background;
   border-radius: $border-radius-8bit;
-  border: $border-width-8bit solid $border-color;
   box-shadow: none;
   display: flex;
   flex-direction: column;
@@ -136,6 +134,28 @@ body.game-active { // Consider adding a class to body when the game is active to
       font-weight: normal;
       display: inline-block;
       margin-right: $gap-base-8bit * 0.5;
+    }
+    
+    &.game-timer {
+      font-size: 3em;
+      text-align: center;
+      margin: $gap-base-8bit 0 $gap-base-8bit * 1.5;
+      padding: $gap-base-8bit * 0.8;
+      border-radius: $border-radius-8bit;
+
+      .game-timer-value {
+        display: inline-block;
+        min-width: 150px;
+        color: $secondary-accent;
+        text-shadow: 0 0 5px color.adjust($secondary-accent, $alpha: -0.7);
+      }
+      
+      strong {
+        color: $secondary-accent;
+        font-weight: bold;
+        display: inline;
+        margin-right: $gap-base-8bit;
+      }
     }
   }
 
@@ -226,8 +246,8 @@ body.game-active { // Consider adding a class to body when the game is active to
   grid-template-columns: repeat(auto-fill, minmax($card-size-8bit, 1fr));
   gap: $gap-base-8bit * 1.2;
   padding: $padding-base-8bit;
-  align-content: flex-start;
-  border: $border-width-8bit solid $border-color;
+  align-content: center;
+  justify-content: center;
   background-color: color.adjust($primary-background, $lightness: 2%); // Updated lighten
   border-radius: $border-radius-8bit;
   min-height: 250px; // Ensure it has some height, adjust as needed
@@ -253,7 +273,7 @@ body.game-active { // Consider adding a class to body when the game is active to
   width: $card-size-8bit;
   height: $card-size-8bit;
   border-radius: $border-radius-8bit;
-  border: $border-width-8bit solid $border-color;
+  border: 0px solid $border-color;
   cursor: pointer;
   transition: none;
   box-shadow: none;
@@ -388,6 +408,26 @@ body.game-active { // Consider adding a class to body when the game is active to
     p {
       margin-bottom: $gap-base-8bit;
     }
+    
+    .final-time {
+      font-size: 1.8em;
+      margin: $gap-base-8bit * 1.5 0;
+      padding: $padding-base-8bit;
+      background-color: color.adjust($primary-background, $lightness: 5%);
+      border: $border-width-8bit solid $border-color;
+      border-radius: $border-radius-8bit;
+      color: $text-color;
+      animation: finishPulse 2s infinite alternate;
+      
+      span {
+        color: $secondary-accent;
+        font-weight: bold;
+        margin: 0 $gap-base-8bit;
+        text-shadow: 0 0 5px color.adjust($secondary-accent, $alpha: -0.7);
+        display: inline-block;
+        min-width: 150px;
+      }
+    }
   }
 }
 
@@ -490,3 +530,24 @@ body.game-active { // Consider adding a class to body when the game is active to
 // ... (all other old styles that were in the file) ...
 }
 */
+
+// 添加計時器閃動動畫
+@keyframes timerPulse {
+  from {
+    background-color: color.adjust($primary-background, $lightness: 5%);
+  }
+  to {
+    background-color: color.adjust($primary-background, $lightness: 8%);
+  }
+}
+
+// 添加結束時間閃動動畫，稍慢一些
+@keyframes finishPulse {
+  from {
+    background-color: color.adjust($primary-background, $lightness: 5%);
+  }
+  to {
+    background-color: color.adjust($primary-background, $lightness: 10%);
+    border-color: color.adjust($secondary-accent, $alpha: -0.3);
+  }
+}

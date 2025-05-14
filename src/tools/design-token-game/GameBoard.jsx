@@ -135,10 +135,10 @@ const GameBoard = () => {
             <div className="game-info-panel">
               <h2>{currentLevelConfig.name}</h2>
               <h3 className="level-subtitle">{levelTypeDisplay} 挑戰 - 第 {currentLevelIndex + 1} 關</h3>
+              <div className="info-item game-timer"><strong>時間:</strong><span className="game-timer-value">{formatTime(elapsedTime)}</span> 秒</div>
               <div className="info-item"><strong>目標顏色:</strong>
                 <span className="color-swatch" style={{ backgroundColor: targetColor }}></span> {targetColor}
               </div>
-              <div className="info-item"><strong>總時間:</strong> {formatTime(elapsedTime)} 秒</div>
               {isGamePlaying && <div className="info-item"><strong>說明:</strong> {currentLevelConfig.description}</div>}
               
               {gameStatus === 'levelCompleteScreen' && (
@@ -174,12 +174,6 @@ const GameBoard = () => {
             </div>
           </div>
           <div className="game-controls-area">
-            {gameStatus === 'allLevelsComplete' && (
-                <div className="all-levels-complete-message">
-                    <p>太強了！你已完成所有Design Token挑戰！總共用時: {formatTime(elapsedTime)} 秒</p>
-                    <button onClick={handleRestartGame} className="restart-game-button-main">再玩一次</button>
-                </div>
-            )}
             {isGamePlaying && <button onClick={handleRestartGame} className="restart-game-button-ingame">放棄並重來</button>}
           </div>
         </>
@@ -192,7 +186,9 @@ const GameBoard = () => {
         <div className="design-token-game-wrapper">
             <div className="game-board-container game-board-centered">
                 <div className="all-levels-complete-message">
-                    <p>太強了！你已完成所有Design Token挑戰！總共用時: {formatTime(elapsedTime)} 秒</p>
+                    <h2>遊戲完成！</h2>
+                    <p>太強了！你已完成所有Design Token挑戰！</p>
+                    <div className="final-time">總共用時: <span className="game-timer-value">{formatTime(elapsedTime)}</span> 秒</div>
                     <button onClick={handleRestartGame} className="restart-game-button-main">再玩一次</button>
                 </div>
             </div>
