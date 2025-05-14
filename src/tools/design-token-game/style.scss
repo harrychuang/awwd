@@ -27,7 +27,7 @@ $font-family-8bit: 'CubicPixel', 'Press Start 2P', 'Courier New', Courier, monos
 // Adjusted Base Variables for 8-bit style
 $padding-base-8bit: 12px;
 $border-radius-8bit: 0px;
-$card-size-8bit: 80px;
+$card-size-8bit: 100px;
 $gap-base-8bit: 10px;
 $border-width-8bit: 2px;
 
@@ -286,10 +286,32 @@ body.game-active { // Consider adding a class to body when the game is active to
   position: relative;
   overflow: hidden; // Hide parts of the input that might overflow if not perfectly sized
 
+  // 設計元素註解樣式
+  .element-comment {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    right: 0;
+    font-size: 12px;
+    padding: 3px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    pointer-events: none; // 確保點擊事件穿透到卡片
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &:hover {
     transform: none;
     background-color: color.adjust($card-background, $lightness: 15%); // Updated lighten
     border-color: color.adjust($border-color, $lightness: 20%); // Updated lighten
+    
+    .element-comment {
+      background-color: rgba(0, 0, 0, 0.8); // 懸停時稍微加深背景
+    }
   }
 
   &:active {
@@ -311,6 +333,12 @@ body.game-active { // Consider adding a class to body when the game is active to
   &.matched {
     border-color: $tertiary-accent;
     background-color: $tertiary-accent;
+    
+    .element-comment {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-weight: bold;
+    }
   }
 
   // When card is in editing mode, the button itself might be hidden or transparent
@@ -615,5 +643,28 @@ body.game-active { // Consider adding a class to body when the game is active to
     &:active {
       transform: translate(1px, 1px);
     }
+  }
+}
+
+// 獎章脈動動畫
+@keyframes reward-pulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba(255, 204, 0, 0.3));
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(255, 204, 0, 0.8));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0px rgba(255, 204, 0, 0.3));
+  }
+}
+
+.reward-display {
+  img {
+    image-rendering: pixelated;
+    animation: reward-pulse 1.5s infinite ease-in-out;
   }
 }

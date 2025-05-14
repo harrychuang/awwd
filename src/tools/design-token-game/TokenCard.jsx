@@ -1,6 +1,36 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './style.scss'; // 共用 GameBoard 的樣式檔案
 
+// 設計元素註解列表
+const designElementComments = [
+  "Icon的顏色",
+  "卡片的背景色",
+  "按鈕的顏色",
+  "標題的顏色",
+  "強調文字顏色",
+  "邊框顏色",
+  "連結顏色",
+  "提示文字顏色",
+  "警告訊息顏色",
+  "成功訊息顏色",
+  "標籤背景色",
+  "頁尾文字顏色",
+  "導航列背景",
+  "分隔線顏色",
+  "次要按鈕顏色",
+  "輸入框邊框色",
+  "焦點狀態色",
+  "進度條顏色",
+  "表格標頭色",
+  "滑鼠懸停效果"
+];
+
+// 從註解列表中隨機選擇一個
+const getRandomComment = () => {
+  const randomIndex = Math.floor(Math.random() * designElementComments.length);
+  return designElementComments[randomIndex];
+};
+
 // 根據您的需求，Framer Motion 可以在之後加入以實現動畫效果
 // import { motion } from "framer-motion";
 
@@ -17,6 +47,7 @@ const TokenCard = ({
 }) => {
   const [inputValue, setInputValue] = useState(color);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [elementComment] = useState(getRandomComment); // 為每個卡片生成一個隨機註解
   const inputRef = useRef(null); // To focus the input when it appears
   const cardRef = useRef(null); // Reference to the card element for animation
 
@@ -115,12 +146,10 @@ const TokenCard = ({
       onClick={() => onCardClick(id)}
       disabled={locked || isMatched || isEditing} // Also disable click if currently editing this card
     >
-      {/* Content of the button, maybe show color hex if not editing? */}
-      {!isEditing && (
-        // Optional: Display the color hex value on the card if not editing
-        // <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.7)' }}>{color}</span>
-        null
-      )}
+      {/* 在卡片上顯示隨機設計元素註解 */}
+      <div className="element-comment">
+        {elementComment}
+      </div>
     </button>
   );
 };

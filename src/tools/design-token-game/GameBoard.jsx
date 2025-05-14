@@ -1,7 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from 'react';
 import TokenCard from './TokenCard';
 import { useGameStore } from './useGameStore';
 import './style.scss';
+
+// 導入獎勵圖示
+const MagicianIcon = '/game/magician-icon.png';
+const DiamondIcon = '/game/diamond-icon.png';
+const HeartIcon = '/game/heart-icon.png';
+const SwordIcon = '/game/sword-icon.png';
+const GrassIcon = '/game/grass-icon.png';
 
 const GameBoard = () => {
   const {
@@ -126,6 +134,34 @@ const GameBoard = () => {
             <br/><br/>
             準備好體驗魔法的差異了嗎？完成5個關卡，成為設計系統的魔法大師！
           </p>
+          
+          <div className="rewards-explanation" style={{ width: '80%', marginBottom: '30px', backgroundColor: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '10px' }}>
+            <h3 style={{ marginBottom: '15px', color: '#FFCC00' }}>完成任務可獲得獎章：</h3>
+            <div className="rewards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px' }}>
+              <div className="reward-item" style={{ textAlign: 'center' }}>
+                <img src={MagicianIcon} alt="魔法師" style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
+                <p>0-9 秒</p>
+              </div>
+              <div className="reward-item" style={{ textAlign: 'center' }}>
+                <img src={DiamondIcon} alt="鑽石" style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
+                <p>10-15 秒</p>
+              </div>
+              <div className="reward-item" style={{ textAlign: 'center' }}>
+                <img src={HeartIcon} alt="愛心" style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
+                <p>16-20 秒</p>
+              </div>
+              <div className="reward-item" style={{ textAlign: 'center' }}>
+                <img src={SwordIcon} alt="劍" style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
+                <p>21-40 秒</p>
+              </div>
+              <div className="reward-item" style={{ textAlign: 'center' }}>
+                <img src={GrassIcon} alt="草地" style={{ width: '40px', height: '40px', marginBottom: '8px' }} />
+                <p>40+ 秒</p>
+              </div>
+            </div>
+            <p style={{ marginTop: '15px', textAlign: 'center', fontSize: '0.9em' }}>越快完成挑戰，獲得的獎章越稀有！</p>
+          </div>
+          
           <button onClick={handleInitialGameStart} className="start-level-button" style={{ fontSize: '1.4em', padding: '15px 30px' }}>開始冒險</button>
         </div>
       </div>
@@ -195,6 +231,17 @@ const GameBoard = () => {
   }
 
   if (gameStatus === 'allLevelsComplete') {
+     // 根據完成時間決定獎章
+     const getRewardIcon = (time) => {
+       if (time < 9000) return { icon: MagicianIcon, name: '魔法師'};
+       if (time < 15000) return { icon: DiamondIcon, name: '鑽石'};
+       if (time < 20000) return { icon: HeartIcon, name: '愛心'};
+       if (time < 40000) return { icon: SwordIcon, name: '劍'};
+       return { icon: GrassIcon, name: '草地'};
+     };
+     
+     const reward = getRewardIcon(elapsedTime);
+     
      return (
         <div className="design-token-game-wrapper">
             <div className="game-board-container game-board-centered">
@@ -202,6 +249,22 @@ const GameBoard = () => {
                     <h2 style={{ fontSize: '2em' }}>遊戲完成！</h2><br/>
                     <p>太強了！你已完成所有Design Token挑戰！</p><br/>
                     <div className="final-time" style={{ fontSize: '1.5em' }}>總共用時: <span className="game-timer-value" style={{ fontSize: '2em', color: 'yellow' }}>{formatTime(elapsedTime)}</span> 秒</div><br/>
+                    
+                    <div className="reward-display" style={{ marginTop: '20px', marginBottom: '30px', textAlign: 'center' }}>
+                      <h3 style={{ color: '#FFCC00', marginBottom: '15px' }}>你獲得了：</h3>
+                      <img 
+                        src={reward.icon} 
+                        alt={reward.name} 
+                        style={{ 
+                          width: '80px', 
+                          height: '80px', 
+                          marginBottom: '10px',
+                          animation: 'reward-pulse 1.5s infinite ease-in-out'
+                        }} 
+                      />
+                      <p style={{ fontSize: '1.2em', color: '#FFCC00' }}>{reward.name}獎章</p>
+                    </div>
+                    
                     <button onClick={handleRestartGame} className="restart-game-button-main" style={{ fontSize: '1.5em' }}>再玩一次</button>
                 </div>
             </div>
