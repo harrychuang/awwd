@@ -10,15 +10,14 @@ export const useGameStore = create((set, get) => ({
   currentLevelIndex: 0,
   currentLevelConfig: null, // Will be set by playLevel
   cards: [],
-  // 'init': Before anything, show start button for game
+  // 'init': Before game session starts
+  // 'loadingFirstLevel': Preparing the very first level (shows initial screen in GameBoard)
   // 'playing': Actively in a level, timer running
-  // 'levelTransition': Briefly after a level is complete, before next one starts automatically
-  // 'allLevelsComplete': All levels finished, show total time
+  // 'levelCompleteScreen': Level finished, timer paused, showing completion message & next button
+  // 'allLevelsComplete': All levels finished, timer stopped
   // 'error': Error state
   gameStatus: 'init', 
   elapsedTime: 0, // Stores total milliseconds for the entire game session
-  elapsedTimeAtLevelStart: 0,
-  lastLevelTimeTaken: 0,
   score: 0, // Score might be less relevant now, or based on total time
   targetColor: '#FFFFFF',
   timerIntervalId: null,
@@ -29,7 +28,17 @@ export const useGameStore = create((set, get) => ({
     if (timerIntervalId) {
       clearInterval(timerIntervalId);
       set({ timerIntervalId: null });
+      console.log("[DEBUG store] Timer stopped");
     }
+  },
+
+  startTimer: () => {
+    if (get().timerIntervalId) return; // Already running
+    const intervalId = setInterval(() => {
+      set((state) => ({ elapsedTime: state.elapsedTime + TIMER_INTERVAL }));
+    }, TIMER_INTERVAL);
+    set({ timerIntervalId: intervalId });
+    console.log("[DEBUG store] Timer started/resumed");
   },
 
   // Called when the user clicks the very first "Start Game" button
@@ -39,41 +48,31 @@ export const useGameStore = create((set, get) => ({
     set({
       currentLevelIndex: 0,
       score: 0,
-      elapsedTime: 0,
-      elapsedTimeAtLevelStart: 0,
-      lastLevelTimeTaken: 0,
-      // currentLevelConfig will be set by playLevel, but we can prepare it for loadingFirstLevel display
+      elapsedTime: 0, 
       currentLevelConfig: firstLevelConfig, 
       gameStatus: 'loadingFirstLevel',
       cards: [],
+      timerIntervalId: null, // Ensure timer is null at the very start
     });
-    // playLevel will be called from GameBoard after this, or we can call it here.
-    // For consistency with goToNextLevel, let's have it called from GameBoard or an effect.
+    console.log("[DEBUG store] startGameSession - gameStatus: loadingFirstLevel, currentLevelIndex: 0");
   },
 
   // Called to load cards, set target, and START/RESUME timer for a level
   playLevel: (levelConfigToPlay) => {
     if (!levelConfigToPlay) {
-      console.error("playLevel called with no levelConfig!");
+      console.error("[DEBUG store] playLevel called with no levelConfig!");
       set({ gameStatus: 'error' });
       return;
     }
-    console.log("[DEBUG store] playLevel - Setting currentLevelConfig to:", levelConfigToPlay);
-    set({ elapsedTimeAtLevelStart: get().elapsedTime });
-
-    // Timer is only stopped if it's a full game restart or all levels complete.
-    // If timerIntervalId is null (e.g. first level, or after a full stop), start it.
-    if (!get().timerIntervalId) {
-        const intervalId = setInterval(() => {
-            set((state) => ({ elapsedTime: state.elapsedTime + TIMER_INTERVAL }));
-        }, TIMER_INTERVAL);
-        set({ timerIntervalId: intervalId });
-    }
+    console.log("[DEBUG store] playLevel - Config:", levelConfigToPlay, "Playing for index:", get().currentLevelIndex);
+    
+    get().startTimer(); // Start or resume timer
 
     const newCards = Array.from({ length: levelConfigToPlay.cardCount }, (_, i) => {
-      const initialColor = levelConfigToPlay.colorPalette && levelConfigToPlay.colorPalette.length > 0
-        ? levelConfigToPlay.colorPalette[i % levelConfigToPlay.colorPalette.length]
-        : '#CCCCCC';
+      const initialColor =
+        levelConfigToPlay.colorPalette && levelConfigToPlay.colorPalette.length > 0
+          ? levelConfigToPlay.colorPalette[i % levelConfigToPlay.colorPalette.length]
+          : '#CCCCCC';
       return {
         id: `card-${levelConfigToPlay.id}-${i}`,
         initialColor: initialColor,
@@ -83,12 +82,12 @@ export const useGameStore = create((set, get) => ({
     });
 
     set({
-      currentLevelConfig: levelConfigToPlay, // Crucially set currentLevelConfig here
+      currentLevelConfig: levelConfigToPlay, 
       cards: newCards,
       targetColor: levelConfigToPlay.targetColor,
       gameStatus: 'playing',
-      // elapsedTime continues, not reset here
     });
+    console.log("[DEBUG store] playLevel - gameStatus: playing");
   },
 
   updateCardColor: (cardId, newColor) => {
@@ -115,39 +114,34 @@ export const useGameStore = create((set, get) => ({
   },
 
   checkLevelCompletion: () => {
-    const { cards, gameStatus, elapsedTime, elapsedTimeAtLevelStart } = get();
+    const { cards, gameStatus } = get();
     if (gameStatus !== 'playing') return;
 
     const allMatched = cards.every(card => card.isMatched);
     if (allMatched && cards.length > 0) {
-      const timeForLevel = elapsedTime - elapsedTimeAtLevelStart;
-      set({
-        lastLevelTimeTaken: timeForLevel,
-        gameStatus: 'levelCompleteModal',
-      });
+      get().stopTimer(); // Pause the timer
+      set({ gameStatus: 'levelCompleteScreen' }); 
+      console.log("[DEBUG store] checkLevelCompletion - gameStatus: levelCompleteScreen, completed index:", get().currentLevelIndex);
     }
   },
   
   // Called after 'levelTransition' to move to the next level or end the game
   proceedToNextOrEnd: () => {
-    const { currentLevelIndex, levels } = get();
+    const { currentLevelIndex, levels } = get(); // This currentLevelIndex is the one that was just completed.
     const nextLevelIndex = currentLevelIndex + 1;
+    console.log(`[DEBUG store] proceedToNextOrEnd - currentLevelIndex (completed): ${currentLevelIndex}, calculated nextLevelIndex: ${nextLevelIndex}`);
 
     if (nextLevelIndex < levels.length) {
       const nextLevelConfig = levels[nextLevelIndex];
-      console.log('[DEBUG store] proceedToNextOrEnd - Preparing nextLevelConfig:', nextLevelConfig, 'nextLevelIndex:', nextLevelIndex);
-      set({
-        currentLevelIndex: nextLevelIndex,
-        // DO NOT set currentLevelConfig here. It will be set by playLevel.
-        // currentLevelConfig: null, // Explicitly ensure it's not stale if necessary, or just remove
-        gameStatus: 'loadingNextLevel',
-        cards: [],
-      });
-      return nextLevelConfig; // Return the config for GameBoard to use
+      console.log('[DEBUG store] proceedToNextOrEnd - Setting currentLevelIndex to:', nextLevelIndex, 'and preparing for next level cfg:', nextLevelConfig);
+      
+      set({ currentLevelIndex: nextLevelIndex }); // Set the index for the level that is ABOUT to be played
+      
+      get().playLevel(nextLevelConfig); 
     } else {
-      get().stopTimer(); // All levels are complete, now stop the timer
+      get().stopTimer(); // Ensure timer is stopped for allLevelsComplete
       set({ gameStatus: 'allLevelsComplete' });
-      return null; // No next level
+      console.log("[DEBUG store] proceedToNextOrEnd - gameStatus: allLevelsComplete");
     }
   },
 })); 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import TokenCard from './TokenCard';
 import { useGameStore } from './useGameStore';
-import { Modal } from '../../components/modal';
 import './style.scss';
 
 const GameBoard = () => {
@@ -12,7 +11,6 @@ const GameBoard = () => {
     targetColor,
     elapsedTime,
     currentLevelIndex,
-    lastLevelTimeTaken,
     startGameSession,
     playLevel,
     proceedToNextOrEnd,
@@ -22,24 +20,12 @@ const GameBoard = () => {
 
   const [systemColorInput, setSystemColorInput] = useState('#FFFFFF');
   const [editingCardId, setEditingCardId] = useState(null);
-  
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
-  const [isErrorModal, setIsErrorModal] = useState(false);
 
   useEffect(() => {
     if (gameStatus === 'init') {
       startGameSession();
     }
   }, [gameStatus, startGameSession]);
-
-  useEffect(() => {
-    if (gameStatus === 'levelCompleteModal') {
-      setModalMessage(`關卡完成！您花了 ${formatTime(lastLevelTimeTaken)} 秒。`);
-      setIsErrorModal(false);
-      setModalVisible(true);
-    }
-  }, [gameStatus, lastLevelTimeTaken]);
 
   useEffect(() => {
     if (currentLevelConfig && currentLevelConfig.type === 'system' && 
@@ -58,9 +44,7 @@ const GameBoard = () => {
   }, [currentLevelConfig, cards, gameStatus]);
 
   const showErrorModal = (message) => {
-    setModalMessage(message);
-    setIsErrorModal(true);
-    setModalVisible(true);
+    alert(message);
   };
 
   const handleInitialGameStart = () => {
@@ -70,8 +54,11 @@ const GameBoard = () => {
   };
   
   const handleRestartGame = () => {
-    setModalVisible(false);
     startGameSession();
+  };
+
+  const handleGoToNextLevel = () => {
+    proceedToNextOrEnd();
   };
 
   const handleCardInteraction = (cardId) => {
@@ -110,19 +97,6 @@ const GameBoard = () => {
     return `${totalSeconds.toString().padStart(2, '0')}.${hundredths.toString().padStart(2, '0')}`;
   };
 
-  const handleCloseModal = () => {
-    setModalVisible(false);
-    if (gameStatus === 'levelCompleteModal') {
-      const nextConfig = proceedToNextOrEnd();
-      if (nextConfig) {
-        console.log("[DEBUG GameBoard] handleCloseModal - Received nextConfig, calling playLevel:", nextConfig);
-        playLevel(nextConfig);
-      } else {
-        console.log("[DEBUG GameBoard] handleCloseModal - No nextConfig, game should be ending.");
-      }
-    }
-  };
-
   if (gameStatus === 'init') {
     return <div className="design-token-game-wrapper"><div className="game-board-container game-board-centered"><p>遊戲準備中...</p></div></div>;
   }
@@ -133,13 +107,6 @@ const GameBoard = () => {
           <p>載入遊戲時發生錯誤！</p>
           <button onClick={handleRestartGame}>重試</button>
         </div>
-        <Modal show={modalVisible && isErrorModal} onClose={handleCloseModal} closeButton>
-            <div className="game-error-modal-content">
-                <h4>錯誤提示</h4>
-                <p>{modalMessage}</p>
-                <button onClick={handleCloseModal} className="modal-confirm-button">我知道了</button>
-            </div>
-        </Modal>
       </div>
     );
   }
@@ -153,55 +120,50 @@ const GameBoard = () => {
           <p className="level-description-ready">{currentLevelConfig.description}</p>
           <button onClick={handleInitialGameStart} className="start-level-button">開始遊戲</button>
         </div>
-        <Modal show={modalVisible && isErrorModal} onClose={handleCloseModal} closeButton>
-            <div className="game-error-modal-content">
-                <h4>錯誤提示</h4>
-                <p>{modalMessage}</p>
-                <button onClick={handleCloseModal} className="modal-confirm-button">我知道了</button>
-            </div>
-        </Modal>
       </div>
     );
   }
   
-  const isGamePlaying = gameStatus === 'playing';
-  const levelTypeDisplay = currentLevelConfig?.type === 'reference' ? 'Reference Token' : (currentLevelConfig?.type === 'system' ? 'System Token' : 'Component Token');
+  if (currentLevelConfig && (gameStatus === 'playing' || gameStatus === 'levelCompleteScreen')) {
+    const isGamePlaying = gameStatus === 'playing';
+    const levelTypeDisplay = currentLevelConfig.type === 'reference' ? 'Reference Token' : currentLevelConfig.type === 'system' ? 'System Token' : 'Component Token';
 
-  if (((gameStatus === 'playing' || gameStatus === 'levelCompleteModal') && currentLevelConfig) || (gameStatus === 'loadingNextLevel' && currentLevelConfig)) {
     return (
-      <div className="design-token-game-wrapper"> 
+      <div className="design-token-game-wrapper">
         <>
           <div className="game-board-container">
             <div className="game-info-panel">
               <h2>{currentLevelConfig.name}</h2>
-              <h3 className="level-subtitle">{levelTypeDisplay} 挑戰 - 第 {currentLevelIndex + 1} 關</h3> 
-              <div className="info-item"><strong>目標顏色:</strong> 
+              <h3 className="level-subtitle">{levelTypeDisplay} 挑戰 - 第 {currentLevelIndex + 1} 關</h3>
+              <div className="info-item"><strong>目標顏色:</strong>
                 <span className="color-swatch" style={{ backgroundColor: targetColor }}></span> {targetColor}
               </div>
               <div className="info-item"><strong>總時間:</strong> {formatTime(elapsedTime)} 秒</div>
               {isGamePlaying && <div className="info-item"><strong>說明:</strong> {currentLevelConfig.description}</div>}
               
+              {gameStatus === 'levelCompleteScreen' && (
+                <div className="level-complete-message-inline">
+                  <h4>太棒了！關卡 {currentLevelIndex + 1} 完成！</h4>
+                  <button onClick={handleGoToNextLevel} className="next-level-button-inline">下一關</button>
+                </div>
+              )}
+
               {currentLevelConfig.type === 'system' && isGamePlaying && (
                 <div className="system-color-input-area">
                   <p>System Token 色彩:</p>
-                  <input 
-                    type="text" 
-                    value={systemColorInput} 
-                    onChange={handleSystemColorInputChange} 
-                    placeholder="#RRGGBB"
-                  />
+                  <input type="text" value={systemColorInput} onChange={handleSystemColorInputChange} placeholder="#RRGGBB" />
                   <button onClick={handleUpdateSystemColor} className="system-token-button">更新系統顏色</button>
                 </div>
               )}
             </div>
 
-            <div className={`cards-grid-container ${!isGamePlaying && gameStatus !== 'levelCompleteModal' ? 'hidden-deck' : ''}`}>
+            <div className={`cards-grid-container ${!isGamePlaying ? 'cards-locked' : ''}`}>
               {cards.map(card => (
                 <TokenCard 
                   key={card.id} 
                   id={card.id} 
                   color={card.currentColor} 
-                  locked={!isGamePlaying || (currentLevelConfig.type === 'system' && isGamePlaying) || (editingCardId !== null && editingCardId !== card.id) || gameStatus === 'levelCompleteModal'}
+                  locked={!isGamePlaying || (currentLevelConfig.type === 'system') || (editingCardId !== null && editingCardId !== card.id)}
                   isMatched={card.isMatched}
                   onCardClick={handleCardInteraction}
                   isEditing={editingCardId === card.id}
@@ -218,30 +180,8 @@ const GameBoard = () => {
                     <button onClick={handleRestartGame} className="restart-game-button-main">再玩一次</button>
                 </div>
             )}
-            {isGamePlaying && gameStatus !== 'allLevelsComplete' && 
-                <button onClick={handleRestartGame} className="restart-game-button-ingame">放棄並重來</button>
-            }
+            {isGamePlaying && <button onClick={handleRestartGame} className="restart-game-button-ingame">放棄並重來</button>}
           </div>
-
-          <Modal 
-            show={modalVisible} 
-            onClose={handleCloseModal} 
-            closeButton={isErrorModal} 
-          >
-            {isErrorModal ? (
-              <div className="game-error-modal-content">
-                  <h4>錯誤提示</h4>
-                  <p>{modalMessage}</p>
-                  <button onClick={handleCloseModal} className="modal-confirm-button">我知道了</button>
-              </div>
-            ) : (
-              <div className="game-level-complete-modal-content">
-                  <h4>關卡 {currentLevelIndex + 1} 完成！</h4>
-                  <p>{modalMessage}</p>
-                  <button onClick={handleCloseModal} className="modal-confirm-button">下一關</button>
-              </div>
-            )}
-          </Modal>
         </>
       </div>
     );
@@ -256,20 +196,11 @@ const GameBoard = () => {
                     <button onClick={handleRestartGame} className="restart-game-button-main">再玩一次</button>
                 </div>
             </div>
-            <Modal show={modalVisible && isErrorModal} onClose={handleCloseModal} closeButton>
-                <div className="game-error-modal-content">
-                    <h4>錯誤提示</h4>
-                    <p>{modalMessage}</p>
-                    <button onClick={handleCloseModal} className="modal-confirm-button">我知道了</button>
-                </div>
-            </Modal>
         </div>
      );
   }
   
-  // If something unexpected happens or a state isn't covered explicitly,
-  // show a generic loading or error. This helps catch unhandled states.
-  console.log('[DEBUG GameBoard] Fallback render - gameStatus:', gameStatus, 'currentLevelConfig:', currentLevelConfig);
+  console.log('[DEBUG GameBoard] Fallback render - gameStatus:', gameStatus, 'currentLevelConfig from store:', currentLevelConfig);
   return <div className="design-token-game-wrapper"><div className="game-board-container game-board-centered"><p>載入中或狀態錯誤...</p></div></div>;
 };
 
