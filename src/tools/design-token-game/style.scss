@@ -1,0 +1,246 @@
+@use "sass:math";
+
+@font-face {
+  font-family: 'CubicPixel';
+  src: url('./fonts/web/Cubic_11.woff2') format('woff2'),
+       url('./fonts/web/Cubic_11.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap; // Ensures text is visible while the font loads
+}
+
+// New Color Palette (8-bit style)
+$primary-background: #222034; // Dark purple/blue - common retro game background
+$card-background: #3E3A4D;   // Slightly lighter for cards/panels
+$text-color: #FFFFFF;       // Bright white text
+$primary-accent: #FF004D;   // Bright Red accent
+$secondary-accent: #FFCC00; // Bright Yellow accent
+$tertiary-accent: #00E436;  // Bright Green accent
+$border-color: #76767F;     // A mid-tone grey for borders
+
+// Font (Using a generic monospace font, can be replaced with a specific pixel font later)
+// You might need to import 'Press Start 2P' via a <link> in your HTML head or Next.js _document.js
+// For example: <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+$font-family-8bit: 'CubicPixel', 'Press Start 2P', 'Courier New', Courier, monospace;
+
+// Adjusted Base Variables for 8-bit style
+$padding-base-8bit: 12px;
+$border-radius-8bit: 0px;
+$card-size-8bit: 80px;
+$gap-base-8bit: 10px;
+$border-width-8bit: 2px;
+
+// Global body styles (if this SCSS is meant to be global for the game page)
+// If this is a component-specific SCSS, you might apply these to a top-level game wrapper div instead.
+body.game-active { // Consider adding a class to body when the game is active to scope these styles
+  font-family: $font-family-8bit;
+  margin: 0;
+  padding: $padding-base-8bit;
+  background-color: $primary-background;
+  color: $text-color;
+  line-height: 1.5;
+}
+
+.game-board-container {
+  display: flex;
+  flex-direction: column; // Stack info and cards for smaller screens, or adjust with media queries
+  gap: $padding-base-8bit * 1.5;
+  max-width: 900px;
+  margin: 20px auto;
+  background-color: lighten($primary-background, 5%);
+  padding: $padding-base-8bit;
+  border-radius: $border-radius-8bit;
+  border: $border-width-8bit solid $border-color;
+  box-shadow: none;
+
+  // For a two-column layout on wider screens:
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+}
+
+.game-info-panel {
+  flex: 1;
+  padding: $padding-base-8bit;
+  background-color: $card-background;
+  border-radius: $border-radius-8bit;
+  border: $border-width-8bit solid $border-color;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column; // Ensure items stack nicely
+  gap: $gap-base-8bit;
+
+
+  h2 {
+    margin-top: 0;
+    color: $secondary-accent;
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: $padding-base-8bit;
+    font-size: 1.2em; // Adjust for pixel font
+    // text-shadow: $border-width-8bit $border-width-8bit darken($secondary-accent, 30%);
+  }
+
+  .info-item {
+    margin-bottom: $gap-base-8bit;
+    font-size: 0.9em; // Adjust for pixel font
+
+    strong {
+      min-width: 80px;
+      color: $text-color;
+      font-weight: normal;
+      display: inline-block; // Helps with alignment
+      margin-right: $gap-base-8bit * 0.5;
+    }
+  }
+
+  .color-swatch {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: $border-width-8bit solid $border-color;
+    border-radius: $border-radius-8bit;
+    vertical-align: middle;
+    margin-left: math.div($gap-base-8bit, 4);
+    margin-right: math.div($gap-base-8bit, 2);
+    image-rendering: pixelated; // Helps if the color itself should look blocky
+  }
+
+  button, .system-token-button {
+    padding: ($gap-base-8bit * 0.8) $padding-base-8bit;
+    color: $text-color;
+    border: $border-width-8bit solid $border-color;
+    border-radius: $border-radius-8bit;
+    cursor: pointer;
+    font-size: 0.9em; // Adjust for pixel font
+    font-family: $font-family-8bit;
+    font-weight: normal;
+    transition: none;
+    width: 100%;
+    margin-top: $gap-base-8bit;
+    text-transform: uppercase;
+    box-shadow: none;
+    position: relative; // For pseudo-element shadow or active state
+
+    // Simple inset shadow effect
+    // box-shadow: inset ($border-width-8bit * -0.5) ($border-width-8bit * -0.5) 0px 0px darken($border-color, 20%),
+    //             inset ($border-width-8bit * 0.5) ($border-width-8bit * 0.5) 0px 0px lighten($border-color, 20%);
+
+
+    &:hover {
+      transform: none;
+      // Simple hover: lighten background
+    }
+     &:active {
+      transform: translate($border-width-8bit * 0.5, $border-width-8bit * 0.5); // Slight push effect
+      // box-shadow: inset 0 0 0px 0px darken($border-color, 10%); // Flatten shadow on click
+    }
+  }
+  
+  button:not(.system-token-button) {
+      background-color: $primary-accent;
+      &:hover {
+         background-color: lighten($primary-accent, 10%);
+      }
+      &:active {
+        background-color: darken($primary-accent, 5%);
+      }
+  }
+  
+  .system-token-button {
+    background-color: $secondary-accent;
+    color: $primary-background;
+     &:hover {
+      background-color: lighten($secondary-accent, 10%);
+    }
+    &:active {
+      background-color: darken($secondary-accent, 5%);
+    }
+  }
+}
+
+.cards-grid-container {
+  flex: 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax($card-size-8bit, 1fr));
+  gap: $gap-base-8bit * 1.2;
+  padding: $padding-base-8bit;
+  align-content: flex-start;
+  border: $border-width-8bit solid $border-color;
+  background-color: lighten($primary-background, 2%);
+  border-radius: $border-radius-8bit;
+  min-height: 200px; // Ensure it has some height
+}
+
+.token-card {
+  width: $card-size-8bit;
+  height: $card-size-8bit;
+  border-radius: $border-radius-8bit;
+  border: $border-width-8bit solid $border-color;
+  cursor: pointer;
+  transition: none;
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: $card-background; // Default card color
+  image-rendering: pixelated; // If card content/color should be sharp pixels
+  position: relative; // For active state
+
+  &:hover {
+    transform: none;
+    background-color: lighten($card-background, 15%);
+    border-color: lighten($border-color, 20%);
+  }
+
+  &:active {
+    transform: translate(1px, 1px); // Simpler active state
+    background-color: darken($card-background, 10%);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    background-color: darken($card-background, 5%);
+    border-color: darken($border-color, 10%);
+     &:active {
+        transform: none; // No active state for disabled
+     }
+  }
+  
+  &.matched { // Style for matched cards
+    border-color: $tertiary-accent;
+    background-color: $tertiary-accent; // Or a shade of it
+    // Add a visual cue like a checkmark or different border style if needed
+    // For example, using an ::after pseudo-element for a pixel checkmark
+  }
+
+  // If you want a "raised" effect on non-disabled cards:
+  // box-shadow: $border-width-8bit $border-width-8bit 0 0 darken($border-color, 20%);
+  // &:active {
+  //   box-shadow: none;
+  //   transform: translate($border-width-8bit, $border-width-8bit);
+  // }
+}
+
+/* 
+  The original SCSS file contained multiple style definitions from different stages.
+  This new 8-bit theme replaces them. 
+  Ensure any global styles (like for `body`) are either scoped (e.g., by adding a class like `.design-token-game-active` to the body or a main wrapper)
+  or that this SCSS file is specifically for the game component and doesn't unintentionally override site-wide styles.
+  The font 'Press Start 2P' is a suggestion; you'll need to ensure it's loaded in your project (e.g., via Google Fonts).
+*/
+
+/* 
+  Original styles from the file are commented out below to prevent conflicts.
+  You can remove them once you confirm the new theme works as expected.
+*/
+
+/*
+@use "sass:math";
+
+.design-token-game {
+  padding: 32px;
+// ... (all other old styles that were in the file) ...
+}
+*/
