@@ -438,6 +438,9 @@ body.game-active { // Consider adding a class to body when the game is active to
     text-align: center;
     font-size: 1.2em;
     color: $secondary-accent;
+    position: relative;
+    overflow: hidden;
+    
     p {
       margin-bottom: $gap-base-8bit;
       display: block;
@@ -461,6 +464,59 @@ body.game-active { // Consider adding a class to body when the game is active to
         text-shadow: 0 0 5px color.adjust($secondary-accent, $alpha: -0.7);
         display: inline-block;
         min-width: 150px;
+      }
+    }
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, $secondary-accent, #FF99CC, $tertiary-accent, $secondary-accent);
+      z-index: 1;
+      opacity: 0.8;
+    }
+    
+    .screenshot-header {
+      .pixel-logo {
+        position: relative;
+        text-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+        
+        &::before, &::after {
+          content: '◈';
+          display: inline-block;
+          margin: 0 10px;
+          color: $tertiary-accent;
+        }
+      }
+    }
+    
+    .reward-display {
+      position: relative;
+      
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      
+      &::before {
+        top: 10px;
+        left: 10%;
+        transform: rotate(-15deg);
+      }
+      
+      &::after {
+        bottom: 20px;
+        right: 10%;
+        transform: rotate(15deg);
       }
     }
   }
@@ -667,4 +723,32 @@ body.game-active { // Consider adding a class to body when the game is active to
     image-rendering: pixelated;
     animation: reward-pulse 1.5s infinite ease-in-out;
   }
+}
+
+// 分享按鈕樣式
+.share-button {
+  background-color: #4169E1 !important;
+  color: $text-color !important;
+  transition: all 0.2s ease !important;
+  
+  &:hover {
+    background-color: lighten(#4169E1, 10%) !important;
+    transform: translateY(-2px) !important;
+  }
+  
+  &:active {
+    transform: translateY(1px) !important;
+    background-color: darken(#4169E1, 10%) !important;
+  }
+}
+
+// 為截圖加載時顯示視覺反饋
+@keyframes screenshot-pulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0.8; }
+}
+
+.taking-screenshot {
+  animation: screenshot-pulse 0.5s ease-in-out;
 }
