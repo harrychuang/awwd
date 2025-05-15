@@ -48,6 +48,48 @@ body.game-active { // Consider adding a class to body when the game is active to
   color: $text-color;
   padding: $padding-base-8bit;
   min-height: 100vh;
+  position: relative;
+  overflow: hidden; // 確保光點不會溢出容器
+  
+  // 添加背景光點效果
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(1px at 20% 30%, rgba(255, 204, 0, 0.3) 0%, transparent 100%),
+      radial-gradient(1px at 40% 70%, rgba(255, 204, 0, 0.3) 0%, transparent 100%),
+      radial-gradient(2px at 60% 20%, rgba(255, 204, 0, 0.3) 0%, transparent 100%),
+      radial-gradient(1px at 80% 50%, rgba(255, 204, 0, 0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  // 添加更多像素光點
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  // 8-bit像素光點動畫容器
+  .pixel-stars-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: -100vh;
+    left: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
 }
 
 .game-board-container {
@@ -811,4 +853,90 @@ body.game-active { // Consider adding a class to body when the game is active to
   10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
   90% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
   100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+}
+
+// 創建像素光點動畫，確保光點從下到上穿越整個畫面
+@keyframes float-up {
+  0% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 0;
+  }
+  5% {
+    transform: translateY(90vh) translateX(0);
+    opacity: var(--star-opacity, 0.6);
+  }
+  90% {
+    transform: translateY(10vh) translateX(calc(var(--star-wander, 30px) * (random(20) - 10)));
+    opacity: var(--star-opacity, 0.6);
+  }
+  100% {
+    transform: translateY(0vh) translateX(calc(var(--star-wander, 30px) * (random(20) - 10)));
+    opacity: 0;
+  }
+}
+
+// 閃爍動畫
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+// 確保其他元素在光點之上
+.game-board-container, .error-message-floating, .language-toggle-button {
+  position: relative;
+  z-index: 1;
+}
+
+// 為光點添加不同的動畫時間和延遲
+@for $i from 1 through 50 {
+  .pixel-star:nth-child(#{$i}) {
+    $size-num: random(12) + 1;
+    $size: $size-num + px;
+    $type: random(3); // 隨機決定顏色類型
+    
+    // 根據類型選擇不同的顏色
+    $color: if($type == 1, 
+              $secondary-accent, // 黃色
+              if($type == 2, 
+                $tertiary-accent, // 綠色 
+                $primary-accent  // 紅色
+              )
+            );
+    
+    // 為每種顏色添加一些色調變化
+    $hue: random(30) - 15;
+    
+    position: absolute;
+    width: $size;
+    height: $size;
+    background-color: color.adjust($color, $hue: $hue);
+    box-shadow: 0 0 #{($size-num * 2) + px} color.adjust($color, $alpha: -0.6, $hue: $hue);
+    border-radius: 0; // 像素風格，不圓角
+    left: percentage(random(100) / 100);
+    bottom: -5px; // 修改為更接近畫面底部
+    // 使用更長的動畫時間，確保能完整從下到上穿越整個畫面
+    animation: float-up #{random(20) + 15}s #{if(random(2) == 1, 'linear', 'ease-in-out')} infinite;
+    animation-delay: #{random(10)}s; // 減少延遲時間使光點更快出現
+    opacity: random(6) / 10 + 0.3; // 0.3 - 0.9的隨機透明度，增加可見度
+    z-index: 0;
+    
+    // 讓光點看起來像素化
+    image-rendering: pixelated;
+    
+    // 添加一些閃爍效果
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      animation: twinkle #{random(6) + 2}s ease-in-out infinite;
+      animation-delay: #{random(5)}s;
+    }
+  }
 }

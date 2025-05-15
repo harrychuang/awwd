@@ -495,10 +495,22 @@ const GameBoard = () => {
     }, 100); // 小延遲確保樣式已應用
   };
 
+  // 創建更多的光點數量
+  const renderPixelStars = () => {
+    return Array.from({ length: 100 }).map((_, index) => (
+      <div key={`star-${index}`} className="pixel-star"></div>
+    ));
+  };
+
   if (gameStatus === 'init') {
     return (
       <div className="design-token-game-wrapper">
         <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        
+        {/* 背景像素光點 */}
+        <div className="pixel-stars-container">
+          {renderPixelStars()}
+        </div>
         
         {/* 錯誤訊息浮動提示 */}
         {errorMessage && (
@@ -519,6 +531,11 @@ const GameBoard = () => {
       <div className="design-token-game-wrapper">
         <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
         
+        {/* 背景像素光點 */}
+        <div className="pixel-stars-container">
+          {renderPixelStars()}
+        </div>
+        
         {/* 錯誤訊息浮動提示 */}
         {errorMessage && (
           <div className="error-message-floating">
@@ -538,6 +555,11 @@ const GameBoard = () => {
     return (
       <div className="design-token-game-wrapper">
         <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        
+        {/* 背景像素光點 */}
+        <div className="pixel-stars-container">
+          {renderPixelStars()}
+        </div>
         
         {/* 錯誤訊息浮動提示 */}
         {errorMessage && (
@@ -603,6 +625,11 @@ const GameBoard = () => {
     return (
       <div className="design-token-game-wrapper">
         <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        
+        {/* 背景像素光點 */}
+        <div className="pixel-stars-container">
+          {renderPixelStars()}
+        </div>
         
         {/* 錯誤訊息浮動提示 */}
         {errorMessage && (
@@ -703,6 +730,11 @@ const GameBoard = () => {
         <div className="design-token-game-wrapper">
           <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
           
+          {/* 背景像素光點 */}
+          <div className="pixel-stars-container">
+            {renderPixelStars()}
+          </div>
+          
           {/* 錯誤訊息浮動提示 */}
           {errorMessage && (
             <div className="error-message-floating">
@@ -793,6 +825,11 @@ const GameBoard = () => {
   return (
     <div className="design-token-game-wrapper">
       <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+      
+      {/* 背景像素光點 */}
+      <div className="pixel-stars-container">
+        {renderPixelStars()}
+      </div>
       
       {errorMessage && (
         <div className="error-message-floating">
