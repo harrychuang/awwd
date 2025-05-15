@@ -274,10 +274,10 @@ body.game-active { // Consider adding a class to body when the game is active to
   width: $card-size-8bit;
   height: $card-size-8bit;
   border-radius: $border-radius-8bit;
-  border: 0px solid $border-color;
+  border: $border-width-8bit solid $border-color;
   cursor: pointer;
   transition: none;
-  box-shadow: none;
+  box-shadow: 0 0 0 2px transparent; /* 添加透明陰影作為動畫基礎 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -756,13 +756,59 @@ body.game-active { // Consider adding a class to body when the game is active to
 // 添加抖動動畫效果
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+  20%, 40%, 60%, 80% { transform: translateX(10px); }
+}
+
+@keyframes error-flash {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(255, 50, 50, 0.5); }
+  50% { box-shadow: 0 0 0 8px rgba(255, 0, 0, 0.8); }
 }
 
 .shake-animation {
-  animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both;
+  animation: shake 0.6s cubic-bezier(.36,.07,.19,.97) both, error-flash 0.6s ease-in-out !important;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
+  border-color: $primary-accent !important; /* 使用紅色邊框 */
+}
+
+// 當卡片本身抖動時添加特殊效果
+.token-card.shake-animation {
+  z-index: 10; /* 確保抖動的卡片在其他卡片之上 */
+  border: $border-width-8bit solid $primary-accent !important;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.6) !important;
+}
+
+.token-card-input.shake-animation {
+  background-color: rgba(255, 50, 50, 0.2) !important; /* 添加紅色背景提示錯誤 */
+  border: $border-width-8bit solid $primary-accent !important; /* 使用紅色邊框 */
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5) inset !important;
+}
+
+// 添加浮動錯誤訊息樣式
+.error-message-floating {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 0, 0, 0.8);
+  color: white;
+  padding: 15px 20px;
+  border-radius: $border-radius-8bit;
+  z-index: 1000;
+  font-family: $font-family-8bit;
+  font-size: 1em;
+  text-align: center;
+  max-width: 80%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+  border: $border-width-8bit solid $primary-accent;
+  animation: fadeInCenterOut 3s ease-in-out;
+}
+
+@keyframes fadeInCenterOut {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+  10% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  90% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
 }

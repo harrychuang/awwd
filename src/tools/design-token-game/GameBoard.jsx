@@ -60,6 +60,7 @@ const GameBoard = () => {
   const [systemColorInput, setSystemColorInput] = useState('#FFFFFF');
   const [editingCardId, setEditingCardId] = useState(null);
   const resultRef = useRef(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (gameStatus === 'init') {
@@ -84,7 +85,11 @@ const GameBoard = () => {
   }, [currentLevelConfig, cards, gameStatus]);
 
   const showErrorModal = (message) => {
-    alert(message);
+    setErrorMessage(message);
+    
+    setTimeout(() => {
+      setErrorMessage('');
+    }, 3000);
   };
 
   const handleInitialGameStart = () => {
@@ -107,41 +112,249 @@ const GameBoard = () => {
     }
   };
 
-  const handleCardColorSubmit = (cardId, enteredColor) => {
-    const trimmedColor = enteredColor.trim();
-    if (/^#[0-9A-F]{6}$/i.test(trimmedColor) || /^#[0-9A-F]{3}$/i.test(trimmedColor)) {
-      updateCardColor(cardId, trimmedColor);
-    } else {
-      showErrorModal(t('invalidColorCode', { colorCode: enteredColor }));
-      
-      const cardElement = document.getElementById(cardId);
-      if (cardElement) {
-        cardElement.classList.add('shake-animation');
-        setTimeout(() => {
-          cardElement.classList.remove('shake-animation');
-        }, 600);
-      }
-    }
-    setEditingCardId(null);
-  };
-
   const handleSystemColorInputChange = (event) => {
     setSystemColorInput(event.target.value);
   };
 
   const handleUpdateSystemColor = () => {
     const trimmedSystemColor = systemColorInput.trim();
+    
+    // 檢查色碼格式是否有效
     if (/^#[0-9A-F]{6}$/i.test(trimmedSystemColor) || /^#[0-9A-F]{3}$/i.test(trimmedSystemColor)) {
-      updateSystemTokenColor(trimmedSystemColor);
+      // 檢查是否與目標色碼匹配
+      if (trimmedSystemColor.toLowerCase() !== targetColor.toLowerCase()) {
+        // 色碼有效但不匹配
+        const systemInputElement = document.querySelector('.system-color-input-area input');
+        
+        // 找到所有卡片元素
+        const cardElements = document.querySelectorAll('.token-card');
+        
+        // 顯示錯誤訊息
+        const errorMessage = t('colorMismatch', { enteredColor: trimmedSystemColor, targetColor });
+        setErrorMessage(errorMessage);
+        
+        // 添加定時器使錯誤訊息自動消失
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 3000);
+        
+        // 為輸入框添加抖動動畫
+        if (systemInputElement) {
+          systemInputElement.classList.add('shake-animation');
+          setTimeout(() => {
+            systemInputElement.classList.remove('shake-animation');
+          }, 600);
+        }
+        
+        // 為所有卡片添加抖動動畫
+        cardElements.forEach(card => {
+          card.classList.add('shake-animation');
+          setTimeout(() => {
+            card.classList.remove('shake-animation');
+          }, 600);
+        });
+        
+        // 在動畫結束後再更新色碼
+        setTimeout(() => {
+          updateSystemTokenColor(trimmedSystemColor);
+        }, 600);
+      } else {
+        // 色碼匹配，直接更新
+        updateSystemTokenColor(trimmedSystemColor);
+      }
     } else {
-      showErrorModal(t('invalidSystemToken', { colorCode: systemColorInput }));
-      
+      // 色碼格式無效
       const systemInputElement = document.querySelector('.system-color-input-area input');
+      
       if (systemInputElement) {
+        // 找到所有卡片元素
+        const cardElements = document.querySelectorAll('.token-card');
+        
+        // 顯示錯誤訊息
+        const errorMessage = t('invalidSystemToken', { colorCode: systemColorInput });
+        setErrorMessage(errorMessage);
+        
+        // 添加定時器使錯誤訊息自動消失
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 3000);
+        
+        // 為輸入框添加抖動動畫
         systemInputElement.classList.add('shake-animation');
         setTimeout(() => {
           systemInputElement.classList.remove('shake-animation');
         }, 600);
+        
+        // 為所有卡片添加抖動動畫
+        cardElements.forEach(card => {
+          card.classList.add('shake-animation');
+          setTimeout(() => {
+            card.classList.remove('shake-animation');
+          }, 600);
+        });
+      } else {
+        // 找不到輸入元素，退回到只顯示錯誤訊息
+        setErrorMessage(t('invalidSystemToken', { colorCode: systemColorInput }));
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 3000);
+      }
+    }
+  };
+
+  const showCustomError = (element, message) => {
+    setErrorMessage(message);
+    
+    setTimeout(() => {
+      setErrorMessage('');
+    }, 3000);
+    
+    if (element) {
+      console.log("Adding shake animation to element", element);
+      
+      // 找到當前卡片元素（如果存在）
+      let cardElement = null;
+      if (element.closest) {
+        const tokenCard = element.closest('.token-card');
+        if (tokenCard) {
+          cardElement = tokenCard;
+        } else {
+          // 處理輸入框可能不在卡片內部的情況
+          const activeCardId = editingCardId;
+          if (activeCardId) {
+            cardElement = document.getElementById(activeCardId);
+          }
+        }
+      }
+      
+      // 添加抖動動畫效果
+      element.classList.add('shake-animation');
+      if (cardElement) {
+        cardElement.classList.add('shake-animation');
+      }
+      
+      // 延遲移除動畫效果
+      setTimeout(() => {
+        element.classList.remove('shake-animation');
+        if (cardElement) {
+          cardElement.classList.remove('shake-animation');
+        }
+      }, 600);
+    } else {
+      console.log("Element not found for shake animation");
+    }
+  };
+
+  const handleCardColorSubmit = (cardId, enteredColor) => {
+    const trimmedColor = enteredColor.trim();
+    if (/^#[0-9A-F]{6}$/i.test(trimmedColor) || /^#[0-9A-F]{3}$/i.test(trimmedColor)) {
+      // 先檢查是否與目標顏色匹配
+      if (trimmedColor.toLowerCase() !== targetColor.toLowerCase()) {
+        // 顏色不匹配時，添加抖動動畫和錯誤消息
+        
+        // 找到當前活動的卡片本身（非輸入框），確保在更新狀態前添加抖動效果
+        const cardElement = document.getElementById(cardId);
+        const inputElements = document.querySelectorAll('.token-card-input');
+        let currentInput = null;
+        
+        if (inputElements.length > 0) {
+          if (inputElements.length === 1) {
+            currentInput = inputElements[0];
+          } else {
+            for (let i = 0; i < inputElements.length; i++) {
+              if (document.activeElement === inputElements[i]) {
+                currentInput = inputElements[i];
+                break;
+              }
+            }
+            
+            if (!currentInput && inputElements.length > 0) {
+              currentInput = inputElements[0];
+            }
+          }
+        }
+        
+        // 使用 showCustomError 函數顯示錯誤訊息並讓它自動消失
+        const errorMessage = t('colorMismatch', { enteredColor: trimmedColor, targetColor });
+        if (currentInput) {
+          // 不使用 showCustomError 避免重複添加動畫效果
+          setErrorMessage(errorMessage);
+          // 添加定時器使錯誤訊息自動消失
+          setTimeout(() => {
+            setErrorMessage('');
+          }, 3000);
+          
+          currentInput.classList.add('shake-animation');
+        } else {
+          setErrorMessage(errorMessage);
+          // 添加定時器使錯誤訊息自動消失
+          setTimeout(() => {
+            setErrorMessage('');
+          }, 3000);
+        }
+        
+        // 如果找到了卡片元素，為其添加抖動動畫
+        if (cardElement) {
+          cardElement.classList.add('shake-animation');
+        }
+        
+        // 延遲更新狀態，確保動畫效果有時間顯示
+        setTimeout(() => {
+          // 移除動畫類別
+          if (currentInput) {
+            currentInput.classList.remove('shake-animation');
+          }
+          if (cardElement) {
+            cardElement.classList.remove('shake-animation');
+          }
+          
+          // 更新卡片顏色並關閉編輯模式
+          updateCardColor(cardId, trimmedColor);
+          setEditingCardId(null);
+        }, 600); // 與動畫持續時間相同
+        
+        return; // 提前返回，避免執行後面的代碼
+      }
+      
+      // 如果顏色匹配，直接更新卡片顏色並關閉編輯模式
+      updateCardColor(cardId, trimmedColor);
+      setEditingCardId(null);
+    } else {
+      // 處理無效色碼格式的情況
+      const inputElements = document.querySelectorAll('.token-card-input');
+      let currentInput = null;
+      
+      if (inputElements.length > 0) {
+        if (inputElements.length === 1) {
+          currentInput = inputElements[0];
+        } else {
+          for (let i = 0; i < inputElements.length; i++) {
+            if (document.activeElement === inputElements[i]) {
+              currentInput = inputElements[i];
+              break;
+            }
+          }
+          
+          if (!currentInput && inputElements.length > 0) {
+            currentInput = inputElements[0];
+          }
+        }
+        
+        if (currentInput) {
+          showCustomError(currentInput, t('invalidColorCode', { colorCode: enteredColor }));
+        } else {
+          setErrorMessage(t('invalidColorCode', { colorCode: enteredColor }));
+          // 添加定時器使錯誤訊息自動消失
+          setTimeout(() => {
+            setErrorMessage('');
+          }, 3000);
+        }
+      } else {
+        setErrorMessage(t('invalidColorCode', { colorCode: enteredColor }));
+        // 添加定時器使錯誤訊息自動消失
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 3000);
       }
     }
   };
@@ -286,6 +499,14 @@ const GameBoard = () => {
     return (
       <div className="design-token-game-wrapper">
         <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        
+        {/* 錯誤訊息浮動提示 */}
+        {errorMessage && (
+          <div className="error-message-floating">
+            {errorMessage}
+          </div>
+        )}
+        
         <div className="game-board-container game-board-centered">
           <p>{t('loading')}</p>
         </div>
@@ -297,6 +518,14 @@ const GameBoard = () => {
     return (
       <div className="design-token-game-wrapper">
         <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        
+        {/* 錯誤訊息浮動提示 */}
+        {errorMessage && (
+          <div className="error-message-floating">
+            {errorMessage}
+          </div>
+        )}
+        
         <div className="game-board-container game-board-centered">
           <p>{t('error')}</p>
           <button onClick={handleRestartGame}>{t('retry')}</button>
@@ -309,6 +538,14 @@ const GameBoard = () => {
     return (
       <div className="design-token-game-wrapper">
         <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        
+        {/* 錯誤訊息浮動提示 */}
+        {errorMessage && (
+          <div className="error-message-floating">
+            {errorMessage}
+          </div>
+        )}
+        
         <div className="game-board-container game-board-centered">
           <h2 style={{ fontSize: '2.5em', color: '#FFCC00', marginBottom: '10px' }}>{t('gameTitle')}</h2>
           <p className="level-description-ready" style={{ 
@@ -366,6 +603,14 @@ const GameBoard = () => {
     return (
       <div className="design-token-game-wrapper">
         <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        
+        {/* 錯誤訊息浮動提示 */}
+        {errorMessage && (
+          <div className="error-message-floating">
+            {errorMessage}
+          </div>
+        )}
+        
         <>
           <div className="game-board-container">
             <div className="game-info-panel">
@@ -457,6 +702,14 @@ const GameBoard = () => {
      return (
         <div className="design-token-game-wrapper">
           <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+          
+          {/* 錯誤訊息浮動提示 */}
+          {errorMessage && (
+            <div className="error-message-floating">
+              {errorMessage}
+            </div>
+          )}
+          
             <div className="game-board-container game-board-centered">
                 <div ref={resultRef} className="all-levels-complete-message"
                   style={{
@@ -540,6 +793,13 @@ const GameBoard = () => {
   return (
     <div className="design-token-game-wrapper">
       <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+      
+      {errorMessage && (
+        <div className="error-message-floating">
+          {errorMessage}
+        </div>
+      )}
+      
       <div className="game-board-container game-board-centered">
         <p>{t('loadingOrError')}</p>
       </div>

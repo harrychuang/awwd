@@ -62,6 +62,7 @@ const translations = {
     // 錯誤訊息
     invalidColorCode: "魔法色碼 \"{colorCode}\" 無效。請使用例如 #RRGGBB 或 #RGB 的魔法色碼。",
     invalidSystemToken: "魔法符文色碼 \"{colorCode}\" 無效。請使用例如 #RRGGBB 或 #RGB 的魔法色碼。",
+    colorMismatch: "你的魔法色碼 \"{enteredColor}\" 與目標色碼 \"{targetColor}\" 不符！重新施法吧！",
     screenshotFailed: "魔法畫像捕捉失敗，請再試一次",
     
     // 其他
@@ -171,6 +172,7 @@ Ready your wand and traverse 5 challenging magical levels to become the Supreme 
     // Error messages
     invalidColorCode: "Magical color code \"{colorCode}\" is invalid. Please use hexadecimal color codes like #RRGGBB or #RGB.",
     invalidSystemToken: "The Magical Rune color code \"{colorCode}\" is invalid. Please use hexadecimal color codes like #RRGGBB or #RGB.",
+    colorMismatch: "Your magical color code \"{enteredColor}\" doesn't match the target \"{targetColor}\"! Try casting again!",
     screenshotFailed: "Magical portrait capture failed, please try again",
     
     // Others
