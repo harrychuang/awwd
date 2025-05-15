@@ -121,6 +121,7 @@ const TokenCard = ({
   return (
     <button
       ref={cardRef}
+      id={id}
       className={`token-card ${isMatched ? 'matched' : ''} ${isEditing ? 'editing' : ''}`}
       style={{ backgroundColor: !isEditing ? color : 'transparent' }} // Hide card color if editing
       onClick={() => onCardClick(id)}

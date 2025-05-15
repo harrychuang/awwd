@@ -113,6 +113,14 @@ const GameBoard = () => {
       updateCardColor(cardId, trimmedColor);
     } else {
       showErrorModal(t('invalidColorCode', { colorCode: enteredColor }));
+      
+      const cardElement = document.getElementById(cardId);
+      if (cardElement) {
+        cardElement.classList.add('shake-animation');
+        setTimeout(() => {
+          cardElement.classList.remove('shake-animation');
+        }, 600);
+      }
     }
     setEditingCardId(null);
   };
@@ -127,6 +135,14 @@ const GameBoard = () => {
       updateSystemTokenColor(trimmedSystemColor);
     } else {
       showErrorModal(t('invalidSystemToken', { colorCode: systemColorInput }));
+      
+      const systemInputElement = document.querySelector('.system-color-input-area input');
+      if (systemInputElement) {
+        systemInputElement.classList.add('shake-animation');
+        setTimeout(() => {
+          systemInputElement.classList.remove('shake-animation');
+        }, 600);
+      }
     }
   };
 

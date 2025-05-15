@@ -94,18 +94,18 @@ const translations = {
       "邊框顏色",
       "連結顏色",
       "提示文字顏色",
-      "警告訊息顏色",
+      "訊息顏色",
       "成功訊息顏色",
       "標籤背景色",
       "頁尾文字顏色",
       "導航列背景",
       "分隔線顏色",
-      "次要按鈕顏色",
+      "按鈕顏色",
       "輸入框邊框色",
       "焦點狀態色",
       "進度條顏色",
       "表格標頭色",
-      "滑鼠懸停效果"
+      "光暈效果"
     ],
   },
   
@@ -203,18 +203,18 @@ Ready your wand and traverse 5 challenging magical levels to become the Supreme 
       "Border color",
       "Link color",
       "Hint text color",
-      "Warning message color",
+      "Message color",
       "Success message color",
       "Tag background",
       "Footer text color",
       "Navigation bar background",
       "Divider color",
-      "Secondary button color",
+      "Button color",
       "Input field border color",
       "Focus state color",
       "Progress bar color",
       "Table header color",
-      "Hover effect color"
+      "Effect color"
     ],
   }
 };
