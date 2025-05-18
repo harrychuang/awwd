@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import TokenCard from './TokenCard';
 import { useGameStore } from './useGameStore';
 import html2canvas from 'html2canvas';
@@ -495,12 +495,26 @@ const GameBoard = () => {
     }, 100); // 小延遲確保樣式已應用
   };
 
-  // 創建更多的光點數量
+  // 創建光點並確保從顯示位置立即開始向上飄動
   const renderPixelStars = () => {
-    return Array.from({ length: 100 }).map((_, index) => (
-      <div key={`star-${index}`} className="pixel-star"></div>
-    ));
+    return Array.from({ length: 60 }).map((_, index) => {
+      // 所有光點都均勻分布在畫面各處
+      return (
+        <div 
+          key={`star-${index}`} 
+          className="pixel-star"
+          style={{
+            bottom: `${Math.random() * 100}%`, // 隨機分布在整個畫面高度
+            left: `${Math.random() * 100}%`,   // 隨機分布在整個畫面寬度
+            animationDelay: `${Math.random() * 3}s` // 較短的隨機延遲
+          }}
+        ></div>
+      );
+    });
   };
+
+  // 使用 useMemo 生成穩定的光點元素，防止不必要的重新渲染
+  const pixelStars = useMemo(() => renderPixelStars(), []);
 
   if (gameStatus === 'init') {
     return (
@@ -509,7 +523,7 @@ const GameBoard = () => {
         
         {/* 背景像素光點 */}
         <div className="pixel-stars-container">
-          {renderPixelStars()}
+          {pixelStars}
         </div>
         
         {/* 錯誤訊息浮動提示 */}
@@ -533,7 +547,7 @@ const GameBoard = () => {
         
         {/* 背景像素光點 */}
         <div className="pixel-stars-container">
-          {renderPixelStars()}
+          {pixelStars}
         </div>
         
         {/* 錯誤訊息浮動提示 */}
@@ -558,7 +572,7 @@ const GameBoard = () => {
         
         {/* 背景像素光點 */}
         <div className="pixel-stars-container">
-          {renderPixelStars()}
+          {pixelStars}
         </div>
         
         {/* 錯誤訊息浮動提示 */}
@@ -620,15 +634,16 @@ const GameBoard = () => {
   
   if (currentLevelConfig && (gameStatus === 'playing' || gameStatus === 'levelCompleteScreen')) {
     const isGamePlaying = gameStatus === 'playing';
+    const isLevelComplete = gameStatus === 'levelCompleteScreen';
     const levelTypeDisplay = currentLevelConfig.type === 'reference' ? 'Hardcoded Value' : currentLevelConfig.type === 'system' ? 'Design Token' : 'Component Token';
 
     return (
       <div className="design-token-game-wrapper">
         <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
         
-        {/* 背景像素光點 */}
-        <div className="pixel-stars-container">
-          {renderPixelStars()}
+        {/* 背景像素光點 - 關卡完成時添加 celebrating 類，但保持使用相同的光點 */}
+        <div className={`pixel-stars-container ${isLevelComplete ? 'celebrating' : ''}`}>
+          {pixelStars}
         </div>
         
         {/* 錯誤訊息浮動提示 */}
@@ -730,9 +745,9 @@ const GameBoard = () => {
         <div className="design-token-game-wrapper">
           <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
           
-          {/* 背景像素光點 */}
-          <div className="pixel-stars-container">
-            {renderPixelStars()}
+          {/* 背景像素光點 - 全部關卡完成時也使用相同的光點，只添加慶祝效果 */}
+          <div className="pixel-stars-container celebrating">
+            {pixelStars}
           </div>
           
           {/* 錯誤訊息浮動提示 */}
@@ -828,7 +843,7 @@ const GameBoard = () => {
       
       {/* 背景像素光點 */}
       <div className="pixel-stars-container">
-        {renderPixelStars()}
+        {pixelStars}
       </div>
       
       {errorMessage && (

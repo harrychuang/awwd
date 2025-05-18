@@ -85,7 +85,7 @@ body.game-active { // Consider adding a class to body when the game is active to
     position: fixed;
     width: 100%;
     height: 100%;
-    top: -100vh;
+    top: 0;
     left: 0;
     z-index: 0;
     pointer-events: none;
@@ -126,9 +126,11 @@ body.game-active { // Consider adding a class to body when the game is active to
 
     .start-level-button,
     .restart-game-button-alt {
+      font-family: $font-family-8bit;
       padding: ($gap-base-8bit * 1.2) ($padding-base-8bit * 2);
       font-size: 1.2em;
       min-width: 200px;
+      border-radius: $border-radius-8bit;
       // Inherits general button styles from below
     }
     .restart-game-button-alt {
@@ -855,22 +857,18 @@ body.game-active { // Consider adding a class to body when the game is active to
   100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
 }
 
-// 創建像素光點動畫，確保光點從下到上穿越整個畫面
+// 修改動畫，讓光點從各自位置開始向上飄動
 @keyframes float-up {
   0% {
-    transform: translateY(100vh) translateX(0);
-    opacity: 0;
-  }
-  5% {
-    transform: translateY(90vh) translateX(0);
+    transform: translateY(0) translateX(0);
     opacity: var(--star-opacity, 0.6);
   }
   90% {
-    transform: translateY(10vh) translateX(calc(var(--star-wander, 30px) * (random(20) - 10)));
+    transform: translateY(-70vh) translateX(calc(var(--star-wander, 30px) * (random(20) - 10)));
     opacity: var(--star-opacity, 0.6);
   }
   100% {
-    transform: translateY(0vh) translateX(calc(var(--star-wander, 30px) * (random(20) - 10)));
+    transform: translateY(-90vh) translateX(calc(var(--star-wander, 30px) * (random(20) - 10)));
     opacity: 0;
   }
 }
@@ -917,11 +915,16 @@ body.game-active { // Consider adding a class to body when the game is active to
     box-shadow: 0 0 #{($size-num * 2) + px} color.adjust($color, $alpha: -0.6, $hue: $hue);
     border-radius: 0; // 像素風格，不圓角
     left: percentage(random(100) / 100);
-    bottom: -5px; // 修改為更接近畫面底部
-    // 使用更長的動畫時間，確保能完整從下到上穿越整個畫面
-    animation: float-up #{random(20) + 15}s #{if(random(2) == 1, 'linear', 'ease-in-out')} infinite;
-    animation-delay: #{random(10)}s; // 減少延遲時間使光點更快出現
-    opacity: random(6) / 10 + 0.3; // 0.3 - 0.9的隨機透明度，增加可見度
+
+    // 初始位置隨機分布在整個畫面中
+    bottom: random(100) * 1%;
+    
+    // 使用固定範圍的動畫時間 (25-40秒)，確保在所有遊戲階段速度一致
+    $animation-duration: 25s + random(15);
+    animation: float-up #{$animation-duration} linear infinite;
+    // 較短的延遲時間，確保光點持續上升
+    animation-delay: #{random(5)}s;
+    opacity: random(6) / 10 + 0.3; // 0.3 - 0.9的隨機透明度
     z-index: 0;
     
     // 讓光點看起來像素化
@@ -936,7 +939,120 @@ body.game-active { // Consider adding a class to body when the game is active to
       right: 0;
       bottom: 0;
       animation: twinkle #{random(6) + 2}s ease-in-out infinite;
-      animation-delay: #{random(5)}s;
+      animation-delay: #{random(3)}s;
     }
   }
 }
+
+// 修改慶祝閃爍動畫，增強效果但不改變位置
+@keyframes enhanced-twinkle {
+  0% {
+    opacity: 0.8;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(2.5);
+    filter: brightness(2) drop-shadow(0 0 15px rgba(255, 255, 255, 0.95));
+  }
+  60% {
+    opacity: 1;
+    transform: scale(2);
+    filter: brightness(1.8) drop-shadow(0 0 12px rgba(255, 255, 255, 0.9));
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+// 添加彈跳縮放動畫，讓光點本身也有放大效果
+@keyframes celebrate-bounce {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(2.2);
+  }
+  45% {
+    transform: scale(1.8);
+  }
+  60% {
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// 關卡完成時的光點容器樣式
+.pixel-stars-container.celebrating {
+  z-index: 10; // 確保光點在前景
+  
+  // 使用偽元素增加整體光芒效果
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0) 70%);
+    animation: pulse 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  
+  // 只修改光點的閃爍效果，不改變動畫路徑
+  .pixel-star {
+    // 不要修改 animation-name，保持原有路徑
+    // 不要修改 animation-duration，保持原有速度
+    
+    // 增強光芒和閃爍
+    filter: brightness(1.5) !important;
+    // 添加彈性縮放動畫
+    animation: float-up var(--animation-duration, 30s) linear infinite, celebrate-bounce 1.5s ease-in-out infinite !important;
+    z-index: 5 !important; // 確保在其他元素上方
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: -100%;
+      right: -100%;
+      bottom: -100%;
+      animation: enhanced-twinkle 1.2s infinite ease-in-out !important;
+      animation-delay: random(700) * 0.001s !important;
+    }
+    
+    // 為每個光點添加特殊顏色，保持原有大小和位置
+    @for $i from 1 through 50 {
+      &:nth-child(#{$i}) {
+        // 隨機選擇不同光點的動畫延遲，創造更自然效果
+        animation-delay: #{random(15) * 0.1}s, #{random(10) * 0.1}s !important;
+        // 使用 box-shadow 增強光芒效果
+        box-shadow: 0 0 #{random(20) + 10}px rgba(255, 255, 255, 0.9) !important;
+        
+        // 隨機選擇一些光點使用不同顏色
+        @if random(100) > 70 {
+          $celebr-colors: (#FFCC00, #FF004D, #00E436, #29ADFF, #FF77A8);
+          $color-index: random(5);
+          background-color: nth($celebr-colors, $color-index) !important;
+          box-shadow: 0 0 #{random(20) + 10}px nth($celebr-colors, $color-index) !important;
+        }
+      }
+    }
+  }
+}
+
+// 添加脈動光芒動畫
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
