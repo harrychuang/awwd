@@ -22,7 +22,7 @@ const fixIconPaths = () => {
     sword: swordImg,
     grass: grassImg,
     // logo 使用相對路徑，因為我們沒有直接導入它
-    logo: './logo.png'
+    logo: './logo.png?v=1'
   };
 };
 
