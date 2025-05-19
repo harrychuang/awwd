@@ -5,12 +5,19 @@ import { useGameStore } from './useGameStore';
 import html2canvas from 'html2canvas';
 import './style.scss';
 
-// 導入獎勵圖示
-const MagicianIcon = 'https://noeinoi.com/storybook/game/magician-icon.png';
-const DiamondIcon = 'https://noeinoi.com/storybook/game/diamond-icon.png';
-const HeartIcon = 'https://noeinoi.com/storybook/game/heart-icon.png';
-const SwordIcon = 'https://noeinoi.com/storybook/game/sword-icon.png';
-const GrassIcon = 'https://noeinoi.com/storybook/game/grass-icon.png';
+// 導入獎勵圖示 - 支援獨立構建和 Storybook 環境
+const getIconPath = (name) => {
+  if (window.gameIcons && window.gameIcons[name]) {
+    return window.gameIcons[name];
+  }
+  return `https://noeinoi.com/storybook/game/${name}-icon.png`;
+};
+
+const MagicianIcon = getIconPath('magician');
+const DiamondIcon = getIconPath('diamond');
+const HeartIcon = getIconPath('heart');
+const SwordIcon = getIconPath('sword');
+const GrassIcon = getIconPath('grass');
 
 // 語言切換按鈕樣式
 const LanguageToggleButton = ({ onClick, currentLanguage }) => (
@@ -18,8 +25,8 @@ const LanguageToggleButton = ({ onClick, currentLanguage }) => (
     onClick={onClick}
     style={{
       position: 'absolute',
-      top: '50px',
-      right: '50px',
+      top: '20px',
+      right: '20px',
       backgroundColor: 'rgba(0, 0, 0, 0.5)',
       color: '#FFCC00',
       border: '2px solid #76767F',
@@ -519,7 +526,6 @@ const GameBoard = () => {
   if (gameStatus === 'init') {
     return (
       <div className="design-token-game-wrapper">
-        <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
         
         {/* 背景像素光點 */}
         <div className="pixel-stars-container">
@@ -534,6 +540,7 @@ const GameBoard = () => {
         )}
         
         <div className="game-board-container game-board-centered">
+          <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
           <p>{t('loading')}</p>
         </div>
       </div>
@@ -543,7 +550,7 @@ const GameBoard = () => {
   if (gameStatus === 'error') {
     return (
       <div className="design-token-game-wrapper">
-        <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        
         
         {/* 背景像素光點 */}
         <div className="pixel-stars-container">
@@ -558,6 +565,7 @@ const GameBoard = () => {
         )}
         
         <div className="game-board-container game-board-centered">
+          <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
           <p>{t('error')}</p>
           <button onClick={handleRestartGame}>{t('retry')}</button>
         </div>
@@ -568,7 +576,7 @@ const GameBoard = () => {
   if (gameStatus === 'loadingFirstLevel' && currentLevelConfig) {
     return (
       <div className="design-token-game-wrapper">
-        <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        
         
         {/* 背景像素光點 */}
         <div className="pixel-stars-container">
@@ -583,7 +591,11 @@ const GameBoard = () => {
         )}
         
         <div className="game-board-container game-board-centered">
-          <h2 style={{ fontSize: '2.5em', color: '#FFCC00', marginBottom: '10px' }}>{t('gameTitle')}</h2>
+          <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+          {/* LOGO + 標題橫向排列 */}
+          <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center', justifyContent: 'center', gap: '30px', marginBottom: '16px' }}>
+            <img src="https://noeinoi.com/storybook/game/logo.png" alt="Logo" style={{ width: '240px', height: 'auto', display: 'block' }} />
+          </div>
           <p className="level-description-ready" style={{ 
             marginBottom: '30px',
             whiteSpace: 'pre-line',
@@ -594,7 +606,7 @@ const GameBoard = () => {
             {t('introDescription')}
           </p>
           
-          <div className="rewards-explanation" style={{ width: '80%', marginBottom: '30px', backgroundColor: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '10px' }}>
+          <div className="rewards-explanation" style={{ width: '90%', marginBottom: '30px', backgroundColor: 'rgba(0,0,0,0.2)', padding: '20px', borderRadius: '10px' }}>
             <h3 style={{ marginBottom: '15px', color: '#FFCC00' }}>{t('rewardExplanation')}</h3>
             <div className="rewards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px' }}>
               <div className="reward-item" style={{ textAlign: 'center' }}>
@@ -639,7 +651,7 @@ const GameBoard = () => {
 
     return (
       <div className="design-token-game-wrapper">
-        <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+        
         
         {/* 背景像素光點 - 關卡完成時添加 celebrating 類，但保持使用相同的光點 */}
         <div className={`pixel-stars-container ${isLevelComplete ? 'celebrating' : ''}`}>
@@ -655,6 +667,7 @@ const GameBoard = () => {
         
         <>
           <div className="game-board-container">
+            <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
             <div className="game-info-panel">
               <h2>{t(currentLevelConfig.name)}</h2>
               <h3 className="level-subtitle">{levelTypeDisplay} {t('challenge')} - {t('level')} {currentLevelIndex + 1} {t('levelSuffix')}</h3>
@@ -743,7 +756,7 @@ const GameBoard = () => {
      
      return (
         <div className="design-token-game-wrapper">
-          <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+          
           
           {/* 背景像素光點 - 全部關卡完成時也使用相同的光點，只添加慶祝效果 */}
           <div className="pixel-stars-container celebrating">
@@ -758,6 +771,7 @@ const GameBoard = () => {
           )}
           
             <div className="game-board-container game-board-centered">
+                <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
                 <div ref={resultRef} className="all-levels-complete-message"
                   style={{
                     background: 'linear-gradient(160deg, #282840 0%, #191925 100%)',
@@ -765,12 +779,18 @@ const GameBoard = () => {
                     borderRadius: '8px',
                     border: '2px solid #2f2f46',
                     boxShadow: '0 5px 15px rgba(0,0,0,0.5)',
-                    maxWidth: '90%'
+                    maxWidth: '90%',
+                    marginTop: '-20px',
+                    marginBottom: '-20px'
                   }}>
                     <div className="screenshot-header" style={{ marginBottom: '15px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                       <div className="pixel-logo" style={{ fontSize: '1.2em', color: '#FFCC00', fontWeight: 'bold', letterSpacing: '1px' }}>{t('designTokenMaster')}</div>
                     </div>
                     
+                    {/* LOGO + 標題橫向排列 */}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '18px', marginBottom: '16px' }}>
+                      <img src="https://noeinoi.com/storybook/game/logo.png" alt="Logo" style={{ width: '180px', height: 'auto', display: 'block' }} />
+                    </div>
                     <h2 style={{ fontSize: '2em' }}>{t('gameCompleted')}</h2><br/>
                     <p>{t('greatPerformance')}</p><br/>
                     <div className="final-time" style={{ fontSize: '1.5em' }}>{t('totalTime')} <span className="game-timer-value" style={{ fontSize: '2em', color: 'yellow' }}>{formatTime(elapsedTime)}</span> {t('seconds')}</div><br/>
@@ -839,7 +859,7 @@ const GameBoard = () => {
   console.log('[DEBUG GameBoard] Fallback render - gameStatus:', gameStatus, 'currentLevelConfig from store:', currentLevelConfig);
   return (
     <div className="design-token-game-wrapper">
-      <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
+      
       
       {/* 背景像素光點 */}
       <div className="pixel-stars-container">
@@ -853,6 +873,7 @@ const GameBoard = () => {
       )}
       
       <div className="game-board-container game-board-centered">
+       <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
         <p>{t('loadingOrError')}</p>
       </div>
     </div>

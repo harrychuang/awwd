@@ -44,7 +44,7 @@ body.game-active { // Consider adding a class to body when the game is active to
 
 .design-token-game-wrapper {
   font-family: $font-family-8bit;
-  background-color: $primary-background;
+  background-color: #1a1a1a;
   color: $text-color;
   padding: $padding-base-8bit;
   min-height: 100vh;
@@ -94,12 +94,13 @@ body.game-active { // Consider adding a class to body when the game is active to
 
 .game-board-container {
   display: flex;
+  width: 720px;
   flex-direction: column; // Always column: info on top, cards below
   gap: 20px;
   max-width: 700px; // Adjusted for a single column layout
   margin: 20px auto;
   background-color: color.adjust($primary-background, $lightness: 5%); // Updated lighten
-  padding: 40px;
+  padding: 40px 20px;
   border-radius: $border-radius-8bit;
   border: $border-width-8bit solid $border-color;
   box-shadow: none;
@@ -119,8 +120,9 @@ body.game-active { // Consider adding a class to body when the game is active to
     .level-description-ready {
       font-size: 1em;
       color: color.adjust($text-color, $alpha: -0.15); // Slightly dimmed
-      max-width: 80%;
+      max-width: 90%;
       line-height: 1.6;
+      padding: 0 0 !important;
       margin-bottom: $padding-base-8bit;
     }
 
