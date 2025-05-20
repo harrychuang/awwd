@@ -594,7 +594,7 @@ const GameBoard = () => {
           <LanguageToggleButton onClick={toggleLanguage} currentLanguage={language} />
           {/* LOGO + 標題橫向排列 */}
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center', justifyContent: 'center', gap: '30px', marginBottom: '16px' }}>
-            <img src="https://noeinoi.com/storybook/game/logo.png?v=1" alt="Logo" style={{ width: '240px', height: 'auto', display: 'block' }} />
+            <img src="https://noeinoi.com/storybook/game/logo.png?v=2" alt="Logo" style={{ width: '240px', height: 'auto', display: 'block' }} />
           </div>
           <p className="level-description-ready" style={{ 
             marginBottom: '30px',
@@ -809,7 +809,7 @@ const GameBoard = () => {
                     
                     {/* LOGO + 標題橫向排列 */}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '18px', marginBottom: '16px' }}>
-                      <img src="https://noeinoi.com/storybook/game/logo.png?v=1" alt="Logo" style={{ width: '180px', height: 'auto', display: 'block' }} />
+                      <img src="https://noeinoi.com/storybook/game/logo.png?v=2" alt="Logo" style={{ width: '180px', height: 'auto', display: 'block' }} />
                     </div>
                     <h2 style={{ fontSize: '2em' }}>{t('gameCompleted')}</h2><br/>
                     <p>{t('greatPerformance')}</p><br/>

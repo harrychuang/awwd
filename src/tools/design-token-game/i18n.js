@@ -74,7 +74,7 @@ const translations = {
 
     // 遊戲關卡
     levelName1: "第一關：點點相連",
-    levelDesc1: "挑戰開始！請點擊每一張卡牌，將它們的顏色都變成指定的目標顏色。",
+    levelDesc1: "挑戰開始！請點擊每一張卡牌，在出現的輸入框中填入目標色碼，將它們的顏色都變成指定的目標顏色。",
     
     levelName2: "第二關：系統之力初顯",
     levelDesc2: "試試看魔法符文(Design Token)的威力！只需要改變上方的魔法符文，所有卡牌顏色將會同步更新為目標顏色。",
@@ -187,7 +187,7 @@ Ready your wand and traverse 5 challenging magical levels to become the Supreme 
 
     // Game levels
     levelName1: "Level 1: Connect the Dots",
-    levelDesc1: "Challenge begins! Click on each card to change their colors to the target color.",
+    levelDesc1: "Challenge begins! Click on each card, enter the target color code in the input field that appears, and change their colors to the target color.",
     
     levelName2: "Level 2: The Power of Magic Runes",
     levelDesc2: "Experience the power of Magical Runes (Design Tokens)! Simply change the magical rune above, and all cards will synchronize to the target color.",
