@@ -59,6 +59,9 @@ const translations = {
     shareResults: "分享魔法成就",
     shareHint: "點擊「分享魔法成就」下載你的成績魔法畫像",
     
+    // AAPD 課程連結
+    learnMoreAAPD: "到 AAPD 學習設計系統魔法",
+    
     // 錯誤訊息
     invalidColorCode: "魔法色碼 \"{colorCode}\" 無效。請使用例如 #RRGGBB 或 #RGB 的魔法色碼。",
     invalidSystemToken: "魔法符文色碼 \"{colorCode}\" 無效。請使用例如 #RRGGBB 或 #RGB 的魔法色碼。",
@@ -168,6 +171,9 @@ Ready your wand and traverse 5 challenging magical levels to become the Supreme 
     abandonAndRestart: "Abandon & Restart",
     shareResults: "Share Magical Achievement",
     shareHint: "Click 'Share Magical Achievement' to download your magical portrait",
+    
+    // AAPD course link
+    learnMoreAAPD: "Learn Design System Magic at AAPD",
     
     // Error messages
     invalidColorCode: "Magical color code \"{colorCode}\" is invalid. Please use hexadecimal color codes like #RRGGBB or #RGB.",

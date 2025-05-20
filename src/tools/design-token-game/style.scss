@@ -131,10 +131,48 @@ body.game-active { // Consider adding a class to body when the game is active to
       font-family: $font-family-8bit;
       padding: ($gap-base-8bit * 1.2) ($padding-base-8bit * 2);
       font-size: 1.2em;
-      min-width: 200px;
+      min-width: 350px;
+      cursor: pointer;
+      background-color: #e1b14b;
       border-radius: $border-radius-8bit;
-      // Inherits general button styles from below
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, background-color 0.2s;
+      border: $border-width-8bit solid $border-color;
+      
+      // 像素風格閃光效果 - 與 aapd-link-button 相同
+      &::before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+        background: linear-gradient(45deg, 
+          transparent 0%, 
+          transparent 40%, 
+          rgba(255, 255, 255, 0.2) 50%, 
+          transparent 60%, 
+          transparent 100%);
+        z-index: 1;
+        transform: translateX(-100%);
+        transition: transform 0.6s;
+      }
+      
+      &:hover {
+        background-color: color.adjust(#f4d239, $lightness: 10%);
+        transform: translateY(-2px);
+        
+        &::before {
+          transform: translateX(100%);
+        }
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
     }
+    
     .restart-game-button-alt {
         background-color: $border-color;
         &:hover {
@@ -473,10 +511,18 @@ body.game-active { // Consider adding a class to body when the game is active to
   }
   
   .restart-game-button-ingame {
-    background-color: $border-color; // More subdued for in-game restart/quit
-    font-size: 0.9em;
+    padding: 8px 16px;
+    font-size: 0.8em;
+    border: $border-width-8bit solid $border-color;
+    border-radius: $border-radius-8bit;
+    margin-top: $gap-base-8bit;
+    cursor: pointer;
+    background-color: color.adjust($card-background, $lightness: -5%);
+    color: $text-color;
+    font-family: $font-family-8bit;
+
     &:hover {
-        background-color: color.adjust($border-color, $lightness: 10%);
+      background-color: color.adjust($card-background, $lightness: 5%);
     }
   }
 
@@ -773,18 +819,18 @@ body.game-active { // Consider adding a class to body when the game is active to
 
 // 分享按鈕樣式
 .share-button {
-  background-color: #4169E1 !important;
-  color: $text-color !important;
+  background-color: #eadc41 !important;
+  color: #111 !important;
   transition: all 0.2s ease !important;
   
   &:hover {
-    background-color: lighten(#4169E1, 10%) !important;
+    background-color: lighten(#ece03b, 10%) !important;
     transform: translateY(-2px) !important;
   }
   
   &:active {
     transform: translateY(1px) !important;
-    background-color: darken(#4169E1, 10%) !important;
+    background-color: darken(#dcbf2b, 10%) !important;
   }
 }
 
@@ -1055,6 +1101,98 @@ body.game-active { // Consider adding a class to body when the game is active to
   }
   50% {
     opacity: 0.8;
+  }
+}
+
+// AAPD 課程連結按鈕樣式
+.aapd-link-button {
+  display: block;
+  margin-top: 10px;
+  font-size: 1.2em;
+  padding: 12px 25px;
+  background-color: #4b37e4;
+  color: white;
+  text-decoration: none;
+  border-radius: $border-radius-8bit;
+  border: $border-width-8bit solid $border-color;
+  font-family: $font-family-8bit;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  img {
+    image-rendering: pixelated;
+    // 添加閃爍發光效果
+    filter: drop-shadow(0 0 6px rgba(255, 204, 0, 0.8)) 
+           drop-shadow(0 0 10px rgba(255, 204, 0, 0.4));
+    // 讓小圖示有微微動畫效果，同時帶有發光的閃爍
+    animation: 
+      icon-float 1s ease-in-out infinite alternate,
+      icon-glow 2s ease-in-out infinite alternate;
+  }
+  
+  // 微小浮動效果
+  @keyframes icon-float {
+    from {
+      transform: translateY(0px);
+    }
+    to {
+      transform: translateY(-6px);
+    }
+  }
+  
+  // 發光效果動畫
+  @keyframes icon-glow {
+    0% {
+      filter: drop-shadow(0 0 2px rgba(255, 204, 0, 0.6)) 
+             drop-shadow(0 0 4px rgba(255, 204, 0, 0.3));
+    }
+    50% {
+      filter: drop-shadow(0 0 5px rgba(255, 204, 0, 0.9)) 
+             drop-shadow(0 0 8px rgba(255, 204, 0, 0.7))
+             drop-shadow(0 0 12px rgba(255, 204, 0, 0.4));
+    }
+    100% {
+      filter: drop-shadow(0 0 2px rgba(255, 204, 0, 0.6)) 
+             drop-shadow(0 0 4px rgba(255, 204, 0, 0.3));
+    }
+  }
+  
+  // 像素風格閃光效果
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(45deg, 
+      transparent 0%, 
+      transparent 40%, 
+      rgba(255, 255, 255, 0.2) 50%, 
+      transparent 60%, 
+      transparent 100%);
+    z-index: 1;
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+  
+  &:hover {
+    background-color: #7b6cef;
+    transform: translateY(-2px);
+    
+    &::before {
+      transform: translateX(100%);
+    }
+  }
+  
+  &:active {
+    transform: translateY(0);
   }
 }
 

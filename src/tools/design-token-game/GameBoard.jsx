@@ -639,6 +639,26 @@ const GameBoard = () => {
           </div>
           
           <button onClick={handleInitialGameStart} className="start-level-button" style={{ fontSize: '1.4em', padding: '15px 30px' }}>{t('startAdventure')}</button>
+          
+          <a 
+            href="https://academy.aapd.com.tw/courses/ds?affcode=harry" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="aapd-link-button"
+          >
+            <img 
+              src={MagicianIcon} 
+              alt="魔法師" 
+              style={{ 
+                width: '36px', 
+                height: '36px', 
+                marginRight: '10px', 
+                verticalAlign: 'middle',
+                display: 'inline-block'
+              }} 
+            />
+            {t('learnMoreAAPD')}
+          </a>
         </div>
       </div>
     );
@@ -795,14 +815,14 @@ const GameBoard = () => {
                     <p>{t('greatPerformance')}</p><br/>
                     <div className="final-time" style={{ fontSize: '1.5em' }}>{t('totalTime')} <span className="game-timer-value" style={{ fontSize: '2em', color: 'yellow' }}>{formatTime(elapsedTime)}</span> {t('seconds')}</div><br/>
                     
-                    <div className="reward-display" style={{ marginTop: '20px', marginBottom: '30px', textAlign: 'center' }}>
-                      <h3 style={{ color: '#FFCC00', marginBottom: '15px' }}>{t('youEarned')}</h3>
+                    <div className="reward-display" style={{ marginTop: '0px', marginBottom: '30px', textAlign: 'center' }}>
+                      <h3 style={{ color: '#FFCC00', marginBottom: '10px' }}>{t('youEarned')}</h3>
                       <img 
                         src={reward.icon} 
                         alt={reward.name} 
                         style={{ 
-                          width: '80px', 
-                          height: '80px', 
+                          width: '120px', 
+                          height: '120px', 
                           marginBottom: '10px',
                           animation: 'reward-pulse 1.5s infinite ease-in-out'
                         }} 
@@ -842,6 +862,28 @@ const GameBoard = () => {
                         {t('shareResults')}
                       </button>
                     </div>
+                    
+                    <a 
+                      href="https://academy.aapd.com.tw/courses/ds?affcode=harry" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="aapd-link-button"
+                    >
+                      <img 
+                        src={MagicianIcon} 
+                        alt="魔法師" 
+                        style={{ 
+                          width: '36px', 
+                          height: '36px', 
+                          padding: '0px 8px',
+                          marginRight: '10px', 
+                          verticalAlign: 'middle',
+                          display: 'inline-block'
+                        }} 
+                      />
+                      {t('learnMoreAAPD')}
+                    </a>
+                    
                     <p style={{ 
                       marginTop: '15px', 
                       fontSize: '0.8em', 
