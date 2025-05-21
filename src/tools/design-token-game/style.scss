@@ -937,12 +937,28 @@ body.game-active { // Consider adding a class to body when the game is active to
   z-index: 1;
 }
 
-// 為光點添加不同的動畫時間和延遲
+// 基本光點樣式，減少重複聲明
+.pixel-star {
+  position: absolute;
+  border-radius: 0; // 像素風格，不圓角
+  z-index: 0;
+  opacity: 0.6; // 基本透明度
+  // 使用 GPU 加速以提高效能
+  transform: translateZ(0);
+  // 告訴瀏覽器這些屬性會變化，優化性能
+  will-change: transform, opacity;
+  // 像素化渲染
+  image-rendering: pixelated;
+  // 減少重繪排版
+  contain: layout;
+}
+
+// 為光點添加不同的動畫時間和延遲，減少重複計算
 @for $i from 1 through 50 {
   .pixel-star:nth-child(#{$i}) {
-    $size-num: random(12) + 1;
+    $size-num: (($i % 6) + 1) * 2; // 簡化大小計算方式
     $size: $size-num + px;
-    $type: random(3); // 隨機決定顏色類型
+    $type: $i % 3 + 1; // 簡化顏色類型計算
     
     // 根據類型選擇不同的顏色
     $color: if($type == 1, 
@@ -953,42 +969,22 @@ body.game-active { // Consider adding a class to body when the game is active to
               )
             );
     
-    // 為每種顏色添加一些色調變化
-    $hue: random(30) - 15;
-    
-    position: absolute;
     width: $size;
     height: $size;
-    background-color: color.adjust($color, $hue: $hue);
-    box-shadow: 0 0 #{($size-num * 2) + px} color.adjust($color, $alpha: -0.6, $hue: $hue);
-    border-radius: 0; // 像素風格，不圓角
-    left: percentage(random(100) / 100);
-
-    // 初始位置隨機分布在整個畫面中
-    bottom: random(100) * 1%;
+    background-color: $color;
+    box-shadow: 0 0 #{($size-num * 1.5) + px} color.adjust($color, $alpha: -0.6);
     
-    // 使用固定範圍的動畫時間 (25-40秒)，確保在所有遊戲階段速度一致
-    $animation-duration: 25s + random(15);
+    // 使用固定範圍的動畫時間 (30-38秒)，降低隨機計算開銷
+    $animation-duration: 30s + ($i % 8) * 1s; 
     animation: float-up #{$animation-duration} linear infinite;
-    // 較短的延遲時間，確保光點持續上升
-    animation-delay: #{random(5)}s;
-    opacity: random(6) / 10 + 0.3; // 0.3 - 0.9的隨機透明度
-    z-index: 0;
+    // 使用固定延遲時間，避免多餘計算
+    animation-delay: #{$i % 5}s;
     
-    // 讓光點看起來像素化
-    image-rendering: pixelated;
-    
-    // 添加一些閃爍效果
-    &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      animation: twinkle #{random(6) + 2}s ease-in-out infinite;
-      animation-delay: #{random(3)}s;
-    }
+    // 使用 CSS 變數來設置自定義屬性，方便 JavaScript 動態修改
+    --star-size: #{$size};
+    --star-color: #{$color};
+    --animation-duration: #{$animation-duration};
+    --star-opacity: #{0.4 + ($i % 5) * 0.1};
   }
 }
 

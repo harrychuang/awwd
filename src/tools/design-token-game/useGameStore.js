@@ -61,7 +61,9 @@ export const useGameStore = create((set, get) => ({
   },
 
   startTimer: () => {
-    if (get().timerIntervalId) return; // Already running
+    // 先確保先前的計時器已停止，防止重複計時器
+    get().stopTimer();
+    
     const intervalId = setInterval(() => {
       set((state) => ({ elapsedTime: state.elapsedTime + TIMER_INTERVAL }));
     }, TIMER_INTERVAL);
@@ -94,6 +96,9 @@ export const useGameStore = create((set, get) => ({
     }
     console.log("[DEBUG store] playLevel - Config:", levelConfigToPlay, "Playing for index:", get().currentLevelIndex);
     
+    // 確保在新一輪開始前停止任何現有計時器
+    get().stopTimer();
+    // 然後重新啟動計時器
     get().startTimer(); // Start or resume timer
 
     const newCards = Array.from({ length: levelConfigToPlay.cardCount }, (_, i) => {
@@ -147,17 +152,25 @@ export const useGameStore = create((set, get) => ({
 
     const allMatched = cards.every(card => card.isMatched);
     if (allMatched && cards.length > 0) {
+      // 確保停止計時器，避免繼續計時
       get().stopTimer(); // Pause the timer
       
+      // 保存當前狀態以防止timeouts在狀態變更時被意外執行
+      const currentGameStatus = get().gameStatus;
+      const currentLevelConfigLocal = currentLevelConfig;
+
       // 如果是系統令牌關卡，提供更長時間以顯示序列動畫
-      const isSystemLevel = currentLevelConfig?.type === 'system';
+      const isSystemLevel = currentLevelConfigLocal?.type === 'system';
       // 計算序列動畫總時間 = 卡片數量 * 每卡片延遲(100ms) + 基本動畫時間(1000ms)
       const sequentialAnimationTime = isSystemLevel ? (cards.length * 100) + 1000 : 800;
       
       // 添加延遲，讓卡片動畫有時間顯示
       setTimeout(() => {
-        set({ gameStatus: 'levelCompleteScreen' });
-        console.log("[DEBUG store] checkLevelCompletion - gameStatus: levelCompleteScreen, completed index:", get().currentLevelIndex);
+        // 再次檢查狀態是否已改變，如果改變則不執行後續操作
+        if (get().gameStatus === currentGameStatus) {
+          set({ gameStatus: 'levelCompleteScreen' });
+          console.log("[DEBUG store] checkLevelCompletion - gameStatus: levelCompleteScreen, completed index:", get().currentLevelIndex);
+        }
       }, sequentialAnimationTime); // 根據關卡類型和卡片數量調整延遲時間
     }
   },
@@ -168,6 +181,9 @@ export const useGameStore = create((set, get) => ({
     const nextLevelIndex = currentLevelIndex + 1;
     console.log(`[DEBUG store] proceedToNextOrEnd - currentLevelIndex (completed): ${currentLevelIndex}, calculated nextLevelIndex: ${nextLevelIndex}`);
 
+    // 不管下一步是什麼，確保先停止計時器
+    get().stopTimer();
+
     if (nextLevelIndex < levels.length) {
       const nextLevelConfig = levels[nextLevelIndex];
       console.log('[DEBUG store] proceedToNextOrEnd - Setting currentLevelIndex to:', nextLevelIndex, 'and preparing for next level cfg:', nextLevelConfig);
@@ -176,6 +192,7 @@ export const useGameStore = create((set, get) => ({
       
       get().playLevel(nextLevelConfig); 
     } else {
+      // 最後一關結束，確保停止計時器
       get().stopTimer(); // Ensure timer is stopped for allLevelsComplete
       set({ gameStatus: 'allLevelsComplete' });
       console.log("[DEBUG store] proceedToNextOrEnd - gameStatus: allLevelsComplete");

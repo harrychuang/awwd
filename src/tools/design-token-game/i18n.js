@@ -43,6 +43,7 @@ const translations = {
 
     // Design Token input
     updateSystemColor: "施放魔法符文",
+    updateColor: "施放魔法符文",
 
     // 關卡完成和遊戲結束
     levelComplete: "魔法成功！關卡 {level} 完成！",
@@ -156,6 +157,7 @@ Ready your wand and traverse 5 challenging magical levels to become the Supreme 
 
     // System token input
     updateSystemColor: "Cast Magical Rune",
+    updateColor: "Cast Magical Rune",
 
     // Level completion and game ending
     levelComplete: "Magic successful! Level {level} completed!",

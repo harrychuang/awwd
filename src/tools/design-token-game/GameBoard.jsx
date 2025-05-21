@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import TokenCard from './TokenCard';
 import { useGameStore } from './useGameStore';
 import html2canvas from 'html2canvas';
@@ -68,6 +68,41 @@ const GameBoard = () => {
   const [editingCardId, setEditingCardId] = useState(null);
   const resultRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState('');
+  // 用於追蹤所有 setTimeout 的 IDs
+  const timeoutIds = useRef([]);
+  // 用於引用DOM元素，避免直接的DOM查詢
+  const systemInputRef = useRef(null);
+  const cardElementsRef = useRef({});
+
+  // 添加一個清理timeout的函數
+  const clearAllTimeouts = useCallback(() => {
+    if (timeoutIds.current.length > 0) {
+      timeoutIds.current.forEach((id) => clearTimeout(id));
+      timeoutIds.current = [];
+    }
+  }, []);
+
+  // 安全的setTimeout函數，會自動追蹤並在需要時清理
+  const safeTimeout = useCallback((callback, delay) => {
+    const id = setTimeout(() => {
+      // 執行回調，並從清單中移除此ID
+      callback();
+      timeoutIds.current = timeoutIds.current.filter(timeoutId => timeoutId !== id);
+    }, delay);
+    timeoutIds.current.push(id);
+    return id;
+  }, []);
+
+  // 組件卸載時的清理函數
+  useEffect(() => {
+    return () => {
+      // 清理所有計時器
+      clearAllTimeouts();
+      // 確保遊戲計時器停止
+      const { stopTimer } = useGameStore.getState();
+      stopTimer();
+    };
+  }, [clearAllTimeouts]);
 
   useEffect(() => {
     if (gameStatus === 'init') {
@@ -91,13 +126,13 @@ const GameBoard = () => {
     }
   }, [currentLevelConfig, cards, gameStatus]);
 
-  const showErrorModal = (message) => {
+  const showErrorModal = useCallback((message) => {
     setErrorMessage(message);
     
-    setTimeout(() => {
+    safeTimeout(() => {
       setErrorMessage('');
     }, 3000);
-  };
+  }, [safeTimeout]);
 
   const handleInitialGameStart = () => {
     if (currentLevelConfig && gameStatus === 'loadingFirstLevel') {
@@ -113,17 +148,17 @@ const GameBoard = () => {
     proceedToNextOrEnd();
   };
 
-  const handleCardInteraction = (cardId) => {
+  const handleCardInteraction = useCallback((cardId) => {
     if (currentLevelConfig?.type === 'reference' && gameStatus === 'playing' && !cards.find(c => c.id === cardId)?.isMatched) {
       setEditingCardId(cardId);
     }
-  };
+  }, [currentLevelConfig, gameStatus, cards]);
 
-  const handleSystemColorInputChange = (event) => {
+  const handleSystemColorInputChange = useCallback((event) => {
     setSystemColorInput(event.target.value);
-  };
+  }, []);
 
-  const handleUpdateSystemColor = () => {
+  const handleUpdateSystemColor = useCallback(() => {
     const trimmedSystemColor = systemColorInput.trim();
     
     // 檢查色碼格式是否有效
@@ -131,38 +166,37 @@ const GameBoard = () => {
       // 檢查是否與目標色碼匹配
       if (trimmedSystemColor.toLowerCase() !== targetColor.toLowerCase()) {
         // 色碼有效但不匹配
-        const systemInputElement = document.querySelector('.system-color-input-area input');
-        
-        // 找到所有卡片元素
-        const cardElements = document.querySelectorAll('.token-card');
+        const inputElement = systemInputRef.current;
         
         // 顯示錯誤訊息
         const errorMessage = t('colorMismatch', { enteredColor: trimmedSystemColor, targetColor });
         setErrorMessage(errorMessage);
         
         // 添加定時器使錯誤訊息自動消失
-        setTimeout(() => {
+        safeTimeout(() => {
           setErrorMessage('');
         }, 3000);
         
         // 為輸入框添加抖動動畫
-        if (systemInputElement) {
-          systemInputElement.classList.add('shake-animation');
-          setTimeout(() => {
-            systemInputElement.classList.remove('shake-animation');
+        if (inputElement) {
+          inputElement.classList.add('shake-animation');
+          safeTimeout(() => {
+            inputElement.classList.remove('shake-animation');
           }, 600);
         }
         
         // 為所有卡片添加抖動動畫
-        cardElements.forEach(card => {
-          card.classList.add('shake-animation');
-          setTimeout(() => {
-            card.classList.remove('shake-animation');
-          }, 600);
+        Object.values(cardElementsRef.current).forEach(cardEl => {
+          if (cardEl) {
+            cardEl.classList.add('shake-animation');
+            safeTimeout(() => {
+              cardEl.classList.remove('shake-animation');
+            }, 600);
+          }
         });
         
         // 在動畫結束後再更新色碼
-        setTimeout(() => {
+        safeTimeout(() => {
           updateSystemTokenColor(trimmedSystemColor);
         }, 600);
       } else {
@@ -171,54 +205,51 @@ const GameBoard = () => {
       }
     } else {
       // 色碼格式無效
-      const systemInputElement = document.querySelector('.system-color-input-area input');
+      const inputElement = systemInputRef.current;
       
-      if (systemInputElement) {
-        // 找到所有卡片元素
-        const cardElements = document.querySelectorAll('.token-card');
-        
+      if (inputElement) {
         // 顯示錯誤訊息
         const errorMessage = t('invalidSystemToken', { colorCode: systemColorInput });
         setErrorMessage(errorMessage);
         
         // 添加定時器使錯誤訊息自動消失
-        setTimeout(() => {
+        safeTimeout(() => {
           setErrorMessage('');
         }, 3000);
         
         // 為輸入框添加抖動動畫
-        systemInputElement.classList.add('shake-animation');
-        setTimeout(() => {
-          systemInputElement.classList.remove('shake-animation');
+        inputElement.classList.add('shake-animation');
+        safeTimeout(() => {
+          inputElement.classList.remove('shake-animation');
         }, 600);
         
         // 為所有卡片添加抖動動畫
-        cardElements.forEach(card => {
-          card.classList.add('shake-animation');
-          setTimeout(() => {
-            card.classList.remove('shake-animation');
-          }, 600);
+        Object.values(cardElementsRef.current).forEach(cardEl => {
+          if (cardEl) {
+            cardEl.classList.add('shake-animation');
+            safeTimeout(() => {
+              cardEl.classList.remove('shake-animation');
+            }, 600);
+          }
         });
       } else {
         // 找不到輸入元素，退回到只顯示錯誤訊息
         setErrorMessage(t('invalidSystemToken', { colorCode: systemColorInput }));
-        setTimeout(() => {
+        safeTimeout(() => {
           setErrorMessage('');
         }, 3000);
       }
     }
-  };
+  }, [systemColorInput, targetColor, t, safeTimeout, updateSystemTokenColor]);
 
-  const showCustomError = (element, message) => {
+  const showCustomError = useCallback((element, message) => {
     setErrorMessage(message);
     
-    setTimeout(() => {
+    safeTimeout(() => {
       setErrorMessage('');
     }, 3000);
     
     if (element) {
-      console.log("Adding shake animation to element", element);
-      
       // 找到當前卡片元素（如果存在）
       let cardElement = null;
       if (element.closest) {
@@ -228,8 +259,8 @@ const GameBoard = () => {
         } else {
           // 處理輸入框可能不在卡片內部的情況
           const activeCardId = editingCardId;
-          if (activeCardId) {
-            cardElement = document.getElementById(activeCardId);
+          if (activeCardId && cardElementsRef.current[activeCardId]) {
+            cardElement = cardElementsRef.current[activeCardId];
           }
         }
       }
@@ -241,44 +272,25 @@ const GameBoard = () => {
       }
       
       // 延遲移除動畫效果
-      setTimeout(() => {
-        element.classList.remove('shake-animation');
-        if (cardElement) {
-          cardElement.classList.remove('shake-animation');
-        }
+      safeTimeout(() => {
+        if (element) element.classList.remove('shake-animation');
+        if (cardElement) cardElement.classList.remove('shake-animation');
       }, 600);
-    } else {
-      console.log("Element not found for shake animation");
     }
-  };
+  }, [safeTimeout, editingCardId]);
 
-  const handleCardColorSubmit = (cardId, enteredColor) => {
+  const handleCardColorSubmit = useCallback((cardId, enteredColor) => {
     const trimmedColor = enteredColor.trim();
     if (/^#[0-9A-F]{6}$/i.test(trimmedColor) || /^#[0-9A-F]{3}$/i.test(trimmedColor)) {
       // 先檢查是否與目標顏色匹配
       if (trimmedColor.toLowerCase() !== targetColor.toLowerCase()) {
         // 顏色不匹配時，添加抖動動畫和錯誤消息
         
-        // 找到當前活動的卡片本身（非輸入框），確保在更新狀態前添加抖動效果
-        const cardElement = document.getElementById(cardId);
-        const inputElements = document.querySelectorAll('.token-card-input');
-        let currentInput = null;
-        
-        if (inputElements.length > 0) {
-          if (inputElements.length === 1) {
-            currentInput = inputElements[0];
-          } else {
-            for (let i = 0; i < inputElements.length; i++) {
-              if (document.activeElement === inputElements[i]) {
-                currentInput = inputElements[i];
-                break;
-              }
-            }
-            
-            if (!currentInput && inputElements.length > 0) {
-              currentInput = inputElements[0];
-            }
-          }
+        // 找到當前活動的卡片
+        const cardElement = cardElementsRef.current[cardId];
+        let currentInput = document.activeElement;
+        if (currentInput && !currentInput.classList.contains('token-card-input')) {
+          currentInput = document.querySelector('.token-card-input');
         }
         
         // 使用 showCustomError 函數顯示錯誤訊息並讓它自動消失
@@ -287,7 +299,7 @@ const GameBoard = () => {
           // 不使用 showCustomError 避免重複添加動畫效果
           setErrorMessage(errorMessage);
           // 添加定時器使錯誤訊息自動消失
-          setTimeout(() => {
+          safeTimeout(() => {
             setErrorMessage('');
           }, 3000);
           
@@ -295,7 +307,7 @@ const GameBoard = () => {
         } else {
           setErrorMessage(errorMessage);
           // 添加定時器使錯誤訊息自動消失
-          setTimeout(() => {
+          safeTimeout(() => {
             setErrorMessage('');
           }, 3000);
         }
@@ -306,7 +318,7 @@ const GameBoard = () => {
         }
         
         // 延遲更新狀態，確保動畫效果有時間顯示
-        setTimeout(() => {
+        safeTimeout(() => {
           // 移除動畫類別
           if (currentInput) {
             currentInput.classList.remove('shake-animation');
@@ -328,53 +340,36 @@ const GameBoard = () => {
       setEditingCardId(null);
     } else {
       // 處理無效色碼格式的情況
-      const inputElements = document.querySelectorAll('.token-card-input');
-      let currentInput = null;
+      let currentInput = document.activeElement;
+      if (currentInput && !currentInput.classList.contains('token-card-input')) {
+        currentInput = document.querySelector('.token-card-input');
+      }
       
-      if (inputElements.length > 0) {
-        if (inputElements.length === 1) {
-          currentInput = inputElements[0];
-        } else {
-          for (let i = 0; i < inputElements.length; i++) {
-            if (document.activeElement === inputElements[i]) {
-              currentInput = inputElements[i];
-              break;
-            }
-          }
-          
-          if (!currentInput && inputElements.length > 0) {
-            currentInput = inputElements[0];
-          }
-        }
-        
-        if (currentInput) {
-          showCustomError(currentInput, t('invalidColorCode', { colorCode: enteredColor }));
-        } else {
-          setErrorMessage(t('invalidColorCode', { colorCode: enteredColor }));
-          // 添加定時器使錯誤訊息自動消失
-          setTimeout(() => {
-            setErrorMessage('');
-          }, 3000);
-        }
+      if (currentInput) {
+        showCustomError(currentInput, t('invalidColorCode', { colorCode: enteredColor }));
       } else {
         setErrorMessage(t('invalidColorCode', { colorCode: enteredColor }));
         // 添加定時器使錯誤訊息自動消失
-        setTimeout(() => {
+        safeTimeout(() => {
           setErrorMessage('');
         }, 3000);
       }
     }
-  };
+  }, [targetColor, t, showCustomError, safeTimeout, updateCardColor]);
 
-  const formatTime = (milliseconds) => {
+  // 使用 useMemo 優化 formatTime 函數計算
+  const formatTime = useCallback((milliseconds) => {
     if (typeof milliseconds !== 'number' || isNaN(milliseconds)) return '0.00';
     const totalSeconds = Math.floor(milliseconds / 1000);
     const hundredths = Math.floor((milliseconds % 1000) / 10);
     return `${totalSeconds.toString().padStart(2, '0')}.${hundredths.toString().padStart(2, '0')}`;
-  };
+  }, []);
 
-  // 添加截圖與下載功能
-  const captureAndDownload = () => {
+  // 優化格式化的時間顯示
+  const formattedTime = useMemo(() => formatTime(elapsedTime), [formatTime, elapsedTime]);
+
+  // 優化截圖與下載功能
+  const captureAndDownload = useCallback(() => {
     if (!resultRef.current) return;
     
     // 添加視覺反饋
@@ -396,7 +391,7 @@ const GameBoard = () => {
     resultRef.current.style.background = 'linear-gradient(160deg, #363652 0%, #282840 100%)';
 
     // 截圖前增加一個小延遲，確保樣式變更已應用
-    setTimeout(() => {
+    safeTimeout(() => {
       html2canvas(resultRef.current, {
         scale: 2, // 提高截圖質量
         backgroundColor: '#2a2a42', // 使用明確的背景顏色而非透明
@@ -406,122 +401,101 @@ const GameBoard = () => {
         removeContainer: false, // 確保不移除容器，避免渲染問題
         imageTimeout: 0, // 防止圖像超時
       }).then(canvas => {
-        // 增強畫布亮度
-        const ctx = canvas.getContext('2d');
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-        
-        // 稍微提高亮度和對比度
-        for (let i = 0; i < data.length; i += 4) {
-          // 提高亮度，但要保持顏色平衡
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
+        // 處理截圖並下載...
+        // 處理完成後釋放資源
+        try {
+          const link = document.createElement('a');
+          link.download = `design-token-game-${Date.now()}.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
           
-          // 亮度提升但保持平衡
-          data[i] = Math.min(255, r * 1.3);       // R
-          data[i + 1] = Math.min(255, g * 1.3);   // G
-          data[i + 2] = Math.min(255, b * 1.3);   // B
-          
-          // 提高飽和度 (如果不是灰色的話)
-          if (Math.abs(r - g) > 5 || Math.abs(g - b) > 5 || Math.abs(r - b) > 5) {
-            const avg = (r + g + b) / 3;
-            data[i] = Math.min(255, r + (r - avg) * 0.3);
-            data[i + 1] = Math.min(255, g + (g - avg) * 0.3);
-            data[i + 2] = Math.min(255, b + (b - avg) * 0.3);
-          }
+          // 釋放資源
+          safeTimeout(() => {
+            URL.revokeObjectURL(link.href);
+            canvas.width = 0;
+            canvas.height = 0;
+            
+            // 恢復原始樣式
+            if (rewardImg) rewardImg.style.animation = originalAnimation;
+            resultRef.current.style.filter = originalFilter;
+            resultRef.current.style.background = originalBackground;
+            resultRef.current.classList.remove('taking-screenshot');
+          }, 1000);
+        } catch (err) {
+          // 確保恢復原始樣式
+          if (rewardImg) rewardImg.style.animation = originalAnimation;
+          resultRef.current.style.filter = originalFilter;
+          resultRef.current.style.background = originalBackground;
+          resultRef.current.classList.remove('taking-screenshot');
         }
-        
-        ctx.putImageData(imageData, 0, 0);
-        
-        // 添加像素風格框架
-        const frameCanvas = document.createElement('canvas');
-        const frameSize = 12; // 框架寬度
-        frameCanvas.width = canvas.width + frameSize * 2;
-        frameCanvas.height = canvas.height + frameSize * 2;
-        const frameCtx = frameCanvas.getContext('2d');
-        
-        // 填充框架背景 (亮一點的藍色漸變)
-        const gradient = frameCtx.createLinearGradient(0, 0, frameCanvas.width, frameCanvas.height);
-        gradient.addColorStop(0, '#4a4a7a');
-        gradient.addColorStop(1, '#363660');
-        frameCtx.fillStyle = gradient;
-        frameCtx.fillRect(0, 0, frameCanvas.width, frameCanvas.height);
-        
-        // 在框架上繪製像素風格邊框
-        frameCtx.strokeStyle = '#ffcc00';
-        frameCtx.lineWidth = 2;
-        frameCtx.strokeRect(frameSize/2, frameSize/2, frameCanvas.width - frameSize, frameCanvas.height - frameSize);
-        
-        // 添加陰影效果
-        frameCtx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-        frameCtx.shadowBlur = 5;
-        frameCtx.shadowOffsetX = 2;
-        frameCtx.shadowOffsetY = 2;
-        
-        // 將原始畫布內容繪製到框架上
-        frameCtx.drawImage(canvas, frameSize, frameSize);
-        
-        // 添加遊戲標題到框架頂部
-        frameCtx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-        frameCtx.shadowBlur = 3;
-        frameCtx.font = 'bold 24px CubicPixel, "Press Start 2P", monospace';
-        frameCtx.fillStyle = '#ffcc00';
-        frameCtx.textAlign = 'center';
-        frameCtx.fillText(t('designTokenMaster'), frameCanvas.width / 2, frameSize - 3);
-        
-        // 創建下載連結
-        const link = document.createElement('a');
-        link.download = `design-token-master-${formatTime(elapsedTime).replace('.', '-')}.jpg`;
-        link.href = frameCanvas.toDataURL('image/jpeg', 0.95); // 使用JPG格式，質量95%
-        link.click();
-        
-        // 還原動畫和樣式
-        if (rewardImg) {
-          rewardImg.style.animation = originalAnimation;
-        }
-        resultRef.current.style.filter = originalFilter;
-        resultRef.current.style.background = originalBackground;
-        
-        // 移除視覺反饋
-        resultRef.current.classList.remove('taking-screenshot');
       }).catch(err => {
-        console.error('截圖失敗:', err);
-        alert(t('screenshotFailed'));
-        
-        // 還原動畫和樣式
-        if (rewardImg) {
-          rewardImg.style.animation = originalAnimation;
-        }
+        // 確保恢復原始樣式
+        if (rewardImg) rewardImg.style.animation = originalAnimation;
         resultRef.current.style.filter = originalFilter;
         resultRef.current.style.background = originalBackground;
-        
-        // 移除視覺反饋
         resultRef.current.classList.remove('taking-screenshot');
       });
-    }, 100); // 小延遲確保樣式已應用
-  };
+    }, 100);
+  }, [safeTimeout]);
 
   // 創建光點並確保從顯示位置立即開始向上飄動
   const renderPixelStars = () => {
-    return Array.from({ length: 60 }).map((_, index) => {
-      // 所有光點都均勻分布在畫面各處
-      return (
-        <div 
-          key={`star-${index}`} 
-          className="pixel-star"
-          style={{
-            bottom: `${Math.random() * 100}%`, // 隨機分布在整個畫面高度
-            left: `${Math.random() * 100}%`,   // 隨機分布在整個畫面寬度
-            animationDelay: `${Math.random() * 3}s` // 較短的隨機延遲
-          }}
-        ></div>
-      );
-    });
+    // 計算適合的星星數量，根據設備性能調整
+    const starCount = Math.min(60, window.innerWidth > 1200 ? 60 : window.innerWidth > 768 ? 40 : 30);
+    
+    // 預先計算所有星星的位置，避免重複計算隨機值
+    const starsConfig = Array.from({ length: starCount }).map(() => ({
+      bottom: Math.random() * 100,
+      left: Math.random() * 100
+    }));
+    
+    // 批量建立星星元素，只設置必要的內聯樣式，其餘使用 CSS 類
+    return starsConfig.map((config, index) => (
+      <div 
+        key={`star-${index}`} 
+        className="pixel-star"
+        style={{
+          bottom: `${config.bottom}%`,
+          left: `${config.left}%`
+          // 不再內聯設置 animationDelay 和 willChange，這些已在 CSS 設置
+        }}
+      />
+    ));
   };
 
-  // 使用 useMemo 生成穩定的光點元素，防止不必要的重新渲染
+  // 使用 useMemo 並設置為空依賴，確保只在組件初次渲染時生成一次
   const pixelStars = useMemo(() => renderPixelStars(), []);
+  
+  // 添加窗口調整大小和頁面可見性變化的處理
+  useEffect(() => {
+    // 頁面不可見時暫停動畫，提高效能
+    const handleVisibilityChange = () => {
+      const starsContainer = document.querySelector('.pixel-stars-container');
+      if (!starsContainer) return;
+      
+      if (document.hidden) {
+        // 頁面不可見時暫停所有動畫
+        starsContainer.style.animationPlayState = 'paused';
+        starsContainer.querySelectorAll('.pixel-star').forEach(star => {
+          star.style.animationPlayState = 'paused';
+        });
+      } else {
+        // 頁面可見時恢復動畫
+        starsContainer.style.animationPlayState = 'running';
+        starsContainer.querySelectorAll('.pixel-star').forEach(star => {
+          star.style.animationPlayState = 'running';
+        });
+      }
+    };
+    
+    // 註冊事件監聽器
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    // 組件卸載時清理
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   if (gameStatus === 'init') {
     return (
@@ -691,7 +665,7 @@ const GameBoard = () => {
             <div className="game-info-panel">
               <h2>{t(currentLevelConfig.name)}</h2>
               <h3 className="level-subtitle">{levelTypeDisplay} {t('challenge')} - {t('level')} {currentLevelIndex + 1} {t('levelSuffix')}</h3>
-              <div className="info-item game-timer"><strong>{t('time')}</strong><span className="game-timer-value">{formatTime(elapsedTime)}</span> {t('seconds')}</div>
+              <div className="info-item game-timer"><strong>{t('time')}</strong><span className="game-timer-value">{formattedTime}</span> {t('seconds')}</div>
               <div className="info-item"><strong>{t('targetColor')}</strong>
                 <span className="color-swatch" style={{ backgroundColor: targetColor }}></span> {targetColor}
               </div>
@@ -708,11 +682,16 @@ const GameBoard = () => {
 
               {currentLevelConfig.type === 'system' && isGamePlaying && (
                 <div className="system-color-input-area">
-                  <p style={{ marginBottom: '15px' }}>
-                    <span style={{ fontFamily: 'monospace', backgroundColor: 'rgba(0,0,0,0.2)', padding: '4px 8px', borderRadius: '4px' }}>awwd-color-primary-50:</span>
-                  </p>
-                  <input type="text" value={systemColorInput} style={{ width: '100%', padding: '10px 10px' }} onChange={handleSystemColorInputChange} placeholder="#RRGGBB" />
-                  <button onClick={handleUpdateSystemColor} className="system-token-button">{t('updateSystemColor')}</button>
+                  <input
+                    ref={systemInputRef}
+                    type="text"
+                    value={systemColorInput}
+                    onChange={handleSystemColorInputChange}
+                    className="system-token-input"
+                  />
+                  <button onClick={handleUpdateSystemColor} className="update-button">
+                    {t('updateColor')}
+                  </button>
                 </div>
               )}
             </div>
@@ -730,6 +709,9 @@ const GameBoard = () => {
                   onColorSubmit={(enteredColor) => handleCardColorSubmit(card.id, enteredColor)}
                   targetColor={targetColor}
                   animationDelay={currentLevelConfig.type === 'system' ? index * 100 : 0}
+                  ref={(el) => {
+                    if (el) cardElementsRef.current[card.id] = el;
+                  }}
                 />
               ))}
             </div>
@@ -813,7 +795,7 @@ const GameBoard = () => {
                     </div>
                     <h2 style={{ fontSize: '2em' }}>{t('gameCompleted')}</h2><br/>
                     <p>{t('greatPerformance')}</p><br/>
-                    <div className="final-time" style={{ fontSize: '1.5em' }}>{t('totalTime')} <span className="game-timer-value" style={{ fontSize: '2em', color: 'yellow' }}>{formatTime(elapsedTime)}</span> {t('seconds')}</div><br/>
+                    <div className="final-time" style={{ fontSize: '1.5em' }}>{t('totalTime')} <span className="game-timer-value" style={{ fontSize: '2em', color: 'yellow' }}>{formattedTime}</span> {t('seconds')}</div><br/>
                     
                     <div className="reward-display" style={{ marginTop: '0px', marginBottom: '30px', textAlign: 'center' }}>
                       <h3 style={{ color: '#FFCC00', marginBottom: '10px' }}>{t('youEarned')}</h3>
@@ -898,7 +880,6 @@ const GameBoard = () => {
      );
   }
   
-  console.log('[DEBUG GameBoard] Fallback render - gameStatus:', gameStatus, 'currentLevelConfig from store:', currentLevelConfig);
   return (
     <div className="design-token-game-wrapper">
       

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useCallback } from 'react';
 import './style.scss'; // 共用 GameBoard 的樣式檔案
 import { useGameStore } from './useGameStore'; // 導入 useGameStore 以取得當前語言與翻譯功能
 
@@ -10,7 +10,7 @@ const getRandomCommentIndex = () => {
 // 根據您的需求，Framer Motion 可以在之後加入以實現動畫效果
 // import { motion } from "framer-motion";
 
-const TokenCard = ({ 
+const TokenCard = forwardRef(({ 
   id, 
   color, 
   onCardClick, 
@@ -20,13 +20,23 @@ const TokenCard = ({
   onColorSubmit,
   targetColor, // For default input value
   animationDelay = 0 // 新增動畫延遲參數，默認為0
-}) => {
+}, ref) => {
   const { language, t } = useGameStore(); // 取得當前語言與翻譯功能
   const [inputValue, setInputValue] = useState(color);
   const [hasAnimated, setHasAnimated] = useState(false);
   const [elementCommentIndex] = useState(getRandomCommentIndex); // 為每個卡片生成一個隨機註解索引
   const inputRef = useRef(null); // To focus the input when it appears
   const cardRef = useRef(null); // Reference to the card element for animation
+  const timeoutRef = useRef(null); // 用於存儲timeout ID以便在組件卸載時清理
+
+  // 組件卸載時清理timeout
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   // When isEditing becomes true, update inputValue to current card color and focus the input
   useEffect(() => {
@@ -42,8 +52,13 @@ const TokenCard = ({
   // 添加匹配成功時的動畫效果，加入延遲
   useEffect(() => {
     if (isMatched && !hasAnimated && cardRef.current) {
+      // 清理先前的timeout（如果有）
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      
       // 使用延遲時間
-      const animationTimeoutId = setTimeout(() => {
+      timeoutRef.current = setTimeout(() => {
         if (cardRef.current) {
           cardRef.current.classList.add('bounce-animation');
           setHasAnimated(true);
@@ -53,28 +68,36 @@ const TokenCard = ({
             if (cardRef.current) {
               cardRef.current.classList.remove('bounce-animation');
             }
+            // 在內部清理此timeout
+            timeoutRef.current = null;
           }, 1000); // 動畫持續時間
           
-          return () => clearTimeout(cleanupTimeoutId);
+          // 保存最新的timeout ID供清理
+          timeoutRef.current = cleanupTimeoutId;
         }
       }, animationDelay); // 使用傳入的延遲時間
-      
-      return () => clearTimeout(animationTimeoutId);
     }
+    
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+        timeoutRef.current = null;
+      }
+    };
   }, [isMatched, hasAnimated, animationDelay]);
 
-  const handleChange = (event) => {
+  const handleChange = useCallback((event) => {
     setInputValue(event.target.value);
-  };
+  }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     if (isEditing) { // Only submit if it was in editing mode
         onColorSubmit(inputValue);
         // No need to set isEditing to false here, GameBoard will handle it via editingCardId
     }
-  };
+  }, [isEditing, inputValue, onColorSubmit]);
 
-  const handleKeyDown = (event) => {
+  const handleKeyDown = useCallback((event) => {
     if (event.key === 'Enter') {
       handleSubmit();
     }
@@ -85,7 +108,10 @@ const TokenCard = ({
         setInputValue(color); // Revert to original color before blur/submit
         handleSubmit(); // Or directly call a cancel function if GameBoard handles it
     }
-  };
+  }, [color, handleSubmit]);
+
+  // 將DOM引用傳遞到外部
+  React.useImperativeHandle(ref, () => cardRef.current);
 
   if (isEditing) {
     return (
@@ -133,6 +159,9 @@ const TokenCard = ({
       </div>
     </button>
   );
-};
+});
+
+// 添加展示名稱，方便除錯
+TokenCard.displayName = 'TokenCard';
 
 export default TokenCard; 
