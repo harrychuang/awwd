@@ -1192,3 +1192,251 @@ body.game-active { // Consider adding a class to body when the game is active to
   }
 }
 
+// Token Card 容器樣式（包含迷你元件和卡片）
+.token-card-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  max-width: $card-size-8bit;
+}
+
+// 迷你元件包裝器
+.mini-component-wrapper {
+  width: 100%;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // border: 1px solid $border-color;
+  border-radius: $border-radius-8bit;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-family: $font-family-8bit;
+  font-size: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+// 各種迷你元件樣式
+.mini-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.mini-card {
+  width: 60px;
+  height: 20px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  
+  .mini-card-content {
+    font-size: 8px;
+    color: rgba(0, 0, 0, 0.8);
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+  }
+}
+
+.mini-button {
+  background-color: #007bff;
+  color: rgba(0, 0, 0, 0.8);
+  border: none;
+  border-radius: 3px;
+  padding: 4px 8px;
+  font-size: 8px;
+  font-family: $font-family-8bit;
+  cursor: pointer;
+  
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.mini-heading {
+  margin: 0;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.mini-text-emphasized {
+  font-size: 9px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.mini-border-box {
+  width: 50px;
+  height: 20px;
+  border: 2px solid;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  background-color: transparent;
+}
+
+.mini-link {
+  color: #0066cc;
+  text-decoration: underline;
+  font-size: 9px;
+  cursor: pointer;
+  
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.mini-hint {
+  font-size: 10px;
+  font-style: italic;
+}
+
+.mini-message {
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 2px;
+  background-color: rgba(0, 0, 0, 0.8);
+  text-align: center;
+}
+
+.mini-success {
+  font-size: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.mini-tag {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.mini-footer {
+  font-size: 10px;
+  text-align: center;
+  padding: 2px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.mini-nav {
+  width: 60px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: white;
+  border-radius: 2px;
+}
+
+.mini-divider {
+  width: 50px;
+  height: 1px;
+  border: none;
+  border-top: 2px solid;
+  margin: 0;
+}
+
+.mini-divider-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-input {
+  width: 60px;
+  height: 18px;
+  border: 2px solid;
+  border-radius: 3px;
+  padding: 2px;
+  font-size: 8px;
+  font-family: $font-family-8bit;
+  background-color: transparent;
+  text-align: center;
+  
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 7px;
+  }
+}
+
+.mini-focus {
+  width: 50px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 3px;
+}
+
+.mini-progress-container {
+  width: 50px;
+  height: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  
+  .mini-progress-bar {
+    height: 100%;
+    width: 70%;
+    border-radius: 4px;
+  }
+}
+
+.mini-table-header {
+  width: 60px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: white;
+  font-weight: bold;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mini-glow {
+  width: 40px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 3px;
+}
+
+.mini-default {
+  width: 50px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: white;
+  border-radius: 3px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+

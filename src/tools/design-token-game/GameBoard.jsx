@@ -253,9 +253,15 @@ const GameBoard = () => {
       // 找到當前卡片元素（如果存在）
       let cardElement = null;
       if (element.closest) {
+        // 先嘗試查找 .token-card，如果找不到再查找 .token-card-container
         const tokenCard = element.closest('.token-card');
+        const tokenCardContainer = element.closest('.token-card-container');
         if (tokenCard) {
           cardElement = tokenCard;
+        } else if (tokenCardContainer) {
+          // 如果在容器中，尋找容器內的實際卡片元素
+          const cardInContainer = tokenCardContainer.querySelector('.token-card');
+          cardElement = cardInContainer || tokenCardContainer;
         } else {
           // 處理輸入框可能不在卡片內部的情況
           const activeCardId = editingCardId;

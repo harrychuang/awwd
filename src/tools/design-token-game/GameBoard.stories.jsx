@@ -4,9 +4,26 @@ import './style.scss'; // 確保樣式被載入
 
 export default {
   title: 'Tools/Design Token Game', // 在 Storybook 中的路徑
+  component: GameBoard,
+  decorators: [
+    (Story) => (
+      <div style={{ 
+        padding: '20px', 
+        background: '#1a1a2e', 
+        minHeight: '100vh',
+        fontFamily: 'CubicPixel, "Press Start 2P", monospace'
+      }}>
+        <Story />
+      </div>
+    ),
+  ],
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 // 基礎的 Story
 const Template = (args) => <GameBoard {...args} />;
 
 export const DesignTokenGame = Template.bind({});
+DesignTokenGame.args = {};

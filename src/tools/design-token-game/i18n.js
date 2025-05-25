@@ -91,26 +91,17 @@ const translations = {
 
     // 設計元素註解列表
     designElements: [
-      "Icon的顏色",
-      "卡片的背景色",
-      "按鈕的顏色",
-      "標題的顏色",
-      "強調文字顏色",
+      "Icon 顏色",
+      "卡片背景色",
+      "按鈕顏色",
+      "標題顏色",
+      "連結文字顏色",
       "邊框顏色",
-      "連結顏色",
-      "提示文字顏色",
       "訊息顏色",
       "成功訊息顏色",
-      "標籤背景色",
-      "頁尾文字顏色",
-      "導航列背景",
       "分隔線顏色",
-      "按鈕顏色",
       "輸入框邊框色",
-      "焦點狀態色",
-      "進度條顏色",
-      "表格標頭色",
-      "光暈效果"
+      "進度條顏色"
     ],
   },
   
@@ -209,22 +200,13 @@ Ready your wand and traverse 5 challenging magical levels to become the Supreme 
       "Card background",
       "Button color",
       "Heading color",
-      "Emphasized text color",
+      "Link text color",
       "Border color",
-      "Link color",
-      "Hint text color",
       "Message color",
       "Success message color",
-      "Tag background",
-      "Footer text color",
-      "Navigation bar background",
       "Divider color",
-      "Button color",
-      "Input field border color",
-      "Focus state color",
-      "Progress bar color",
-      "Table header color",
-      "Effect color"
+      "Input border color",
+      "Progress bar color"
     ],
   }
 };
