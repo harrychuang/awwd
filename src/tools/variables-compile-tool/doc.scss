@@ -3,7 +3,7 @@
 .variables-compile-tool {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 20px;
   color: var(--awwd-sys-color-on-dark-surface, #fff);
   margin: 0 auto;
 }
@@ -44,15 +44,32 @@
 
 .vct-actions { margin-top: 12px; display: flex; gap: 10px; }
 .vct-button {
-  font-size: 18px;
+  font-size: 15px;
   padding: 10px 14px;
   border-radius: 10px;
   border: none;
-  background: rgba(0,0,0,0.8);
+  background: rgba(255,255,255,0.1);
   color: #fff;
   cursor: pointer;
   transition: transform .12s ease, box-shadow .12s ease, border-color .2s ease;
 }
+
+/* 平台專屬的下載按鈕色彩（對應各自 h3 色系） */
+.vct-output-header.android .vct-button {
+  background: #27da27;
+  color: #0a0a0a;
+  box-shadow: 0 4px 14px rgba(39, 218, 39, 0.25);
+}
+.vct-output-header.android .vct-button:hover { box-shadow: 0 6px 16px rgba(39, 218, 39, 0.35); transform: translateY(-1px); }
+.vct-output-header.android .vct-button:active { transform: translateY(0); box-shadow: 0 3px 10px rgba(39, 218, 39, 0.25); }
+
+.vct-output-header.ios .vct-button {
+  background: #5e5eff;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(94, 94, 255, 0.25);
+}
+.vct-output-header.ios .vct-button:hover { box-shadow: 0 6px 16px rgba(94, 94, 255, 0.35); transform: translateY(-1px); }
+.vct-output-header.ios .vct-button:active { transform: translateY(0); box-shadow: 0 3px 10px rgba(94, 94, 255, 0.25); }
 .vct-button.primary {
   border-color: var(--awwd-sys-color-secondary-surface-light, #6b6fff);
   color: var(--awwd-sys-color-secondary-surface-light, #e0e2ff);
