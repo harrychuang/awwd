@@ -142,7 +142,7 @@
         }
 
         th:last-child {
-          text-align: right;
+          text-align: center;
         }
         
         th {
@@ -231,6 +231,23 @@
                 box-shadow: 0 3px 10px rgba(168, 85, 247, 0.3);
               }
             }
+            
+            &.tertiary {
+              background: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
+              color: #ffffff;
+              box-shadow: 0 3px 10px rgba(236, 72, 153, 0.3);
+              
+              &:hover {
+                box-shadow: 0 6px 16px rgba(236, 72, 153, 0.4);
+                transform: translateY(-2px);
+                background: linear-gradient(135deg, #f472b6 0%, #fb923c 100%);
+              }
+              
+              &:active {
+                transform: translateY(-1px);
+                box-shadow: 0 3px 10px rgba(236, 72, 153, 0.3);
+              }
+            }
           }
           
           .count {
@@ -243,6 +260,7 @@
         
         .total-cell {
           text-align: center;
+          min-width: 80px;
           
           strong {
             color: #ffffff;
@@ -252,7 +270,7 @@
             min-width: 30px;
             width: 100%;
             position: relative;
-            text-align: right;
+            text-align: center;
             transition: all 0.12s ease;
           }
         }

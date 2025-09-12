@@ -119,6 +119,53 @@ const getInheritanceChain = (varName, variables, inheritanceMap, visited = new S
   return chain;
 };
 
+// 獲取變數的層級（距離最終數值的步數）
+const getVariableLevel = (varName, variables, cache = new Map()) => {
+  if (cache.has(varName)) return cache.get(varName);
+  
+  const value = variables[varName];
+  if (!value) return 0;
+  
+  const varMatch = value.match(/var\((--[^)]+)\)/);
+  if (!varMatch) {
+    // 直接包含數值，是第0層
+    cache.set(varName, 0);
+    return 0;
+  }
+  
+  const referencedVar = varMatch[1];
+  const level = 1 + getVariableLevel(referencedVar, variables, cache);
+  cache.set(varName, level);
+  return level;
+};
+
+// 按層級分組變數
+const groupVariablesByLevel = (variables, numericVariables) => {
+  const levelGroups = {};
+  const maxLevel = Math.max(
+    ...Object.keys(variables).map(varName => getVariableLevel(varName, variables))
+  );
+  
+  Object.keys(variables).forEach(varName => {
+    const level = getVariableLevel(varName, variables);
+    
+    // 只有與數值相關的變數才計入統計
+    const chain = getInheritanceChain(varName, variables);
+    const hasNumericRoot = chain.some(chainVar => 
+      numericVariables.includes(chainVar)
+    ) || numericVariables.includes(varName);
+    
+    if (hasNumericRoot) {
+      if (!levelGroups[level]) {
+        levelGroups[level] = [];
+      }
+      levelGroups[level].push(varName);
+    }
+  });
+  
+  return { levelGroups, maxLevel };
+};
+
 const CSSVariablesAnalyzer = () => {
   const clipboardCopy = useContext(ClipboardCopyContext);
   const [cssInput, setCssInput] = useState(`:root {
@@ -148,6 +195,15 @@ const CSSVariablesAnalyzer = () => {
   --abcd-sys-font-size-sm: var(--abcd-ref-size-12-rem);
   --abcd-sys-font-size-rg: var(--abcd-ref-size-16-rem);
   --abcd-sys-font-size-lg: var(--abcd-ref-size-24-rem);
+  
+  /* COMPONENT TOKENS (Third Level) */
+  --abcd-comp-button-padding: var(--abcd-sys-spacing-rg);
+  --abcd-comp-card-gap: var(--abcd-sys-spacing-lg);
+  --abcd-comp-input-padding: var(--abcd-sys-spacing-sm);
+  --abcd-comp-modal-padding: var(--abcd-sys-spacing-xl);
+  --abcd-comp-text-heading: var(--abcd-sys-font-size-lg);
+  --abcd-comp-text-body: var(--abcd-sys-font-size-rg);
+  --abcd-comp-text-caption: var(--abcd-sys-font-size-sm);
 }`);
   
   const [copiedText, setCopiedText] = useState('');
@@ -173,40 +229,103 @@ const CSSVariablesAnalyzer = () => {
     setCssInput('');
   };
 
-  // 獲取數值使用統計
+  // 獲取數值使用統計（支援多層級）
   const getValueStats = () => {
-    if (!analysisResult) return [];
+    if (!analysisResult) return { stats: [], maxLevel: 1 };
     
     const { variables, inheritanceMap, numericValues } = analysisResult;
+    const numericVariables = Object.values(numericValues).flatMap(data => data.variables);
+    const { levelGroups, maxLevel } = groupVariablesByLevel(variables, numericVariables);
     
-    return Object.entries(numericValues)
+    const stats = Object.entries(numericValues)
       .sort((a, b) => {
         // 按基礎數值大小排序
         return a[1].baseValue - b[1].baseValue;
       })
       .map(([valueKey, data]) => {
-        const directUsage = data.variables;
-        const indirectUsage = [];
+        const levelUsage = {};
         
-        // 查找間接使用（繼承關係）
-        directUsage.forEach(varName => {
-          if (inheritanceMap[varName]) {
-            indirectUsage.push(...inheritanceMap[varName]);
+        // 為每個層級初始化空數組
+        for (let i = 0; i <= maxLevel; i++) {
+          levelUsage[i] = [];
+        }
+        
+        // 分析每個變數的層級使用情況
+        const processedVars = new Set();
+        
+        const analyzeVariable = (varName, visited = new Set()) => {
+          if (visited.has(varName) || processedVars.has(varName)) return;
+          visited.add(varName);
+          
+          const level = getVariableLevel(varName, variables);
+          
+          // 檢查這個變數是否與當前數值相關
+          const chain = getInheritanceChain(varName, variables);
+          const isRelated = data.variables.includes(varName) || 
+                           chain.some(chainVar => data.variables.includes(chainVar));
+          
+          if (isRelated) {
+            levelUsage[level].push(varName);
+            processedVars.add(varName);
+            
+            // 分析繼承這個變數的其他變數
+            if (inheritanceMap[varName]) {
+              inheritanceMap[varName].forEach(childVar => {
+                analyzeVariable(childVar, new Set(visited));
+              });
+            }
           }
+        };
+        
+        // 從直接使用數值的變數開始分析
+        data.variables.forEach(varName => {
+          analyzeVariable(varName);
         });
+        
+        // 計算總使用次數
+        const totalUsage = Object.values(levelUsage).reduce((sum, vars) => sum + vars.length, 0);
         
         return {
           value: data.displayValue,
           baseValue: data.baseValue,
           unit: data.unit,
-          directUsage,
-          indirectUsage: [...new Set(indirectUsage)], // 去重
-          totalUsage: directUsage.length + [...new Set(indirectUsage)].length
+          levelUsage,
+          totalUsage
         };
       });
+    
+    return { stats, maxLevel };
   };
 
-  const valueStats = getValueStats();
+  const valueStatsResult = getValueStats();
+  const { stats: valueStats, maxLevel } = valueStatsResult;
+
+  // 生成表格標題
+  const generateTableHeaders = () => {
+    const headers = ['數值'];
+    
+    for (let i = 0; i <= maxLevel; i++) {
+      if (i === 0) {
+        headers.push('第1層使用 (REF)');
+      } else if (i === 1) {
+        headers.push('第2層使用 (SYS)');
+      } else if (i === 2) {
+        headers.push('第3層使用 (COMP)');
+      } else {
+        headers.push(`第${i + 1}層使用`);
+      }
+    }
+    
+    headers.push('使用次數');
+    return headers;
+  };
+
+  // 生成變數標籤的樣式類別
+  const getVariableTagClass = (level) => {
+    if (level === 0) return 'direct'; // REF tokens
+    if (level === 1) return 'indirect'; // SYS tokens  
+    return 'tertiary'; // COMP tokens 或更高層級
+  };
 
   return (
     <div className="css-variables-analyzer">
@@ -245,10 +364,11 @@ const CSSVariablesAnalyzer = () => {
               <table>
                 <thead>
                   <tr>
-                    <th>數值</th>
-                    <th>第1層使用</th>
-                    <th>第2層使用 (繼承)</th>
-                    <th>使用次數</th>
+                    {generateTableHeaders().map((header, index) => (
+                      <th key={index} className={index === generateTableHeaders().length - 1 ? '' : ''}>
+                        {header}
+                      </th>
+                    ))}
                   </tr>
                 </thead>
                 <tbody>
@@ -263,34 +383,25 @@ const CSSVariablesAnalyzer = () => {
                           {stat.value}
                         </span>
                       </td>
-                      <td className="usage-cell">
-                        <div className="variable-list">
-                          {stat.directUsage.map((varName, idx) => (
-                            <span 
-                              key={idx} 
-                              className="variable-tag direct"
-                              onClick={() => handleCopy(varName)}
-                              title={`點擊複製: ${varName}`}
-                            >
-                              {varName}
-                            </span>
-                          ))}
-                        </div>
-                      </td>
-                      <td className="usage-cell">
-                        <div className="variable-list">
-                          {stat.indirectUsage.map((varName, idx) => (
-                            <span 
-                              key={idx} 
-                              className="variable-tag indirect"
-                              onClick={() => handleCopy(varName)}
-                              title={`點擊複製: ${varName}`}
-                            >
-                              {varName}
-                            </span>
-                          ))}
-                        </div>
-                      </td>
+                      
+                      {/* 動態生成每個層級的使用情況 */}
+                      {Array.from({ length: maxLevel + 1 }, (_, level) => (
+                        <td key={level} className="usage-cell">
+                          <div className="variable-list">
+                            {(stat.levelUsage[level] || []).map((varName, idx) => (
+                              <span 
+                                key={idx} 
+                                className={`variable-tag ${getVariableTagClass(level)}`}
+                                onClick={() => handleCopy(varName)}
+                                title={`點擊複製: ${varName} (第${level + 1}層)`}
+                              >
+                                {varName}
+                              </span>
+                            ))}
+                          </div>
+                        </td>
+                      ))}
+                      
                       <td className="total-cell">
                         <strong>{stat.totalUsage}</strong>
                       </td>
