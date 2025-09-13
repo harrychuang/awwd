@@ -327,6 +327,46 @@ const CSSVariablesAnalyzer = () => {
     return 'tertiary'; // COMP tokens 或更高層級
   };
 
+  // 導出 CSV 功能
+  const downloadCSV = () => {
+    if (!valueStats.length) return;
+    
+    // 建立 CSV 標題
+    const headers = generateTableHeaders();
+    const csvContent = [
+      headers.join(','),
+      ...valueStats.map(stat => {
+        const row = [stat.value];
+        
+        // 添加每個層級的變數（用分號分隔同層級內的變數）
+        for (let level = 0; level <= maxLevel; level++) {
+          const variables = (stat.levelUsage[level] || []).join('; ');
+          row.push(`"${variables}"`);
+        }
+        
+        row.push(stat.totalUsage);
+        return row.join(',');
+      })
+    ].join('\n');
+    
+    // 添加 BOM 以確保中文正確顯示
+    const BOM = '\uFEFF';
+    const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' });
+    
+    // 創建下載連結
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `css-variables-analysis-${new Date().toISOString().slice(0, 10)}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+  };
+
   return (
     <div className="css-variables-analyzer">
       <div className="input-section">
@@ -360,7 +400,22 @@ const CSSVariablesAnalyzer = () => {
               <p>未找到數值類型的 CSS Variables</p>
             </div>
           ) : (
-            <div className="value-stats-table">
+            <>
+              <div className="table-actions">
+                <div className="action-group">
+                  <h3>數值使用分析表</h3>
+                  <button 
+                    className="download-button"
+                    onClick={downloadCSV}
+                    title="下載 CSV 檔案"
+                  >
+                    <MaterialIcon icon="file_download" />
+                    下載報表
+                  </button>
+                </div>
+              </div>
+              
+              <div className="value-stats-table">
               <table>
                 <thead>
                   <tr>
@@ -410,6 +465,7 @@ const CSSVariablesAnalyzer = () => {
                 </tbody>
               </table>
             </div>
+            </>
           )}
 
         </div>
