@@ -12,7 +12,6 @@
   border: 3px solid var(--awwd-sys-color-secondary-surface);
   font-family: var(--awwd-sys-font-face-brand-med);
   margin-right: var(--awwd-sys-spacing-rg);
-  margin-bottom: var(--awwd-sys-spacing-lg);
   gap: 15px;
   min-width: 17px;
   cursor: pointer;
@@ -43,12 +42,69 @@
   }
 }
 
+.token-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--awwd-sys-spacing-lg);
+  gap: var(--awwd-sys-spacing-rg);
+
+  &__primary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--awwd-sys-spacing-rg);
+  }
+
+  &__separator {
+    display: inline-flex;
+    gap: var(--awwd-sys-spacing-xs, 8px);
+  }
+}
+
+.token-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--awwd-sys-spacing-sm, 12px);
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 12px;
+    border: 2px solid var(--awwd-sys-color-secondary-surface);
+    background-color: transparent;
+    color: var(--awwd-sys-color-secondary-surface);
+    cursor: pointer;
+    font-family: var(--awwd-sys-font-face-brand-med);
+    font-size: 14px;
+    transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+
+    &:hover {
+      background-color: var(--awwd-sys-color-secondary-surface);
+      color: var(--awwd-sys-color-on-dark-surface);
+    }
+
+    .material-icons {
+      color: inherit !important;
+    }
+  }
+
+  &__file-input {
+    display: none;
+  }
+}
+
 .doc-token {
   --doc-token-input-bg: var(--awwd-sys-color-secondary-surface-dark);
   display: flex;
-  gap: 5px;
+  flex-wrap: wrap;
+  gap: var(--awwd-sys-spacing-lg);
 
   .custom-token-input {
+    padding-right: 36px;
     display: inline-block;
     border: 2px solid var(--awwd-sys-color-secondary-surface-light);
     background-color: var(--doc-token-input-bg);
@@ -64,6 +120,44 @@
     }
   }
 
+  .token-input {
+    position: relative;
+    display: inline-block;
+    margin-bottom: var(--awwd-sys-spacing-sm, 12px);
+  }
+
+  .token-input__add {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    padding: 0;
+    transition: color 0.15s ease-in-out, transform 0.15s ease-in-out;
+
+    &:hover {
+      // color: var(--awwd-sys-color-secondary-surface-light);
+      opacity: 0.6;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--awwd-sys-color-secondary-surface);
+      outline-offset: 2px;
+    }
+
+    .material-icons {
+      font-size: 18px;
+      font-weight: bold;
+      color: #fff;
+    }
+  }
+
   // Modifier
   .sbdocs-h3 {
     font-size: 16px;
@@ -74,13 +168,77 @@
     flex: 1;
   }
 
+  .token-option-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .token-option {
+    position: relative;
+    list-style: none;
+    display: inline-flex;
+    align-items: stretch;
+    margin-bottom: 0px;
+  }
+
+  .token-option__delete {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    border: none;
+    background: none;
+    color: var(--awwd-sys-color-secondary-surface);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease-in-out, transform 0.15s ease-in-out;
+    padding: 0;
+
+    &:hover {
+      color: var(--awwd-sys-color-secondary-surface-light);
+      transform: scale(1.05);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--awwd-sys-color-secondary-surface);
+      outline-offset: 2px;
+    }
+
+    .material-icons {
+      font-size: 16px;
+      color: #999;
+      font-weight: bold;
+    }
+  }
+
+  .token-option--active {
+    .token-option__delete {
+      color: var(--awwd-sys-color-on-dark-surface);
+
+      .material-icons {
+        color: var(--awwd-sys-color-on-dark-surface);
+      }
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+
   .card-list__item__flexible--sm {
     min-height: 32px;
     min-width: fit-content;
     padding: 5px 8px;
-    margin: 0 5px 5px 0;
+    padding-right: 32px;
+    margin: 0;
     font-size: 14px;
     font-family: var(--awwd-sys-font-face-brand-med);
+    position: relative;
     &.active {
       color: var(--awwd-sys-color-on-dark-surface);
       background-color: var(--awwd-sys-color-secondary-surface);
